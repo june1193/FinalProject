@@ -4,7 +4,6 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="UserDTO" type="com.acorn.racket.login.domain.UserLoginDTO"/>
-		<typeAlias alias="facDTO" type="com.acorn.racket.facility.domain.FacDTO"/>
+		<typeAlias alias="facDTO" type="com.acorn.project.FacDTO"/>		
 	</typeAliases>
 </configuration>
