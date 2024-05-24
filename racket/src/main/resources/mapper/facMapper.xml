@@ -46,7 +46,7 @@
       insert into facilityTbl values
            <foreach collection="list" item="item" separator=",">
             (
-            #{item.facillityID},
+            #{item.facilityID},
             #{item.minclassname},
             #{item.service_status},
             #{item.facName},
