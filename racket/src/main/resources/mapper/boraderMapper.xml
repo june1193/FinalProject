@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.acorn.boardMapper">
+
+
+	<!-- String board_name; String user_id; int post_id; String post_title; 
+		String post_content; int uppost; int downpost; String post_date; String post_time; 
+		int post_viewes; -->
+
+	<!-- resultMap 사용하는 경우 테이블의 컬러명과 DTO객체의 속성명이 다른경우 -->
+
+
+
+
+	<!-- 쿼리 결과 컬럼명을 기준으로 객체를 바인딩한다. 컬럼명과 속성명이 다르면 값이 들어가지 않는다. -->
+
+	<select id="postview" parameterType="int" resultType="CommunityDetailDTO" >
+		SELECT * FROM post 
+		WHERE post_id = #{postId}
+	</select>
+
+</mapper>
+<!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
+	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 
+	tel , price FROM ordera o JOIN membera m ON o.userid = m.userid </select> -->

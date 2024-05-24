@@ -1,5 +1,10 @@
 package com.acorn.racket.community.service;
 
-public interface CommunityServiceI {
 
+
+import com.acorn.racket.community.domain.CommunityDetailDTO;
+
+public interface CommunityServiceI {
+	
+	CommunityDetailDTO detailview(int postnum);
 }
