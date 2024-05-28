@@ -3,37 +3,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.acorn.MatchMapper">  <!-- mapper설정파일명 -->
- 	<!-- 원하는 쿼리문 작성 -->
- 	
- 	<!-- 클럽 -->
- 	<select id="selectAll" resultType="Club"> <!--resultType는 DTO파일명 -->
-        select * 
-        from club_posts_tbl 
-        order by p_num asc
-    </select>
- 	
- 	<!-- 조회수 업데이트 -->
-    <update id="updateViews">
-        UPDATE club_posts_tbl 
-        SET views = views + 1 
-        WHERE p_num = #{p_num}
-    </update>
+	<!-- 원하는 쿼리문 작성 -->
+
+	<!-- 클럽 -->
+	<select id="selectAll" resultType="Club"> <!--resultType는 DTO파일명 -->
+		select *
+		from club_posts_tbl
+		order by p_num asc
+	</select>
+
+	<!-- 조회수 업데이트 -->
+	<update id="updateViews">
+		UPDATE club_posts_tbl
+		SET views = views + 1
+		WHERE p_num = #{p_num}
+	</update>
 
 	<!-- 상위 5개의 클럽 정보를 가져옴 -->
-    <select id="selectTopClubs" resultType="Club">
-        SELECT * 
-        FROM club_posts_tbl 
-        ORDER BY views DESC 
-        LIMIT #{count}
-    </select>
-    
-    <!-- p_num에 맞는 데이터를 가져오는 쿼리 -->
-    <select id="selectDetail" resultType="Club" parameterType="int">
-        SELECT * 
-        FROM club_posts_tbl 
-        WHERE p_num = #{p_num}
-    </select>
- 	
+	<select id="selectTopClubs" resultType="Club">
+		SELECT *
+		FROM club_posts_tbl
+		ORDER BY views DESC
+		LIMIT #{count}
+	</select>
+
+	<!-- p_num에 맞는 데이터를 가져오는 쿼리 -->
+	<select id="selectDetail" resultType="Club" parameterType="int">
+		SELECT *
+		FROM club_posts_tbl
+		WHERE p_num = #{p_num}
+	</select>
+
+	<!-- 스탬프 관련 특정 user_ID의 데이터를 모두 가져오는 쿼리 -->
+	<select id="getStampsByUserID" resultType="com.acorn.racket.match.domain.Stamp">
+		SELECT * FROM stamps WHERE user_ID = #{user_ID}
+	</select>
+
 </mapper>
 
 

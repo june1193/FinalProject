@@ -2,6 +2,9 @@ package com.acorn.racket.match.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,12 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.racket.match.domain.Club;
+
+import com.acorn.racket.match.domain.Stamp;
+import com.acorn.racket.match.repository.MatchRepository;
+
 import com.acorn.racket.match.domain.badmintonDTO;
 import com.acorn.racket.match.domain.tabletennisDTO;
 import com.acorn.racket.match.domain.tennisDTO;
 import com.acorn.racket.match.repository.MatchRepository;
 import com.acorn.racket.match.service.MatchService;
 import com.google.gson.Gson;
+
 
 @Controller
 public class MatchController {
@@ -59,6 +67,52 @@ public class MatchController {
 		model.addAttribute("clubInfo", clubInfo);
 		return "matchDetail";
 	}
+
+
+	// 스탬프 메인페이지 임시 컨트롤러
+	@RequestMapping("/stamp")
+	public String StampMain(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession(); // 세션 가져오기
+		/* String id = (String) session.getAttribute("user_ID"); */ // 세션에서 "id" 속성 값 가져오기
+		 String id = "user1";  // 임시로 id 값을 설정
+
+		// 세션에 user_ID가 없으면 뷰만 리턴
+		if (id == null) {
+			int countzero = 0;
+			model.addAttribute("countStamp", countzero);
+			return "stampMain";
+		}
+	
+		
+		List<Stamp> Slist = nr.StampData(id);
+		System.out.println(Slist);
+		model.addAttribute("s_data", Slist);
+		
+		int countS = nr.countStamps(id);
+		model.addAttribute("countStamp", countS);
+		return "stampMain";
+	}
+
+	
+	// 스탬프 "로그인이 필요합니다" 페이지 임시 컨트롤러
+	@RequestMapping("/needLogin")
+	public String Stamplogin(HttpServletRequest request) {
+		HttpSession session = request.getSession(); // 세션 가져오기
+		// 로그인 컨트롤러에 if문으로 redirectStampingUrl값이 null값이 아니면 stamping으로 매핑
+		session.setAttribute("redirectStampingUrl", "/stamping");
+		return "needLogin";
+	}
+
+	// 스탬프 찍기 페이지 임시 컨트롤러
+	@RequestMapping("/stamping")
+	public String stamping(HttpServletRequest request) {
+		HttpSession session = request.getSession(); // 세션 가져오기
+		String id = (String) session.getAttribute("user_ID"); // 세션에서 "id" 속성 값 가져오기
+		return "stamping"; // 로그인한 사용자이므로 스탬핑 페이지로 이동
+	}
+	
+	//스탬프 찍기 버튼 누르면 스탬프 테이블에 인서트 하는 컨트롤러 메소드 만들 것 
+	
 
 	// 매치 생성 AJAX
 
@@ -122,5 +176,6 @@ public class MatchController {
 		return null;
 		
 	}
+
 	
 }

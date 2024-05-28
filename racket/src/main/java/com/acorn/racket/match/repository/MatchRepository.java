@@ -10,9 +10,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.acorn.racket.match.domain.Club;
+
+import com.acorn.racket.match.domain.Stamp;
+
 import com.acorn.racket.match.domain.badmintonDTO;
 import com.acorn.racket.match.domain.tabletennisDTO;
 import com.acorn.racket.match.domain.tennisDTO;
+
 
 @Repository
 public class MatchRepository {
@@ -45,6 +49,17 @@ public class MatchRepository {
         return session.selectOne(namespace + "selectDetail", p_num);
     }
     
+    // 스탬프 개수 세기 관련
+    public int countStamps(String user_ID) {
+        List<Stamp> stamps = session.selectList(namespace + "getStampsByUserID", user_ID);
+        return stamps.size();
+    }
+    
+    //ID에 일치하는 스탬프데이터 자체를 반환 관련 
+    public List<Stamp> StampData(String user_ID) {
+        return session.selectList(namespace + "getStampsByUserID", user_ID);
+    }
+
     
    /* 매치 부분 */
     
@@ -73,6 +88,7 @@ public class MatchRepository {
     	return list;
     }
     
+
 }
 
 
