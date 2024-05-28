@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.acorn.racket.match.domain.Club;
+import com.acorn.racket.match.domain.Stamp;
 
 @Component
 public class MatchRepository {
@@ -36,6 +37,17 @@ public class MatchRepository {
     //상세페이지
     public Club selectDetail(int p_num) {
         return session.selectOne(namespace + "selectDetail", p_num);
+    }
+    
+    // 스탬프 개수 세기 관련
+    public int countStamps(String user_ID) {
+        List<Stamp> stamps = session.selectList(namespace + "getStampsByUserID", user_ID);
+        return stamps.size();
+    }
+    
+    //ID에 일치하는 스탬프데이터 자체를 반환 관련 
+    public List<Stamp> StampData(String user_ID) {
+        return session.selectList(namespace + "getStampsByUserID", user_ID);
     }
 }
 

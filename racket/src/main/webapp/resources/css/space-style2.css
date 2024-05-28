@@ -120,7 +120,7 @@ section{
 }
 section::before{
     content: '';
-    background: url(/recket/resources/images/bac2.png) no-repeat center / cover;
+    background: url(/racket/resources/images/bac2.png) no-repeat center / cover;
     position: absolute;
     width: 100%;
     height: 660px;
