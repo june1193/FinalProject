@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.acorn.matchJoinMapper">
+
+	<select id="tennis" resultType="tennisDTO">
+
+		SELECT minclassname, region_name,
+		place , facilityID
+		FROM (
+		SELECT minclassname, region_name, place,
+		facilityID ,
+		ROW_NUMBER() OVER (PARTITION BY place ORDER BY place) as
+		row_num
+		FROM facilitytbl
+		WHERE minclassname = '테니스장'
+		) AS subquery
+		WHERE
+		row_num = 1
+
+	</select>
+
+	<select id="tabletennis" resultType="tabletennisDTO">
+
+		SELECT minclassname, region_name,
+		place , facilityID
+		FROM (
+		SELECT minclassname, region_name, place,
+		facilityID ,
+		ROW_NUMBER() OVER (PARTITION BY place ORDER BY place) as
+		row_num
+		FROM facilitytbl
+		WHERE minclassname = '탁구장'
+		) AS subquery
+		WHERE
+		row_num = 1
+	</select>
+
+	<select id="badminton" resultType="badmintonDTO">
+
+		SELECT minclassname, region_name, place , facilityID
+		FROM (
+		SELECT minclassname, region_name, place, facilityID ,
+		ROW_NUMBER() OVER (PARTITION BY place ORDER BY place) as row_num
+		FROM facilitytbl
+		WHERE minclassname = '배드민턴장'
+		) AS subquery
+		WHERE row_num = 1
+
+	</select>
+
+
+</mapper>
+<!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
+	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 
+	tel , price FROM ordera o JOIN membera m ON o.userid = m.userid </select> -->

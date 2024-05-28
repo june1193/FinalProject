@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -261,7 +261,7 @@
 </head>
 <body>
     <!-- 글 제목 부분-->
-    <div class="container">
+    <div class="container" data-post-id="${post.post_id}">
         <div class="category"><a href="#" style="font-size: 2rem; font-weight: bold; color: rgb(0, 0, 0);">${post.board_name}</a>
         </div>
         <div class="title_container">
@@ -273,7 +273,7 @@
                     <h6>${post.user_id}</h6>
                 </div>
                 <div class="date" style="margin-left: 10px;">
-                    <h6>${post.post_date } ${post.post_time }</h6>
+                    <h6>${post.post_date} ${post.post_time}</h6>
                 </div>
                 <div class="data_board">
                     <div class="1">조회 ${post.post_views}</div>
@@ -306,57 +306,37 @@
         <!-- 댓글 부분 -->
         <div class="comment_container">
             <div class="comment">
-                <ul>
-                    <li>
+                <ul id="commentul">
+                <c:forEach items="${cmList}" var="comment">
+                    <li data-comment-id="${comment.commentNumber}">
                         <div class="commnet_content_box">
-                            <div class="commnet_id">댓글아이디</div>
+                            <div class="commnet_id">${comment.user_id}</div>
                             <div class="commnet_content" style="font-size: 10pt;">
-                                댓 글 내 용 댓 글 내 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용
+                                 ${comment.commentcontent}
                                 <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
                                     class="recomment">
                             </div>
-                            <div class="comment_date" style="font-size: 10pt;">2024-05-08 03:05:05</div>
+                            <div class="comment_date" style="font-size: 10pt;">${comment.commentdatetime}</div>
                         </div>
                     </li>
-                    <li>
-                        <div class="commnet_content_box">
-                            <div class="commnet_id">아이디</div>
-                            <div class="commnet_content" style="font-size: 10pt;">
-                                댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓
-                                <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
-                                    class="recomment">
-                            </div>
-                            <div class="comment_date" style="font-size: 10pt;">2024-05-08 03:05:05</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="commnet_content_box">
-                            <div class="commnet_id">아이디</div>
-                            <div class="commnet_content" style="font-size: 10pt;">
-                                댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글 내 용 댓 글
-                                <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
-                                    class="recomment">
-                            </div>
-                            <div class="comment_date" style="font-size: 10pt;">2024-05-08 03:05:05</div>
-                        </div>
-                    </li>
+                   </c:forEach>
                 </ul>
             </div>
             <!-- 댓글 작성 부분 -->
-            <form action="#">
+        
                 <div class="comment_write_box">
                     <div class="write_id">아이디</div>
-                    <div class="write_content"><textarea name="" id=""
+                    <div class="write_content"><textarea name="content"  id="content"
                             placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
                     </div>
                     <div class="write_function">
                         <div class="write_button">
-                            <button>등록</button>
+                            <button onclick="createcomment()">등록</button>
                             <button>추천 + 등록</button>
                         </div>
                     </div>
                 </div>
-            </form>
+            
         </div>
         <!-- 글목록 부분 -->
         <form action="">
@@ -374,30 +354,97 @@
     </div>
 </body>
 
-<!-- 대댓글 스크립트 -->
+<!-- 댓글insert 스크립트 -->
 <script>
-    class CommentForm {
-        constructor() {
-            this.formHTML = `
-                <div class="comment_write_box" id="replyForm">
-                    <div class="write_id">아이디</div>
-                    <div class="write_content">
-                        <textarea id="replyTextarea" placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
-                    </div>
-                    <div class="write_function">
-                        <div class="write_button">
-                            <button>등록</button>
-                            <button>추천 + 등록</button>
+
+function createcomment(){
+	
+	// 댓글 인서트
+	var div = document.querySelector('div[data-post-id]');
+			
+	
+	var postid =  div.getAttribute('data-post-id') ;		
+	var user_id = "jungkiwon";
+	var commentcontent = document.querySelector('#content').value;
+	
+	
+	var commentdata = {
+			post_id: postid,
+			user_id: user_id,
+			commentcontent: commentcontent	
+	}
+		
+	$.ajax({
+		
+			url: "/racket/createcomment" ,
+			type: "POST" ,
+			data: JSON.stringify(commentdata) ,
+			contentType: "application/json",
+			dataType: "json" ,
+			
+			success: function(data){
+						
+	                updateCommentList(data);
+		
+					},
+
+			error: function(err){
+				console.log(err);
+			}
+		
+	});
+}
+
+function updateCommentList(ajaxdata){
+	
+	let comment = `
+        <li>
+           <div class="commnet_content_box">
+               <div class="commnet_id">${ajaxdata.user_id}</div>
+               <div class="commnet_content" style="font-size: 10pt;">
+                    ${ajaxdata.commentcontent}
+                   <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
+                       class="recomment">
+               </div>
+               <div class="comment_date" style="font-size: 10pt;">${ajaxdata.commentdatetime}</div>
+           </div>
+       </li>
+		
+		`;
+	$("#commentul").append(comment);
+	location.reload();
+}
+</script>
+<!-- 대댓글 스크립트 -->
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+		
+    	
+        class CommentForm {
+            constructor() {
+                this.formHTML = `
+                    <div class="comment_write_box" id="replyForm">
+                        <div class="write_id">아이디</div>
+                        <div class="write_content">
+                            <textarea id="replyTextarea" placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
+                        </div>
+                        <div class="write_function">
+                            <div class="write_button">
+                                <button>등록</button>
+                                <button>추천 + 등록</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+
+            }
 
         }
-
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-
+    	
+    	
+    	
         let commentform = new CommentForm();
         let recomment = document.querySelectorAll('.recomment');
         let replyFormExists = false;
@@ -415,7 +462,7 @@
 
             });
         });
-    });
+    }); 
 </script>
 
 </html>
