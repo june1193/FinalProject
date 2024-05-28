@@ -1,21 +1,21 @@
 package com.acorn.racket.facility.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.racket.facility.domain.FacDTO;
+import com.acorn.racket.facility.domain.ParamDTO;
 import com.acorn.racket.facility.service.FacService;
 
 
@@ -45,21 +45,21 @@ public class FacController {
  	}
 	
    
-   //시설 전체 목록 불러오기
+   //시설 목록 불러오기 (필터링 포함)
     @ResponseBody
 	@RequestMapping("/facilityListData")	 
-	public List<FacDTO> selectAll( int limit, int offset){		 
-		System.out.println( "limit = "+limit +  ", offset = "  + offset);
-		return service.selectAll(limit, offset);
-	}
-    
-    //필터링 추가한 코드
-    @ResponseBody
-	@RequestMapping(value = "/facilityListData/{sport}", method = RequestMethod.GET)	 
-	public List<FacDTO> selectSport( int limit, int offset, @PathVariable String sport){
-    	System.out.println("종목 : "+sport);
-    	System.out.println( "limit = "+limit +  ", offset = "  + offset);
-		return service.selectSport(limit, offset,sport);
+	public Map selectAll(  @RequestBody ParamDTO options){			
+    	int limit = options.getLimit();
+    	int offset = options.getOffset();
+		System.out.println( "limit = "+ + limit+ ", offset = "  + offset);
+		System.out.println(options.getOptions());
+		
+		Map<String, Object> parameters = new HashMap<>();
+	    parameters.put("limit", limit);
+	    parameters.put("offset", offset);
+	    parameters.put("options", options.getOptions());
+	 	    
+	    return service.selectFilter(parameters);
 	}
 	
 	//시설 상세보기

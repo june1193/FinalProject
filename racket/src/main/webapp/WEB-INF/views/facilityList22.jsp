@@ -10,36 +10,23 @@
 <link rel="stylesheet" href="/racket/resources/css/space-style2.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+	function search() {
+		alert("검색");
+	}
+	
 	var postScroll = true;
 	var offset = 0;
 	var limit = 20;  
 	var option = {};
-	var search = '';
 	
-	$(document).ready(function() {	
-		
-		//검색
-		$("input[name='search']").keyup(function(event) {
-	        if (event.which === 13) {
-	            $(".search-btn").click();
-	        }
-    	});
-		$(".search-btn").click(function(){
-	        search = $("input[name='search']").val();
-	        console.log(search);
-			if(search == ''){
-				alert("검색어를 입력해주세요");
-			}
-		});
+	$(document).ready(function() {
+
 		
 		//필터링 
-		//.sport > ul > li input, #submit
-		$(".form ul > li > input,.search-btn, #submit").click(function(){
+		$(".sport > ul > li input, #submit").click(function(){
 			$(".item-list").children().remove();
 			offset = 0;
 			limit = 20;
-	        
-			search = $("input[name='search']").val();
 			
 			//종목
 			var sport = $("input[name='sport']:checked").val();
@@ -63,38 +50,45 @@
 	        $("input[name='payment']:checked").each(function() {
 	        	paymentList.push($(this).val());
 	        });
+
 	        
 	        option = {
 	        		sport : sport,
 	        		region : checkList,
 	        		status : statusList,
 	        		target : targetList,
-	        		payment : paymentList,
-	        		search : search
+	        		payment : paymentList
 	        };
+	        console.log(option);
 	        
 	        showList(limit,offset, option);
 	        
 
 		});
-        
-		//페이지 처음 로드할때 '전체' 탭 포커스
-		$(".sport > ul > li:first-child input").prop("checked",true);
 		
 		//초기화
 		$(".reset").click(function(){
-			$(".item-list").children().remove();
-			$(".data-count > .count").empty();
-			$(".sport > ul > li:first-child input").prop("checked",true);
-			$("input[name='ck-box'], input[name='status'],input[name='target'],input[name='payment']").prop("checked",false);
-			$("input[name='search']").val('');
-			offset = 0;
-			limit = 20;
-			option = {
-	        		sport : 'all'
-	        };
-			showList(limit,offset, option);
+			
 		});
+        
+		//페이지 처음 로드할때 '전체' 탭 포커스
+		$(".sport > ul > li:first-child input").prop("checked",true);
+
+		//게시글 목록 출력
+		showList(limit, offset,option);
+		
+		
+		if(postScroll === true){
+			$(window).scroll(scrollHandler);
+		}
+		
+		function scrollHandler(){
+			//스크롤이 화면 맨 아래에 닿으면 실행
+			if(postScroll === true &&  $(window).scrollTop() == $(document).height() - $(window).height()){ 
+				offset += limit;			
+				showList(limit, offset, option);
+			}
+		}
 		
 		//status 클래스
 		function getStatus(service_status){
@@ -112,21 +106,6 @@
 			}
 			return status;
 		}
-
-		//게시글 목록 출력
-		showList(limit, offset,option);
-		
-		if(postScroll === true){
-			$(window).scroll(scrollHandler);
-		}
-		
-		function scrollHandler(){
-			//스크롤이 화면 맨 아래에 닿으면 실행
-			if(postScroll === true &&  $(window).scrollTop() == $(document).height() - $(window).height()){ 
-				offset += limit;			
-				showList(limit, offset, option);
-			}
-		}
 		
 		//시설 목록 요청
 		function showList(limit, offset, option){
@@ -141,21 +120,18 @@
 				data : dataJOSN,
 				contentType : "application/json",
 				success : function(data){
-					var count = data.count;
-					$(".data-count > .count").empty();
-					$(".data-count > .count").append(count);
 					//받아온 데이터가 없으면 스크롤 멈춤
-					if(data.facility.length == 0){
+					if(data.length == 0){
 						postScroll = false;
-					}else if(data.facility.length < 20){ //받아온 데이터가 20개 아래면 스크롤 멈춤		
+					}else if(data.length < 20){ //받아온 데이터가 20개 아래면 스크롤 멈춤
 						let str = '';
-						for(let i=0;i<data.facility.length;i++){
-							let item = data.facility[i];	
+						for(let i=0;i<data.length;i++){
+							let item = data[i];	
 							let status = getStatus(item.service_status);
 							let pay = item.payment == '무료' ? 'free':'pay';
-							str = `<div class="item">
+							str += `<div class="item">
 									<div class="badge">
-			                        	<span class="\${status}">\${item.service_status}</span>
+										<span class="\${status}">\${item.service_status}</span>
 			                        	<span class="\${pay}">\${item.payment}</span>
 			                        </div>
 			                        <div class="badge2">
@@ -199,8 +175,8 @@
 						postScroll = false;
 					}else{
 					let str = '';
-					for(let i=0;i<data.facility.length;i++){
-						let item = data.facility[i];	
+					for(let i=0;i<data.length;i++){
+						let item = data[i];	
 						let status = getStatus(item.service_status);
 						let pay = item.payment == '무료' ? 'free':'pay';
 						str = `<div class="item">
@@ -245,7 +221,6 @@
 						</div>`;
 						
 						$(".item-list").append(str);
-						
 					}
 					}
 				}
@@ -253,6 +228,22 @@
 			
 			 
 		}
+
+		$(".filter").click(function() {
+			$(".filter-wrap").css("display", "flex");
+			$("body").addClass("scrollLock");
+		});
+
+		$(".close").click(function() {
+			$(".filter-wrap").css("display", "none");
+			$("body").removeClass("scrollLock");
+		});
+
+		$(".filter-button").click(function() {
+			$(".filter-wrap").css("display", "none");
+			$("body").removeClass("scrollLock");
+		});
+
 		//찜하기		
 		$(document).on("click",".like",function(){
 			$(this).children('.basil--heart-outline').toggleClass("full");
@@ -280,11 +271,12 @@
         <section>
             <div class="space-content">
                 <h4>시설 찾기</h4>
+                <form id="form">
 	                <div class="search-area">
 	                    <div class="search">
 	                        <div class="search-in">
-	                            <input type="text" placeholder="시설명을 입력하세요" name="search">
-	                            <button class="search-btn">
+	                            <input type="text" placeholder="시설명을 입력하세요">
+	                            <button onclick="search()">
 	                                <span class="tabler--search"></span>
 	                            </button>
 	                        </div>
@@ -397,18 +389,9 @@
 							
 						</div>
 						<div class="form">
-							<div class="form-label">이용요금</div>
+							<div class="form-label">접수기간</div>
 							<div class="form-group">
-								<ul>
-									<li>
-										<input type="checkbox" name="payment" class="select-input" id="select-input30" value="무료">
-	                                	<label for="select-input30" class="select-category">무료</label>
-									</li>
-									<li>
-										<input type="checkbox" name="payment" class="select-input" id="select-input31" value="유료">
-	                                	<label for="select-input31" class="select-category">유료</label>
-									</li>
-								</ul>
+								<input type="date"> ~ <input type="date">
 							</div>						
 						</div>
 						<div class="form">
@@ -456,20 +439,31 @@
 									</li>
 								</ul>
 							</div>						
+						</div>
+						<div class="form">
+							<div class="form-label">이용요금</div>
+							<div class="form-group">
+								<ul>
+									<li>
+										<input type="checkbox" name="payment" class="select-input" id="select-input30" value="무료">
+	                                	<label for="select-input30" class="select-category">무료</label>
+									</li>
+									<li>
+										<input type="checkbox" name="payment" class="select-input" id="select-input31" value="유료">
+	                                	<label for="select-input31" class="select-category">유료</label>
+									</li>
+								</ul>
+							</div>						
 						</div>					
 						<button class="f-btn" type="button">필터</button>
 	               	</div>
 	               	<div class="f-footer">
-							<input type="button" class="reset" value="초기화">
+							<input type="button" value="초기화">
 							<button id="submit" type="button">검색</button>
 					</div>
+               	</form>
             </div>
             <div class="item-wrap">
-            	<div class="data-count">
-            		<!-- <span class="mdi--paper"></span> -->
-            		<span class="typcn--home"></span>
-            		총 <span class="count"></span>건
-            	</div>
                 <div class="item-list">
                 
                

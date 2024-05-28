@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/project/resources/css/font.css">
-<link rel="stylesheet" href="/project/resources/css/spaceDesc-style.css">
+<link rel="stylesheet" href="/racket/resources/css/font.css">
+<link rel="stylesheet" href="/racket/resources/css/spaceDesc-style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
