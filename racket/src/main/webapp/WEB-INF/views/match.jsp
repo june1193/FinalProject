@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
 * {
 	padding: 0px;
@@ -399,7 +404,175 @@
 	font-weight: bold;
 }
 </style>
+<!-- 옵션값 정의  -->
+<script>						
+		function changeValue(){
+								
+								
+								let option =  document.querySelector('#sprots').value;
+								if(option == "테니스"){
+									
+									$.ajax({
+							            url: 'machjoinTennis',  // 서버 엔드포인트 URL
+							            type: 'GET',  // 요청 방식
+							            dataType: 'json',  // 반환받을 데이터 타입
+							            success: function(data) {
+											
+							            	
+							            	
+							            	let uniqueRegions = new Set(); // 중복 제거용 Set 객체
+							            	let regionOption = $('#region');
+							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
+							            	regionOption.empty();
+							            	
+							            	regionOption.append(innerhtml);
+							            	for(let i=0 ; i < data.length ; i++){
+							            		
+							            		
+							            		
+							            		let items = data[i];
+							            		if(!uniqueRegions.has(items.region_name)){ //Set 에 region_name 이 없다면 has (검증)
+							            			uniqueRegions.add(items.region_name); // Set 에 추가 add (추가)
+							            			
+							            			let itemstr = "<option  value='"  + items.region_name +"'>"   +  items.region_name  + "</option> ";
+								            		regionOption.append( itemstr);
+							            			
+							            		}
+							            		
+							            		
+							            	}
+							                $('#region').change(function() {
+							                    let selectedRegion = $(this).val();
+							                    let placeOption = $('#place'); // place select 태그
+							                    placeOption.empty(); // 기존 옵션 제거
+							                    placeOption.append(innerhtml); // 첫번째 옵션 다시생성
+							                   
+							                    
+							                    	
+							                    data.forEach(item => {
+							                        if (item.region_name === selectedRegion) {
+							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
+							                            placeOption.append(optionStr);
+							                        }
+							                    });
+							                });
+							            	
 
+							            },
+							            error: function(err) {
+							              
+							                console.log(err)
+							            }
+							        });
+									
+								}else if(option == "탁구" ){
+									
+									$.ajax({
+							            url: 'matchjoinTableTennis',  // 서버 엔드포인트 URL
+							            type: 'GET',  // 요청 방식
+							            dataType: 'json',  // 반환받을 데이터 타입
+							            success: function(data) {
+											
+							            	let uniqueRegions = new Set(); // 중복 제거용 Set 객체
+							            	let regionOption = $('#region');
+							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
+							            	regionOption.empty();
+							            	
+							            	regionOption.append(innerhtml);
+							            	for(let i=0 ; i < data.length ; i++){
+							            		
+							            		
+							            		
+							            		let items = data[i];
+							            		if(!uniqueRegions.has(items.region_name)){ //Set 에 region_name 이 없다면 has (검증)
+							            			uniqueRegions.add(items.region_name); // Set 에 추가 add (추가)
+							            			
+							            			let itemstr = "<option  value='"  + items.region_name +"'>"   +  items.region_name  + "</option> ";
+								            		regionOption.append( itemstr);
+							            			
+							            		}
+							            		
+							            		
+							            	}
+							                $('#region').change(function() {
+							                    let selectedRegion = $(this).val();
+							                    let placeOption = $('#place'); // place select 태그
+							                    placeOption.empty(); // 기존 옵션 제거
+							                    placeOption.append(innerhtml); // 첫번째 옵션 다시생성
+							                   
+							                    
+							                    	
+							                    data.forEach(item => {
+							                        if (item.region_name === selectedRegion) {
+							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
+							                            placeOption.append(optionStr);
+							                        }
+							                    });
+							                });
+							            		
+
+							            },
+							            error: function(err) {
+							              
+							                console.log(err)
+							            }
+							        });
+									
+								}else{
+									
+									$.ajax({
+							            url: 'matchjoinbadminton',  // 서버 엔드포인트 URL
+							            type: 'GET',  // 요청 방식
+							            dataType: 'json',  // 반환받을 데이터 타입
+							            success: function(data) {
+											
+							            	let uniqueRegions = new Set(); // 중복 제거용 Set 객체
+							            	let regionOption = $('#region');
+							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
+							            	regionOption.empty();
+							            	
+							            	regionOption.append(innerhtml);
+							            	for(let i=0 ; i < data.length ; i++){
+							            		
+							            		
+							            		
+							            		let items = data[i];
+							            		if(!uniqueRegions.has(items.region_name)){ //Set 에 region_name 이 없다면 has (검증)
+							            			uniqueRegions.add(items.region_name); // Set 에 추가 add (추가)
+							            			
+							            			let itemstr = "<option  value='"  + items.region_name +"'>"   +  items.region_name  + "</option> ";
+								            		regionOption.append( itemstr);
+							            			
+							            		}
+							            		
+							            		
+							            	}
+							                $('#region').change(function() {
+							                    let selectedRegion = $(this).val();
+							                    let placeOption = $('#place'); // place select 태그
+							                    placeOption.empty(); // 기존 옵션 제거
+							                    placeOption.append(innerhtml); // 첫번째 옵션 다시생성
+							                   
+							                    
+							                    	
+							                    data.forEach(item => {
+							                        if (item.region_name === selectedRegion) {
+							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
+							                            placeOption.append(optionStr);
+							                        }
+							                    });
+							                });
+
+							            },
+							            error: function(err) {
+							              
+							                console.log(err)
+							            }
+							        });
+									
+								}
+		}
+</script>
 
 <script>
 
@@ -485,7 +658,7 @@
                         console.error(`Element with ID '${elementId}' not found.`);
                     }
                 }
-
+				
                 /* 지역선택 함수 */
                 function local_One() {
                     document.querySelectorAll(".local:nth-child(1)")[0].style.color = "#000000";
@@ -657,7 +830,26 @@
                     form.submit();
                 }
             </script>
+
+<!-- 매치생성 DB등록 -->
+
+<!-- 월/일 만 받아오는 스크립트 -->
+<script>
+
+function submitDate() {
+
+	
+    
+    
+     
+}
+</script>
+
 </head>
+
+
+
+
 
 <body>
 
@@ -702,8 +894,8 @@
 
 				<div id="rankingList">
 					<c:forEach var="club" items="${r_data}">
-					<!-- p_num으로 어떤 게시글 가져올지 판별하기 위해 -->
-						<div class="r_box" onclick="submitForm('${club.p_num}')"> 
+						<!-- p_num으로 어떤 게시글 가져올지 판별하기 위해 -->
+						<div class="r_box" onclick="submitForm('${club.p_num}')">
 							<div class="r_img">
 								<img src="resources/images/${club.club_thumbnail}"
 									alt="Thumbnail">
@@ -737,102 +929,220 @@
 
 			<!-- 번개모임 -->
 			<article id="art-1">
-				<table id="board">
+				<form action="#" method="post">
+					<div class="joinshow_container">
+						<div class="createjoin">
+							<div style="margin-left: auto; margin-bottom: 30px;">
+								<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
+							</div>
+							<div
+								style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+								<h1>
+									날짜<input type="date" id="matchdate"> <input
+										type="hidden" name="date" id="realDate">
+								</h1>
+								<h1>
+									시간<input type="time" id="matchhhour" name="matchhhour">
+								</h1>
 
+								<h1>
+									<select id="sprots" onchange="changeValue()" name="sport">
+										<option value="" disabled selected>선택하세요</option>
+										<option value="테니스">테니스</option>
+										<option value="탁구">탁구</option>
+										<option value="배드민턴">배드민턴</option>
+									</select>
+								</h1>
 
-					<tr>
-						<th>글번호</th>
-						<th>공간</th>
-						<th>제목</th>
-						<th>등록일</th>
-					</tr>
-
-				
-
-				</table>
-
-				<!-- 페이징 -->
-				<div class="paging">[ 1 2 3 4 5 ]</div>
-
-			</article>
-
-
-
-
-			<!-- 클럽 -->
-
-			<article id="art-2">
-
-
-				<div id="board-2">
-
-					<div id="local-box">
-						<div class="local" onclick=local_One()>전체</div>
-						<div class="local" onclick=local_Two()>용산구</div>
-						<div class="local" onclick=local_Three()>서대문구</div>
-						<div class="local" onclick=local_Four()>강남구</div>
-						<div class="local" onclick=local_Five()>종로구</div>
-						<div class="local" onclick=local_Six()>관악구</div>
-						<div class="local" onclick=local_Seven()>영등포구</div>
-						<div class="local" onclick=local_Eight()>송파구</div>
+								<h1 class="region">
+									
+									<select id="region" name="region">
+											<option value="" disabled selected>선택하세요</option>
+									</select> 
+									<select id="place" name="place">
+										<option value="" disabled selected>선택하세요</option>
+									</select>
+								</h1>
+								<h1>
+									모집인원 <select id="membersu" name="membersu">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+									</select>
+								</h1>
+							</div>
+							<textarea name="" id="" placeholder="간단한 번개 소개글을 입력해 보세요."></textarea>
+							<button onclick="submitDate()">등록</button>
+						</div>
+				</form>
+				<div class="joinshow" onclick="joindetails(this)">
+					<div>종목</div>
+					<div>지역</div>
+					<div>
+						<a href="#">장소</a>
 					</div>
+					<div>시간</div>
+					<div>모인인원수(이미지로대체)</div>
+				</div>
+				<div class="joinshow" onclick="joindetails(this)">
+					<div>날짜</div>
+					<div>지역</div>
+					<div>
+						<a href="">장소</a>
+					</div>
+					<div>시간</div>
+					<div>모인인원수(이미지로대체)</div>
+				</div>
+	</div>
+	<!-- 번개모임 상세보기
+                <div class="joindetails">
+                    <div>종목</div>
+                    <div>프로필사진</div>
+                    <div>아이디</div>
+                    <div>나이</div>
+                    <div>구력</div>
+                </div>
+                 -->
+	<!-- 번개등록 div -->
 
-					<!-- 한줄 단위 -->
-					<c:forEach var="club" items="${data}" varStatus="status">
-						<c:choose>
-							<c:when test="${status.index % 2 == 0}">
-								<form action="updateViews" method="post"
-									class="update-views-form">
-									<input type="hidden" name="p_num" value="${club.p_num}">
-									<input type="hidden" name="targetUrl" value="C_detail">
-									<a href="#" class="box-link"
-										onclick="this.closest('form').submit(); return false;">
-										<div class="box-1-textarea">
-											<span class="rounded">${club.region}</span> <span
-												class="rounded">${club.sport}</span>
-											<h3>${club.c_name}</h3>
-											<p>${club.p_title}</p>
-											<br> <span class="magamill"> D-<span
-												id="d_day_${status.index}"></span>
-											</span> <span class="johwesu">조회수: ${club.views}</span>
-										</div>
-										<div class="thumbnail">
-											<img src="resources/images/${club.club_thumbnail}"
-												alt="이미지 설명">
-										</div>
-									</a>
-								</form>
-							</c:when>
-							<c:otherwise>
-								<form action="updateViews" method="post"
-									class="update-views-form">
-									<input type="hidden" name="p_num" value="${club.p_num}">
-									<input type="hidden" name="targetUrl" value="C_detail">
-									<a href="#" class="box-link"
-										onclick="this.closest('form').submit(); return false;">
-										<!-- a태그의 부모요소중 가장 가까운 폼태그를 찾아서 전송함. return false는 a태그 링크의 기본 동작(페이지 이동)을 막음. -->
-										<div class="box-2-textarea">
-											<span class="rounded">${club.region}</span> <span
-												class="rounded">${club.sport}</span>
-											<h3>${club.c_name}</h3>
-											<p>${club.p_title}</p>
-											<br> <span class="magamill"> D-<span
-												id="d_day2_${status.index}"></span>
-											</span> <span class="johwesu">조회수: ${club.views}</span>
-										</div>
-										<div class="thumbnail">
-											<img src="resources/images/${club.club_thumbnail}"
-												alt="이미지 설명">
-										</div>
-									</a>
-								</form>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					<!-- 여기까지 한줄단위 -->
+	<div style="display: flex; margin-top: 10px;">
+		<button style="margin-left: auto;" onclick="createjoin()">번개등록</button>
+	</div>
 
-					<!-- 모집공고 인덱스 모두 부여하고나서 함수호출. 안그러면 인덱스가 아직 덜 부여된 상태라 오류남-->
-					<script>
+	<!-- 번개생성 투명도 스타일 부여용 -->
+	<div class="joinhidden"></div>
+
+
+	<!-- 번개모임 상세보기 -->
+	<script>
+    class CommentForm {
+        constructor() {
+            //플레이어 데이터 들어갈 부분
+            this.formHTML = `
+                <div class="joindetails">
+                        <div>종목</div>
+                        <div>프로필사진</div>
+                        <div>아이디</div>
+                        <div>나이</div>
+                        <div>구력</div>
+                    </div>
+            `;
+
+        }
+
+    }
+    //div 클릭시 플레이어 상세정보 호출
+    function joindetails(buttonElement) {
+        let commentForm = new CommentForm();
+        let detailsview = commentForm.formHTML;
+
+        let existingDetails = buttonElement.nextElementSibling;
+
+
+        if (existingDetails && existingDetails.classList.contains('joindetails')) {
+            existingDetails.remove();
+        } else {
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = detailsview;
+            buttonElement.insertAdjacentElement('afterend', tempDiv.firstElementChild);
+        }
+    }
+</script>
+
+	<!-- 번개모임 생성하기 -->
+	<script>
+
+    let togglecreatejoin = document.querySelector('.createjoin');
+    let hidden = document.querySelector('.joinhidden');
+    function createjoin() {
+
+        hidden.style.display = 'block';
+        togglecreatejoin.style.display = 'flex';
+    }
+    function createjoinclose() {
+        hidden.style.display = 'none';
+        togglecreatejoin.style.display = 'none';
+    }
+</script>
+
+	<!-- 페이징 -->
+	<div class="paging">[ 1 2 3 4 5 ]</div>
+
+	</article>
+
+
+
+
+	<!-- 클럽 -->
+
+	<article id="art-2">
+
+
+		<div id="board-2">
+
+			<div id="local-box">
+				<div class="local" onclick=local_One()>전체</div>
+				<div class="local" onclick=local_Two()>용산구</div>
+				<div class="local" onclick=local_Three()>서대문구</div>
+				<div class="local" onclick=local_Four()>강남구</div>
+				<div class="local" onclick=local_Five()>종로구</div>
+				<div class="local" onclick=local_Six()>관악구</div>
+				<div class="local" onclick=local_Seven()>영등포구</div>
+				<div class="local" onclick=local_Eight()>송파구</div>
+			</div>
+
+			<!-- 한줄 단위 -->
+			<c:forEach var="club" items="${data}" varStatus="status">
+				<c:choose>
+					<c:when test="${status.index % 2 == 0}">
+						<form action="updateViews" method="post" class="update-views-form">
+							<input type="hidden" name="p_num" value="${club.p_num}">
+							<input type="hidden" name="targetUrl" value="C_detail"> <a
+								href="#" class="box-link"
+								onclick="this.closest('form').submit(); return false;">
+								<div class="box-1-textarea">
+									<span class="rounded">${club.region}</span> <span
+										class="rounded">${club.sport}</span>
+									<h3>${club.c_name}</h3>
+									<p>${club.p_title}</p>
+									<br> <span class="magamill"> D-<span
+										id="d_day_${status.index}"></span>
+									</span> <span class="johwesu">조회수: ${club.views}</span>
+								</div>
+								<div class="thumbnail">
+									<img src="resources/images/${club.club_thumbnail}" alt="이미지 설명">
+								</div>
+							</a>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<form action="updateViews" method="post" class="update-views-form">
+							<input type="hidden" name="p_num" value="${club.p_num}">
+							<input type="hidden" name="targetUrl" value="C_detail"> <a
+								href="#" class="box-link"
+								onclick="this.closest('form').submit(); return false;"> <!-- a태그의 부모요소중 가장 가까운 폼태그를 찾아서 전송함. return false는 a태그 링크의 기본 동작(페이지 이동)을 막음. -->
+								<div class="box-2-textarea">
+									<span class="rounded">${club.region}</span> <span
+										class="rounded">${club.sport}</span>
+									<h3>${club.c_name}</h3>
+									<p>${club.p_title}</p>
+									<br> <span class="magamill"> D-<span
+										id="d_day2_${status.index}"></span>
+									</span> <span class="johwesu">조회수: ${club.views}</span>
+								</div>
+								<div class="thumbnail">
+									<img src="resources/images/${club.club_thumbnail}" alt="이미지 설명">
+								</div>
+							</a>
+						</form>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<!-- 여기까지 한줄단위 -->
+
+			<!-- 모집공고 인덱스 모두 부여하고나서 함수호출. 안그러면 인덱스가 아직 덜 부여된 상태라 오류남-->
+			<script>
 					document.addEventListener('DOMContentLoaded', function() {
 					    <c:forEach var="club" items="${data}" varStatus="status">
 					        if (${status.index} % 2 === 0) {
@@ -842,22 +1152,23 @@
 					        }
 					    </c:forEach>
 					});
-
-
+			
 					</script>
 
-				</div>
+		</div>
 
-				<!-- 페이징 -->
-				<div class="paging">[ 1 2 3 4 5 ]</div>
+		<!-- 페이징 -->
+		<div class="paging">[ 1 2 3 4 5 ]</div>
 
-			</article>
+	</article>
 
 
-		</section>
+	</section>
 
 	</div>
 
 </body>
+
+
 
 </html>
