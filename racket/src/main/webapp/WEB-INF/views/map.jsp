@@ -6,12 +6,11 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Document</title>
-      <link rel="stylesheet" href="/resources/css/style.css" />
+      <link rel="stylesheet" href="/../resources/css/style.css" />
       <script src="https://kit.fontawesome.com/353e3b9f74.js" crossorigin="anonymous"></script>
       <!-- Swiper 라이브러리 추가 -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
       <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-      <script src="main.js"></script>
 
       <style>
          .swiper-slide {
@@ -56,14 +55,18 @@
          </div>
       </header>
 
-      <div id="map">
-         <div class="map_marker">
-            <a href="#" class="marker_button"><i class="fa-solid fa-location-dot"></i></a>
+      <div id="mapContainer">
+         <div id="map"></div>
+         <div class="mapImg">
+            <div class="map_left"></div>
+            <div class="map_right"></div>
          </div>
-         <div class="map_left"></div>
-         <div class="map_right"></div>
-         <div id="marker_facility"></div>
       </div>
+
+      <!-- <div class="map_marker">
+         <a href="#" class="marker_button"><i class="fa-solid fa-location-dot"></i></a>
+      </div>
+      <div id="marker_facility"></div> -->
 
       <!-- Swiper -->
       <div class="facility_container">
@@ -275,6 +278,7 @@
          </div>
       </footer>
 
-      <script src="main.js"></script>
+      <script src="/../resources/js/main.js"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8wsx0LtLG5OxLSA5UzXpbEAbUjnPEE0&callback=initMap"></script>
    </body>
 </html>
