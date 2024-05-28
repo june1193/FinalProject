@@ -16,11 +16,35 @@
 
 	<!-- 쿼리 결과 컬럼명을 기준으로 객체를 바인딩한다. 컬럼명과 속성명이 다르면 값이 들어가지 않는다. -->
 
-	<select id="postview" parameterType="int" resultType="CommunityDetailDTO" >
-		SELECT * FROM post 
+	<select id="postview" parameterType="int"
+		resultType="CommunityDetailDTO">
+		SELECT * FROM post
 		WHERE post_id = #{postId}
 	</select>
 
+	<select id="comment" parameterType="int" resultType="CommentDTO">
+		SELECT
+		commentNumber,
+		post_id,
+		commentcontent,
+		DATE_FORMAT(commentdatetime, '%Y-%m-%d %H:%i:%s') AS commentdatetime,
+		user_id
+		FROM comments
+		WHERE post_id = #{postid}
+		ORDER BY CommentDatetime ASC
+	</select>
+	
+	<insert id="insertComment" parameterType="com.acorn.racket.community.domain.CommentinsertDTO">        
+        INSERT INTO comments (post_id, commentcontent, commentdatetime, user_id)
+		VALUES (#{post_id}, #{commentcontent} , #{commentdatetime}, #{user_id});
+    </insert>
+	
+	<select id="insertCommentview" parameterType="ajaxCommentDTO"  resultType="CommentDTO">
+		SELECT *
+		FROM comments
+		WHERE post_id = #{post_id} AND user_id = #{user_id} AND commentdatetime = #{commentdatetime}
+	</select>
+	
 </mapper>
 <!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
 	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 

@@ -6,21 +6,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.racket.match.domain.Club;
+
 import com.acorn.racket.match.domain.Stamp;
 import com.acorn.racket.match.repository.MatchRepository;
+
+import com.acorn.racket.match.domain.badmintonDTO;
+import com.acorn.racket.match.domain.tabletennisDTO;
+import com.acorn.racket.match.domain.tennisDTO;
+import com.acorn.racket.match.repository.MatchRepository;
+import com.acorn.racket.match.service.MatchService;
+import com.google.gson.Gson;
+
 
 @Controller
 public class MatchController {
 
 	@Autowired
 	MatchRepository nr;
+	@Autowired
+	MatchService ms;
 
 	// 매칭 메인
 	@RequestMapping("/club")
@@ -32,6 +49,7 @@ public class MatchController {
 		List<Club> list = nr.selectAll();
 		System.out.println(list);
 		model.addAttribute("data", list);
+
 		return "match";
 	}
 
@@ -49,6 +67,7 @@ public class MatchController {
 		model.addAttribute("clubInfo", clubInfo);
 		return "matchDetail";
 	}
+
 
 	// 스탬프 메인페이지 임시 컨트롤러
 	@RequestMapping("/stamp")
@@ -94,5 +113,69 @@ public class MatchController {
 	
 	//스탬프 찍기 버튼 누르면 스탬프 테이블에 인서트 하는 컨트롤러 메소드 만들 것 
 	
+
+	// 매치 생성 AJAX
+
+	@RequestMapping(value = "/machjoinTennis", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<String> machjoincreate() {
+
+		List<tennisDTO> list = ms.ts();
+
+		Gson gson = new Gson();
+
+		String json = gson.toJson(list);
+
+		// UTF-8 인코딩
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+		return new ResponseEntity<>(json, headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/matchjoinTableTennis", method = RequestMethod.GET)
+	public ResponseEntity<String> matchjoincreate() {
+
+		List<tabletennisDTO> list = ms.tbs();
+
+		Gson gson = new Gson();
+
+		String json = gson.toJson(list);
+
+		// UTF-8 인코딩
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+		return new ResponseEntity<>(json, headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/matchjoinbadminton" , method = RequestMethod.GET)
+	public ResponseEntity<String> matchjoincreatea() {
+
+		List<badmintonDTO> list = ms.bad();
+
+		Gson gson = new Gson();
+
+		String json = gson.toJson(list);
+
+		// UTF-8 인코딩
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+		return new ResponseEntity<>(json, headers, HttpStatus.OK);
+	}
+	
+	//매치생성 form post 
+	//날짜 MM-DD / 시간 / 종목 / 지역 / 시설이름 / 모집인원 / 아이디 /
+	
+	@PostMapping("/matchCreate")
+	public String matchCreate(@RequestParam("date") String date , @RequestParam("matchhhour") String hour , @RequestParam("sport") String sport , @RequestParam("region") String region , @RequestParam("place") String place , @RequestParam("membersu") String membersu) {
+		
+		
+		
+		return null;
+		
+	}
+
 	
 }

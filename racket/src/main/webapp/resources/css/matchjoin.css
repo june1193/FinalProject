@@ -1,0 +1,71 @@
+.joinshow_container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3eaff;
+    position: relative;
+}
+
+.joinshow:hover {
+    background-color: #d3eaff;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.joinshow {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    border-bottom: 1px solid #d3eaff;
+}
+
+.joindetails {
+    border: 1px solid black;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #d8f9ee;
+}
+
+.joinhidden {
+
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 1000;
+    display: none;
+}
+
+.createjoin {
+    margin: 0 auto;
+    width: 800px;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    background-color: #edfbff;
+    display: flex;
+    flex-direction: column;
+    display: none;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.createjoin textarea {
+    margin: 0 auto;
+    width: 80%;
+    height: 100px;
+}
+
+.createjoin button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
