@@ -2,7 +2,9 @@ package com.acorn.racket.facility.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,6 +22,19 @@ public class FacService {
 	ApiExplorer api;
 	@Autowired
 	FacRepository repository;
+	
+	//필터 검색
+	public Map selectFilter(Map<String,Object> parameters){
+		List<FacDTO> list = repository.selecFilter(parameters);
+		int count = repository.selectTotalCount(parameters);
+
+		Map<String, Object> map = new HashMap ();		
+		map.put("facility", list);
+		map.put("count", count);
+		
+		//return repository.selecFilter(parameters); 
+		return map;
+	}
 	
 	//api 받아와서 json으로 가공 후 FacDTO타입으로 리스트 반환
 	public ArrayList<FacDTO> getApiData() throws IOException{

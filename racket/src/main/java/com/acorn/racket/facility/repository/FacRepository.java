@@ -2,6 +2,7 @@ package com.acorn.racket.facility.repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -25,24 +26,11 @@ public class FacRepository implements FacRepositoryI {
     public int insert(List<FacDTO> facDto) throws Exception {
         return session.insert(namespace+"insert", facDto);
     }
-	
-//    //시설 전체목록 불러오기
-//    public List<FacDTO> selectAll() {
-//    	return session.selectList(namespace+"selectAll");
-//    }
     
     //시설 상세보기
     public FacDTO selectDesc(String facID) {
     	return session.selectOne(namespace+"selectDesc", facID);
     }
-
-	@Override
-	public List<FacDTO> selectAll(@Param("limit") int limit, @Param("offset") int offset) {
-		return session.selectList(namespace+"selectAll",  new HashMap<String, Object>() {{
-	        put("limit", limit);
-	        put("offset", offset);
-	    }});
-	}
 
 	@Override
 	public List<FacDTO> selectSport(@Param("limit") int offset, @Param("offset") int limit, @Param("sport") String sport) {
@@ -51,6 +39,23 @@ public class FacRepository implements FacRepositoryI {
 	        put("offset", offset);
 	        put("sport",sport);
 	    }});
+	}
+	
+	//총 데이터 건수
+	public int selectTotalCount(@Param("parameters") Map<String,Object> parameters) {
+		return session.selectOne(namespace+"selectTotalCount", parameters);
+	}
+	
+	//필터링 검색
+	public List<FacDTO> selecFilter(@Param("parameters") Map<String,Object> parameters){
+		return session.selectList(namespace+"selectFilter", parameters);
+		
+	}
+
+	@Override
+	public List<FacDTO> selectAll(int offset, int limit) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
