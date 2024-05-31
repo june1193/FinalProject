@@ -50,14 +50,12 @@
 
 	<div id="wrap">
 		<div id="centerbox">
-			로그인이 필요한 페이지 입니다
+			<span id="change">로그인이 필요한 페이지 입니다</span>
 			<div class="button-container">
 				<button onclick="location.href='#'">로그인</button>
 				<button onclick="location.href='#'">회원가입</button>
 			</div>
 		</div>
 	</div>
-
-
 </body>
 </html>

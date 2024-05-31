@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acorn.racket.match.domain.Club;
 
@@ -95,7 +96,7 @@ public class MatchController {
 
 	
 	// 스탬프 "로그인이 필요합니다" 페이지 임시 컨트롤러
-	@RequestMapping("/needLogin")
+	@RequestMapping("/needLogin") //이건 url을 알아도 위치검사를 하기때문에 암호화 필요없다
 	public String Stamplogin(HttpServletRequest request) {
 		HttpSession session = request.getSession(); // 세션 가져오기
 		// 로그인 컨트롤러에 if문으로 redirectStampingUrl값이 null값이 아니면 stamping으로 매핑
@@ -104,16 +105,29 @@ public class MatchController {
 	}
 
 	// 스탬프 찍기 페이지 임시 컨트롤러
-	@RequestMapping("/stamping")
+	@RequestMapping("/stamping") //암호화 할것
 	public String stamping(HttpServletRequest request) {
 		HttpSession session = request.getSession(); // 세션 가져오기
 		String id = (String) session.getAttribute("user_ID"); // 세션에서 "id" 속성 값 가져오기
+		//세션 아이디로 데이터를 추가해야 한다.
 		return "stamping"; // 로그인한 사용자이므로 스탬핑 페이지로 이동
 	}
 	
-	//스탬프 찍기 버튼 누르면 스탬프 테이블에 인서트 하는 컨트롤러 메소드 만들 것 
-	
+	// 스탬프 인서트와 동시에 스템프 메인으로 이동 (이촌테니스장)
+	@PostMapping("/stampbutton")
+	public String stampinginsert(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		HttpSession session = request.getSession(); // 세션 가져오기
+		/* String id = (String) session.getAttribute("user_ID"); */ // 세션에서 "id" 속성 값 가져오기
+		String id = "user1";  // 임시로 id 값을 설정
+		nr.addStamp(id, "S240420102801036476"); // 사용자 ID와 시설번호 추가
+		redirectAttributes.addFlashAttribute("message", "스탬프가 추가되었습니다.");
+		return "redirect:/stamp";
+	}
 
+	
+	
+	
+	
 	// 매치 생성 AJAX
 
 	@RequestMapping(value = "/machjoinTennis", method = RequestMethod.GET)
