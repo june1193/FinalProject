@@ -60,6 +60,15 @@ public class MatchRepository {
         return session.selectList(namespace + "getStampsByUserID", user_ID);
     }
 
+    //스탬프 찍기 관련
+    public void addStamp(String user_ID, String facilityID) {
+    	//parameterType을 dto로 해놨기 때문에 dto를 매개변수에 넣어야 한다.
+    	Stamp stampDTO = new Stamp(user_ID, facilityID);
+        session.insert(namespace + "insertStamp", stampDTO);
+        //인서트 하면 끝이기 때문에 반환값이 필요없음
+    }
+    
+    
     
    /* 매치 부분 */
     

@@ -38,6 +38,11 @@
 	<select id="getStampsByUserID" resultType="com.acorn.racket.match.domain.Stamp">
 		SELECT * FROM stamps WHERE user_ID = #{user_ID}
 	</select>
+	
+	<!-- 스탬프 찍기 인서트 -->
+	<insert id="insertStamp" parameterType="com.acorn.racket.match.domain.Stamp">
+        INSERT INTO stamps (user_ID, facilityID) VALUES (#{user_ID}, #{facilityID})
+    </insert>
 
 </mapper>
 
