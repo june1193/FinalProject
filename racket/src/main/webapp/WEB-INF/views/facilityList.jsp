@@ -128,6 +128,59 @@
 			}
 		}
 		
+		//시설 랜더
+		function render(data){
+			let str = '';
+			for(let i=0;i<data.facility.length;i++){
+				let item = data.facility[i];	
+				let status = getStatus(item.service_status);
+				let pay = item.payment == '무료' ? 'free':'pay';
+				let like = item.liked == '0' ? '':'full';
+				str = `<div class="item">
+						<div class="badge">
+                        	<span class="\${status}">\${item.service_status}</span>
+                        	<span class="\${pay}">\${item.payment}</span>
+                        </div>
+                        <div class="badge2">
+                        	<span class="bdlocal">\${item.region_name}</span>
+                    	</div>
+                    <a href="/racket/facility/\${item.facilityID}">
+                    <div class="thumbnail-out">
+                        <div class="thumbnail-in">
+                            <img src="\${item.image}" alt="">
+                        </div>
+                    </div>
+                    </a>
+                    <a href="/racket/facility/\${item.facilityID}">
+                    <div class="desc">
+                        <span>\${item.minclassname}</span>
+                        <div class="text-con">
+                            <h3>\${item.facName}</h3>
+                        </div>
+                        
+                        <div class="location-div">
+                            <span class="fluent--location-20-regular"></span>
+                            <span class="location">\${item.place}</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="item-footer">
+                <div class="it-footer-icon">
+                    <div class="star">
+                        <span class="mage--star"></span>
+                        <span class="rating">\${item.rating}</span>
+                    </div>
+                    <div class="like" id="\${item.facilityID}">
+                        <span class="basil--heart-outline \${like}"></span> <span class="footer-font">\${item.count}</span>
+                    </div>
+                </div>
+            </div>
+				</div>`;
+				
+				$(".item-list").append(str);
+			}
+		}
+		
 		//시설 목록 요청
 		function showList(limit, offset, option){
 			postScroll = true;
@@ -141,6 +194,7 @@
 				data : dataJOSN,
 				contentType : "application/json",
 				success : function(data){
+					console.log(data);
 					var count = data.count;
 					$(".data-count > .count").empty();
 					$(".data-count > .count").append(count);
@@ -148,105 +202,10 @@
 					if(data.facility.length == 0){
 						postScroll = false;
 					}else if(data.facility.length < 20){ //받아온 데이터가 20개 아래면 스크롤 멈춤		
-						let str = '';
-						for(let i=0;i<data.facility.length;i++){
-							let item = data.facility[i];	
-							let status = getStatus(item.service_status);
-							let pay = item.payment == '무료' ? 'free':'pay';
-							str = `<div class="item">
-									<div class="badge">
-			                        	<span class="\${status}">\${item.service_status}</span>
-			                        	<span class="\${pay}">\${item.payment}</span>
-			                        </div>
-			                        <div class="badge2">
-		                            	<span class="bdlocal">\${item.region_name}</span>
-		                        	</div>
-		                        <a href="/racket/facility/\${item.facilityID}">
-		                        <div class="thumbnail-out">
-		                            <div class="thumbnail-in">
-		                                <img src="\${item.image}" alt="">
-		                            </div>
-		                        </div>
-		                        </a>
-			                    <a href="/racket/facility/\${item.facilityID}">
-	                            <div class="desc">
-	                                <span>\${item.minclassname}</span>
-	                                <div class="text-con">
-	                                    <h3>\${item.facName}</h3>
-	                                </div>
-	                                
-	                                <div class="location-div">
-	                                    <span class="fluent--location-20-regular"></span>
-	                                    <span class="location">\${item.place}</span>
-	                                </div>
-	                            </div>
-	                        </a>
-	                        <div class="item-footer">
-	                        <div class="it-footer-icon">
-	                            <div class="star">
-	                                <span class="mage--star"></span>
-	                                <span class="rating">0.0</span>
-	                            </div>
-	                            <div class="like">
-	                                <span class="basil--heart-outline"></span> <span class="footer-font">12</span>
-	                            </div>
-	                        </div>
-	                    </div>
-							</div>`;
-							
-							$(".item-list").append(str);
-						}
+						render(data);
 						postScroll = false;
 					}else{
-					let str = '';
-					for(let i=0;i<data.facility.length;i++){
-						let item = data.facility[i];	
-						let status = getStatus(item.service_status);
-						let pay = item.payment == '무료' ? 'free':'pay';
-						str = `<div class="item">
-								<div class="badge">
-		                        	<span class="\${status}">\${item.service_status}</span>
-		                        	<span class="\${pay}">\${item.payment}</span>
-		                        </div>
-		                        <div class="badge2">
-	                            	<span class="bdlocal">\${item.region_name}</span>
-	                        	</div>
-	                        <a href="/racket/facility/\${item.facilityID}">
-	                        <div class="thumbnail-out">
-	                            <div class="thumbnail-in">
-	                                <img src="\${item.image}" alt="">
-	                            </div>
-	                        </div>
-	                        </a>
-		                    <a href="/racket/facility/\${item.facilityID}">
-                            <div class="desc">
-                                <span>\${item.minclassname}</span>
-                                <div class="text-con">
-                                    <h3>\${item.facName}</h3>
-                                </div>
-                                
-                                <div class="location-div">
-                                    <span class="fluent--location-20-regular"></span>
-                                    <span class="location">\${item.place}</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="item-footer">
-                        <div class="it-footer-icon">
-                            <div class="star">
-                                <span class="mage--star"></span>
-                                <span class="rating">0.0</span>
-                            </div>
-                            <div class="like">
-                                <span class="basil--heart-outline"></span> <span class="footer-font">12</span>
-                            </div>
-                        </div>
-                    </div>
-						</div>`;
-						
-						$(".item-list").append(str);
-						
-					}
+						render(data);
 					}
 				}
 			});
@@ -255,7 +214,21 @@
 		}
 		//찜하기		
 		$(document).on("click",".like",function(){
-			$(this).children('.basil--heart-outline').toggleClass("full");
+			let click = $(this); 
+			let facID = click.attr('id');
+			$.ajax({
+				method : "get",
+				url : "/racket/facility/"+facID+"/bookmark",
+				success : function(data){
+					if(data === -1){
+						alert("로그인 후 이용 가능합니다.")
+					}else{
+						click.children('.basil--heart-outline').toggleClass("full");
+						click.children(".footer-font").empty();
+						click.children(".footer-font").append(data);
+					}
+				}
+			});
 		});
 		
 		//필터 더보기
