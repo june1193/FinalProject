@@ -7,7 +7,11 @@
 		<typeAlias alias="UserDTO" type="com.acorn.racket.login.domain.UserLoginDTO"/>
 		
 		<typeAlias alias="Club" type="com.acorn.racket.match.domain.Club" />  <!--DTO 파일명을 간결한 이름(alias)으로 지정 -->
+		
+		<!-- 시설 부분 -->
 		<typeAlias alias="facDTO" type="com.acorn.racket.facility.domain.FacDTO"/>
+		<typeAlias alias="reviewDTO" type="com.acorn.racket.facility.domain.ReviewDTO"/>
+	  
 		
 		<!-- 커뮤니티 부분 -->
 		<typeAlias alias="CommunityDetailDTO" type="com.acorn.racket.community.domain.CommunityDetailDTO"/>
