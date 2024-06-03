@@ -7,8 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/racket/resources/css/font.css">
-<link rel="stylesheet" href="/racket/resources/css/space-style2.css">
+<link rel="stylesheet" href="/racket/resources/css/space-style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
 <script>
 	var postScroll = true;
 	var offset = 0;
@@ -136,7 +138,8 @@
 				let status = getStatus(item.service_status);
 				let pay = item.payment == '무료' ? 'free':'pay';
 				let like = item.liked == '0' ? '':'full';
-				str = `<div class="item">
+				str = `
+				<div class="item">
 						<div class="badge">
                         	<span class="\${status}">\${item.service_status}</span>
                         	<span class="\${pay}">\${item.payment}</span>

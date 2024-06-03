@@ -112,4 +112,15 @@ public class FacService {
 	public Map<String, Object> selectUser(String user){
 		return repository.selectUser(user);
 	}
+	
+	//리뷰 수정
+	public int updateReview(Map<String, Object> param) {
+		System.out.println("서비스 "+repository.updateReview(param));
+		return repository.updateReview(param);
+	}
+	
+	//리뷰 삭제 
+	public int deleteReview(Map<String, String> param) {
+		return repository.deleteReview(param);
+	}
 }

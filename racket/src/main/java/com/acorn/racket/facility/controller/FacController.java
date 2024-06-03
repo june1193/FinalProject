@@ -61,7 +61,7 @@ public class FacController {
 		Map<String, Object> parameters = new HashMap<>();
 		HttpSession session = request.getSession();
 		//String user = (String)session.getAttribute("user");
-		String user = "test";
+		String user = "test3";
 		if(user != null) {
 			parameters.put("user", user);
 		}else {
@@ -84,7 +84,7 @@ public class FacController {
 		Map<String, String> parameters = new HashMap<>();
 		HttpSession session = request.getSession();
 		//String user = (String)session.getAttribute("user");
-		String user = "test";
+		String user = "test3";
 		if(user != null) {
 			parameters.put("user", user);
 			//유저 정보 받아오기
@@ -108,7 +108,7 @@ public class FacController {
 		Map<String, String> param = new HashMap<>();
 		HttpSession session = request.getSession();
 		//String user = (String)session.getAttribute("user");
-		String user = "test";
+		String user = "test3";
 		if(user != null) {
 			param.put("facID", facID);
 			param.put("user", user);
@@ -137,7 +137,7 @@ public class FacController {
 		Map<String, Object> param = new HashMap<>();
 		HttpSession session = request.getSession();
 		//String user = (String)session.getAttribute("user");
-		String user = "test";
+		String user = "test3";
 		param.put("facID", facID);
 		param.put("user", user);
 		param.put("rating", review.getRating());
@@ -164,6 +164,37 @@ public class FacController {
 	@RequestMapping(value = "/avgRating/{facID}", method = RequestMethod.GET)
 	public String selectRating(@PathVariable String facID) {
 		return service.selectRating(facID);
+	}
+	
+	//리뷰 수정
+	@ResponseBody
+	@RequestMapping(value = "/updateReview/{facID}", method = RequestMethod.POST)
+	public int updateReview(@PathVariable String facID, @RequestBody ReviewVO review, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Map<String, Object> param = new HashMap<>();
+		//String user = (String)session.getAttribute("user");
+		String user = "test3";
+		param.put("facID", facID);
+		param.put("user", user);
+		param.put("rating", review.getRating());
+		param.put("text", review.getContent());
+		
+		System.out.println(review);
+		
+		return service.updateReview(param);
+	}
+	
+	//리뷰 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteReview/{facID}", method = RequestMethod.GET)
+	public int deleteReview(@PathVariable String facID,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Map<String, String> param = new HashMap<>();
+		//String user = (String)session.getAttribute("user");
+		String user = "test3";
+		param.put("facID", facID);
+		param.put("user", user);
+		return service.deleteReview(param);
 	}
 
 	
