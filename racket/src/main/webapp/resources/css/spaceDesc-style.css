@@ -11,6 +11,10 @@ a {
 .wrap{
     width: 100%;
 }
+.inner-star::before{color: #FF9600;}
+.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
+.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
+.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
 .sub{
     display: flex;
     justify-content: space-between;
@@ -198,8 +202,8 @@ a {
     display: flex;
     padding-top: 25px;
     padding-bottom: 25px;
-    align-items: center;
-    border-bottom: 1.5px dashed #7d7d7d;
+    align-items: flex-start;
+    /*border-bottom: 1.5px dashed #7d7d7d;*/
 }
 .sub-desc > ul > li > span{
     padding-left: 15px;
@@ -217,7 +221,30 @@ a {
     border: 4px solid #d3eaff;
     border-radius: 20px;
 }
-
+.road{
+	position: absolute;
+    z-index: 5;
+    background-color: #Fff;
+    padding: 5px;
+    border-radius: 7px;
+    right: 10px;
+    top: 10px;
+    font-size: 14px;
+ 	font-family: 'Pretendard';
+ 	box-shadow: 0px 0px 4px #858585ba;
+ 	font-weight: 200;
+}
+.road > a{
+	color: #858585;
+}
+.write-review > .delete-btn{
+	display : none;
+	right: 155px;
+    border: 1px solid #9b9b9b;
+    background: none;
+    color: #9b9b9b;
+    width: 80px;
+}
 /* 방문 리뷰 스타일 */
 .default{
 	text-align: center;
@@ -227,6 +254,9 @@ a {
     font-family: 'Pretendard';
     color: #b3b3b3;
     font-weight: 500; 
+}
+.write-review > .update{
+	background-color : #8dacf1;
 }
 .star::before{
 	content : '';

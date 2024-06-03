@@ -82,6 +82,16 @@ public class FacRepository implements FacRepositoryI {
 	public Map<String,Object> selectUser(String user) {
 		return session.selectOne(namespace+"selectUser", user);
 	}
+	
+	//리뷰 수정
+	public int updateReview(@Param("param") Map<String, Object> param){
+		return session.update(namespace+"updateReview", param);
+	}
+	
+	//리뷰 삭제
+	public int deleteReview(Map<String, String> param) {
+		return session.delete(namespace+"deleteReview", param);
+	}
    
 
 }

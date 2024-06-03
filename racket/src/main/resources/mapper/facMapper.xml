@@ -181,6 +181,16 @@
 	on r.user_ID = u.user_ID where r.facilityID = #{facID} order by insert_time desc
 </select>
 
+<!-- 리뷰 삭제 -->
+<delete id="deleteReview" parameterType="java.util.Map">
+	delete from reviewtbl where facilityID = #{facID} and user_ID = #{user}
+</delete>
+
+<!-- 리뷰 수정 -->
+<update id="updateReview" parameterType="java.util.Map">
+	update reviewtbl set rating = #{rating}, review_Text = #{text}, insert_time = SYSDATE() where facilityID = #{facID} and user_ID = #{user}
+</update>
+
 <!-- 평균 별점 -->
 <select id="avgRating" parameterType="String" resultType="String">
 	select format( avg(rating),1) rating from reviewtbl where facilityID = #{facID}
