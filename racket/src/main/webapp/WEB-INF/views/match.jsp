@@ -7,10 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
+ --%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
 * {
 	padding: 0px;
@@ -402,6 +401,127 @@
 	color: #00c8ff;
 	font-weight: bold;
 }
+
+/* 조인 부분 */
+.joinshow_container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3eaff;
+    position: relative;
+    font-size: 10pt;
+}
+
+.joinshow:hover {
+    background-color: #d3eaff;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.joinshow {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    border-bottom: 1px solid #d3eaff;
+}
+
+.joindetails {
+	border-bottom:1px solid  #9dd0ff;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #d8f9ee;
+    
+}
+
+.joindetails > :nth-child(1){
+	margin-right: auto;
+	width:20%;
+}
+.joindetails > :nth-child(2){
+	width: 40%;
+	
+}
+.joindetails > :nth-child(3){
+	width: 20%
+	text-align: center;
+}
+.joindetails > :nth-child(4){
+	width: 20%;
+	text-align: center;
+}
+
+
+.joinhidden {
+
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 1000;
+    display: none;
+}
+
+.createjoin {
+    margin: 0 auto;
+    width: 800px;
+    height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    background-color: #edfbff;
+    display: flex;
+    flex-direction: column;
+    display: none;
+    padding: 5px;
+    border-radius: 3px;
+    
+    
+}
+
+.textdiv{
+	margin-top: 20px;
+}
+.createjoin textarea {
+    margin: 0 auto;
+    width: 80%;
+    height: 20px;
+}
+
+.createjoin button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.joinshow > :nth-child(1) {
+	width: 10%;
+}
+
+.joinshow > :nth-child(2) {
+	width: 10%;
+	text-align: center;
+}
+
+.joinshow > :nth-child(3) {
+	
+	width: 50%;
+	text-align:center;
+}
+
+.joinshow > :nth-child(4) {
+	width: 20%;
+}
+.joinshow > :nth-child(5) {
+	width: 10%;
+}
+
 </style>
 <!-- 옵션값 정의  -->
 <script>						
@@ -423,6 +543,7 @@
 							            	let regionOption = $('#region');
 							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
 							            	regionOption.empty();
+							            	let hiddenURL = $('#placeURL');
 							            	
 							            	regionOption.append(innerhtml);
 							            	for(let i=0 ; i < data.length ; i++){
@@ -453,7 +574,22 @@
 							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
 							                            placeOption.append(optionStr);
 							                        }
+							                        	
 							                    });
+							                });
+							                
+							                //여기서부터 복사 ( 장소 주소 받아오기 )
+							                let placeOption = $('#place');
+							                placeOption.change(function(){
+							                	
+							                	let selectPlace = $(this).val();
+							                	data.forEach(item =>{
+							                		if( item.place === selectPlace){
+							                			hiddenURL.val(item.facilityID);
+							                			alert("test :" + item.facilityID);
+							                		}
+							                		
+							                	});
 							                });
 							            	
 
@@ -476,7 +612,7 @@
 							            	let regionOption = $('#region');
 							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
 							            	regionOption.empty();
-							            	
+							            	let hiddenURL = $('#placeURL');
 							            	regionOption.append(innerhtml);
 							            	for(let i=0 ; i < data.length ; i++){
 							            		
@@ -508,8 +644,21 @@
 							                        }
 							                    });
 							                });
+							                
+							                let placeOption = $('#place');
+							                placeOption.change(function(){
+							                	
+							                	let selectPlace = $(this).val();
+							                	data.forEach(item =>{
+							                		if( item.place === selectPlace){
+							                			hiddenURL.val(item.facilityID);
+							                			alert("test :" + item.facilityID);
+							                		}
+							                		
+							                	});
+							                });
 							            		
-
+		
 							            },
 							            error: function(err) {
 							              
@@ -529,7 +678,7 @@
 							            	let regionOption = $('#region');
 							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
 							            	regionOption.empty();
-							            	
+							            	let hiddenURL = $('#placeURL');
 							            	regionOption.append(innerhtml);
 							            	for(let i=0 ; i < data.length ; i++){
 							            		
@@ -560,6 +709,19 @@
 							                            placeOption.append(optionStr);
 							                        }
 							                    });
+							                });
+							                
+							                let placeOption = $('#place');
+							                placeOption.change(function(){
+							                	
+							                	let selectPlace = $(this).val();
+							                	data.forEach(item =>{
+							                		if( item.place === selectPlace){
+							                			hiddenURL.val(item.facilityID);
+							                			alert("test :" + item.facilityID);
+							                		}
+							                		
+							                	});
 							                });
 
 							            },
@@ -832,18 +994,6 @@
 
 <!-- 매치생성 DB등록 -->
 
-<!-- 월/일 만 받아오는 스크립트 -->
-<script>
-
-function submitDate() {
-
-	
-    
-    
-     
-}
-</script>
-
 </head>
 
 
@@ -928,32 +1078,77 @@ function submitDate() {
 
 			<!-- 번개모임 -->
 			<article id="art-1">
-				<form action="#" method="post">
-					<div class="joinshow_container">
-						<div class="createjoin">
+			<div class="joinshow_container">
+				<!-- 보여지는 뷰 -->
+				<c:forEach var="items" items="${main}">
+				<div class="joinshow" onclick="joindetails(this)" data-matchnum="${items.match_num}" style="align-items: center;" >
+					<div class="j1">${items.sprots}</div>
+					<div class="j2">${items.region}</div>
+					<div class="j3">
+						<a href="/racket/facility/${items.facilityID}" onclick="event.stopPropagation()">${items.place}</a>
+					</div>
+					<div class="j4"> ${items.matchdate}</div>
+					<div class="j5" style="display: flex;  align-items: center;">모집인원:${items.membersu}
+						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
+					</div>
+				</div>
+				</c:forEach>
+			</div>
+			<!-- 게시물 조인 스크립트 -->
+			<script>
+				function joinMatch(button){
+				
+					event.stopPropagation();
+				 datadiv = button.parentElement.parentElement.parentElement;
+				 let match_num = parseInt( datadiv.getAttribute('data-matchnum') , 10 );
+				 
+				 alert(match_num);
+					let jsondata = { 
+							"user_Id" : "duckgu" ,
+							"match_num" : 	match_num
+							
+					};
+					
+				 	$.ajax({
+						
+						url: "/racket/insertMatchDetail" ,
+						type: "POST" ,
+						data: JSON.stringify(jsondata) ,
+						contentType: "application/json",
+						dataType: "json" ,
+						
+						success: function(data){
+									
+				                alert("참여했습니다.");
+				                
+				                location.reload();
+								},
+
+						error: function(err){
+							console.log(err);
+						}
+					
+				}); 
+					
+					
+					
+				}
+			</script>
+			<div class="createjoin">
 							<div style="margin-left: auto; margin-bottom: 30px;">
 								<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
 							</div>
-							<div
-								style="display: flex; justify-content: space-between; margin-bottom: 30px;">
-								<h1>
-									날짜<input type="date" id="matchdate"> <input
-										type="hidden" name="date" id="realDate">
-								</h1>
-								<h1>
-									시간<input type="time" id="matchhhour" name="matchhhour">
-								</h1>
-
-								<h1>
+							<div style="display: flex; margin-bottom: 30px; flex-direction: column;">
+								<div style="margin: 0 auto; justify-content: space-between;">
+									<input type="date" id="matchdate"> 
+									<input type="hidden" name="date" id="realDate">
+									<input type="time" id="matchhhour" name="matchhhour">
 									<select id="sprots" onchange="changeValue()" name="sport">
 										<option value="" disabled selected>선택하세요</option>
 										<option value="테니스">테니스</option>
 										<option value="탁구">탁구</option>
 										<option value="배드민턴">배드민턴</option>
 									</select>
-								</h1>
-
-								<h1 class="region">
 									
 									<select id="region" name="region">
 											<option value="" disabled selected>선택하세요</option>
@@ -961,39 +1156,21 @@ function submitDate() {
 									<select id="place" name="place">
 										<option value="" disabled selected>선택하세요</option>
 									</select>
-								</h1>
-								<h1>
-									모집인원 <select id="membersu" name="membersu">
+									<input type="hidden" id="placeURL"></input>
+								<select id="membersu" name="membersu">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
 										<option value="4">4</option>
-									</select>
-								</h1>
+								</select>
 							</div>
-							<textarea name="" id="" placeholder="간단한 번개 소개글을 입력해 보세요."></textarea>
-							<button onclick="submitDate()">등록</button>
+
+						<div class="textdiv">
+							<textarea name="intro" id="intro" placeholder="간단한 번개 소개글을 입력해 보세요." style="display: block; margin: 0 auto;"></textarea>
+							<button onclick="matchform()">등록</button>
 						</div>
-				</form>
-				<div class="joinshow" onclick="joindetails(this)">
-					<div>종목</div>
-					<div>지역</div>
-					<div>
-						<a href="#">장소</a>
 					</div>
-					<div>시간</div>
-					<div>모인인원수(이미지로대체)</div>
 				</div>
-				<div class="joinshow" onclick="joindetails(this)">
-					<div>날짜</div>
-					<div>지역</div>
-					<div>
-						<a href="">장소</a>
-					</div>
-					<div>시간</div>
-					<div>모인인원수(이미지로대체)</div>
-				</div>
-	</div>
 	<!-- 번개모임 상세보기
                 <div class="joindetails">
                     <div>종목</div>
@@ -1014,40 +1191,56 @@ function submitDate() {
 
 
 	<!-- 번개모임 상세보기 -->
-	<script>
-    class CommentForm {
-        constructor() {
-            //플레이어 데이터 들어갈 부분
-            this.formHTML = `
-                <div class="joindetails">
-                        <div>종목</div>
-                        <div>프로필사진</div>
-                        <div>아이디</div>
-                        <div>나이</div>
-                        <div>구력</div>
-                    </div>
-            `;
+    <script>
+        // div 클릭 시 플레이어 상세 정보 호출
+        function joindetails(buttonElement) {
 
+            let existingDetails = buttonElement.nextElementSibling;
+
+            var matchNumStr = buttonElement.dataset.matchnum;
+            var matchNum = parseInt(matchNumStr, 10);
+
+            $.ajax({
+                url: "/racket/getMatchDetail",
+                type: "GET",
+                data: { num: matchNum },
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+
+                    // 기존 상세 정보 제거
+                    let joindetails = $('.joindetails');
+                    if (joindetails.length > 0) {
+							joindetails.remove();
+							
+							return;
+                        
+                    } else {
+                        // 데이터 순회하여 HTML 요소 추가
+                        data.forEach(function(item) {
+                            let tempDiv = document.createElement('div');
+                            
+                            
+                            tempDiv.innerHTML = `
+                                <div class="joindetails" style="height:auto; align-items: center;">
+                                    <div class="jd1"><img src="${pageContext.request.contextPath}/resources/img/냥이1.jpg" style="width:100px; height:100px;"></div>
+                                    <div class="jd2">닉네임 : <%= "${item.user_Nickname}"%></div>
+                                    <div class="jd3">나이 : <%="${item.birthday}"%></div>
+                                    <div class="jd4">구력 : <%="${item.user_Level}"%></div>
+                                    
+                                </div>
+                            `;
+                            buttonElement.insertAdjacentElement('afterend', tempDiv.firstElementChild);
+                        });
+                        
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
         }
-
-    }
-    //div 클릭시 플레이어 상세정보 호출
-    function joindetails(buttonElement) {
-        let commentForm = new CommentForm();
-        let detailsview = commentForm.formHTML;
-
-        let existingDetails = buttonElement.nextElementSibling;
-
-
-        if (existingDetails && existingDetails.classList.contains('joindetails')) {
-            existingDetails.remove();
-        } else {
-            let tempDiv = document.createElement('div');
-            tempDiv.innerHTML = detailsview;
-            buttonElement.insertAdjacentElement('afterend', tempDiv.firstElementChild);
-        }
-    }
-</script>
+    </script>
 
 	<!-- 번개모임 생성하기 -->
 	<script>
@@ -1166,7 +1359,73 @@ function submitDate() {
 
 	</div>
 
+<!-- 매치 게시물 생성 부분  -->
+<script>
+
+
+
+function matchform() {
+
+		let matchdatee = $('#matchdate').val(); // 매치날짜
+		let matchhhour = $('#matchhhour').val();  // 매치시간
+		
+		
+		
+		
+		let matchdate = matchdatee +" "+ matchhhour+":00"; // mysql datetime 형식
+		
+		
+		
+		let sprots = $('#sprots ').val(); // 종목
+		let region = $('#region').val(); // 지역
+		let place = $('#place').val(); // 시설이름
+		let membersu = $('#membersu').val(); // 모집인원
+		let intro = $('#intro').val();  // 소개글 
+		let placeURL = $('#placeURL').val(); // 시설물 
+		let user_id = "jungkiwon";
+		
+        let jsonObject = {
+        		matchdate: matchdate,
+                sprots: sprots,
+                region: region,
+                place: place,
+                membersu: membersu,
+                intro: intro,
+                placeURL: placeURL,
+                user_id: user_id
+            };
+		
+        let jsonString = JSON.stringify(jsonObject);
+        
+		
+    $.ajax({
+        url: '/racket/createMatchBoard',
+        method: 'POST',
+        contentType: 'application/json',
+    	dataType: 'text',
+    	data: jsonString,
+    	
+        success: function(data) {
+            
+        	
+        	alert("매치 게시물 생성 완료");
+        	location.reload();
+        	
+        },
+        error: function(err) {
+           console.log(err);
+        }
+    });
+    
+     
+}
+
+</script>
+
+
+
 </body>
+
 
 
 
