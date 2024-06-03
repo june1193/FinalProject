@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,15 +13,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa33c4d6f8e26463d3f4c1d31afd3571"></script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
-<style>
-.inner-star::before{color: #FF9600;}
-.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
-.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
-.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
-</style>
 <script>
 	$(document).ready(function(){
-		//$('#5-s').prevAll().addBack().addClass("full");
+		
 		var facID = "${facility.facilityID}";
 		//별점
 		var rating = "${facility.rating}";
@@ -44,7 +40,7 @@
 	            $(".sub-desc").css("display","block");
 	        }else if(val == 'review'){
 	        	$(".review-content > ul").children().remove();
-	        	//조회
+	        	//리뷰조회
 	        	loadReview(facID);
 	            $(".sub-review").css("display","block");
 	            $(".sub-desc").css("display","none");
@@ -64,6 +60,44 @@
 	    		}
 	    	});
 	    }
+   	
+	    //리뷰 수정
+	    $(document).on("click",".edit,.update", function(){
+	    	$("input[name='rating']").attr("onclick", "return true;");
+	    	$(".star-rating").removeClass("readonly");
+	    	$(".sb-writer > textarea").prop("readonly", false);
+	    	$(".sb-writer > textarea").focus();
+	    	$(".update").addClass("edit");
+	    	$(".update").css("background-color","#87DBC0");
+	    	$(".update").text("등록");
+	    });
+	    
+	    //리뷰 수정 요청
+	    $(document).on("click", ".update.edit", function(){
+	    	let rating = $("input[name='rating']:checked").val();
+	    	console.log("별점"+rating);
+	    	let text = $(".sb-writer > textarea").val();
+	    	let check = checkReview(rating, text)
+	    	if(check){
+	    		let data = {rating : rating, content : text};
+		    	let dataJSON = JSON.stringify(data);
+		    	$.ajax({
+		    		method : "post",
+		    		url : "/racket/updateReview/"+facID,
+		    		data : dataJSON,
+					contentType : "application/json",
+					success : function(data){
+						avgRating();
+						$(".review-content > ul").children().remove();
+						loadReview(facID);
+					},
+					error : function(error){
+						console.log(error);
+					}
+		    	});
+	    	}
+	    	
+	    });
 	    
 	    //리뷰 조회
 	    function loadReview(facID){
@@ -75,8 +109,6 @@
 	    			console.log(data);
 	    			//input hidden의 userid값 받아오기
 	    			let uID = $("input[name='uId']").val();
-	    			console.log(uID);
-	    			//user.userID랑 값이 같으면 sb-icon 출력
 	    			if(data.length <= 0){
 	    				str = "<p class='default'>등록된 후기가 없습니다.</p>"
 	    				$(".review-content").append(str);
@@ -86,6 +118,26 @@
 	    				console.log()
 	    				let user = data[i];
 	    				let userRating = user.rating;
+	    				//세션 아이디값과 데이터의 유저 아이디가 같으면
+	    				if(uID == user.userID){
+	    					let srating = user.rating;
+	 						let u_rating = '#'+srating+'-s';
+	 						let s_rating = '#'+srating+'-stars';
+	 						console.log(s_rating);
+	    					$(u_rating).prevAll().addBack().addClass("full");
+	 						$(s_rating).prop("checked",true);
+	    					$(".star-rating").addClass("readonly");
+	    					
+	    					let text = user.reviewText;
+	    					$(".sb-writer > textarea").val(text);
+	    					$(".sb-writer > textarea").prop("readonly", true);
+	    					$("input[name='rating']").attr("onclick", "return false;");
+	    					
+	    					$(".delete-btn").css("display","block");
+	    					$(".submit").remove();
+	    					$(".write-review").append("<button type='button' class='update'>수정</button>");
+	    					    					
+	    				}
 	    				str = `<li>
 	                        <div class="profile">
 		                        <div class="img-in">
@@ -125,45 +177,53 @@
 	    	});
 	    }
 	    
-	    //
-	   
-	    
-	    //리뷰 등록
-	    $(".submit").click(function(){
-	    	let rating = '';
-	    	rating = $("input[name='rating']:checked").val();
-	    	console.log(rating);
-	    	let text = $(".sb-writer > textarea").val();
-	    	console.log(text);
+	    //리뷰 유효성 검사
+	    function checkReview(rating, text){
 	    	if(rating === undefined){
 	    		alert("별점을 입력해주세요");
+	    		return false;
 	    	}else if(text == ''){
 	    		alert("내용을 입력해주세요");
 	    		$(".sb-writer > textarea").focus();
+	    		return false;
+	    	}else{
+	    		return true;
+	    	}
+	    }
+	   
+	    
+	    //리뷰 등록
+	    $(document).on("click",".submit", function(){
+	    	let rating = '';
+	    	rating = $("input[name='rating']:checked").val();
+	    	let text = $(".sb-writer > textarea").val();
+	    	let check = checkReview(rating, text);
+	    	if(check){
+	    		let data = {rating : rating, content : text};
+		    	let dataJSON = JSON.stringify(data);
+		    	
+		    	$.ajax({
+		    		method : "post",
+					url : "/racket/insertReview/"+facID,
+		    		data : dataJSON,
+					contentType : "application/json",
+		    		success : function(res){
+		    			if(res.success){
+		    				$(".review-content > ul").children().remove();
+		    				//평균 별점 조회
+		    				avgRating();
+		    				loadReview(facID);
+		    			}else{
+		    				console.log("리뷰 등록 실패");
+		    			}
+		    		},
+		    		error : function(error){
+		    			console.error(error);
+		    		}
+		    	});
 	    	}
 	    	
-	    	let data = {rating : rating, content : text};
-	    	let dataJSON = JSON.stringify(data);
 	    	
-	    	$.ajax({
-	    		method : "post",
-				url : "/racket/insertReview/"+facID,
-	    		data : dataJSON,
-				contentType : "application/json",
-	    		success : function(res){
-	    			if(res.success){
-	    				$(".review-content > ul").children().remove();
-	    				//평균 별점 조회
-	    				avgRating();
-	    				loadReview(facID);
-	    			}else{
-	    				console.log("리뷰 등록 실패");
-	    			}
-	    		},
-	    		error : function(error){
-	    			console.error(error);
-	    		}
-	    	});
 	    });	
 	
 	    //댓글 수정
@@ -178,16 +238,41 @@
 	        $textarea.focus();
 	    });	
 	    
+	    //리뷰 삭제
+	    $(document).on("click",".delete, .delete-btn",function(){
+	    	$.ajax({
+	    		method:"get",
+	    		url : "/racket/deleteReview/"+facID,
+	    		success : function(data){
+	    			$(".delete-btn").css("display","none");
+	    			$(".star-rating input, .star-rating label").removeClass("full");
+	    			$("input[name='rating']").prop("checked",false);
+	    			$("input[name='rating']").attr("onclick", "return true;");
+	    			$(".sb-writer > textarea").val('');
+	    			$(".sb-writer > textarea").prop("readonly", false);
+					$(".star-rating").removeClass("readonly");
+					$(".submit").remove();
+					$(".write-review").append("<button type='button' class='submit'>등록</button>");
+	    			avgRating();
+					$(".review-content > ul").children().remove();
+					loadReview(facID);
+	    		},
+	    		error : function(error){
+	    			console.log(error);
+	    		}
+	    		
+	    	});
+	    });
+	    
 	 	//별점 선택 기능
 	    $('.star').click(function(){
-	        // 현재 클릭된 별의 인덱스 가져옴
-	        var clickedIndex = $(this).index();
-
-	        // 클릭된 별과 그 이전 별들에게 .full 클래스를 추가
-	        $(this).prevAll().addBack().addClass('full');
-	        
-	        // 클릭된 별 다음에 있는 별들에게 .full 클래스를 제거
-	        $(this).nextAll().removeClass('full');
+	        if (!$(".star-rating").hasClass("readonly")) {
+	        	// 클릭된 별과 그 이전 별들에게 .full 클래스를 추가
+		        $(this).prevAll().addBack().addClass('full');
+		        
+		        // 클릭된 별 다음에 있는 별들에게 .full 클래스를 제거
+		        $(this).nextAll().removeClass('full');
+	        }	   
 	    });
 	 	
 	 	
@@ -251,7 +336,9 @@
 						</div>
                     </div>
                     <div id="map" class="map">
-    
+    					<div class="road">
+    						<a href="https://map.kakao.com/link/to/${facility.place },${facility.location_y },${facility.location_x }">길찾기</a>
+    					</div>
                     </div>
                 </div>
                 <div class="sub-right">
@@ -320,14 +407,15 @@
                     <li>
                         <span>상세설명</span>
                         <div class="text">
-                            ${facility.details }
+                            ${fn:replace(facility.details, replaceChar, "<br/>")}
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="sub-review">             
                     	<c:choose>
-                    		<c:when test="${userInfo.user_ID eq 'test' }">
+                    		
+                    		<c:when test="${not empty userInfo.user_ID }">
 	                    		<div class="write-review">
 	                    			<div class="profile sa-profile">
 	                            <div class="img-in">
@@ -345,14 +433,14 @@
 									<label for="3-stars" class="star" id="3-s"></label>
 									<input type="radio" id="4-stars" name="rating" value="4" class="input-star"/>
 									<label for="4-stars" class="star" id="4-s"></label>
-									<input type="radio" id="5-star" name="rating" value="5" class="input-star"/>
-									<label for="5-star" class="star" id="5-s"></label>
+									<input type="radio" id="5-stars" name="rating" value="5" class="input-star"/>
+									<label for="5-stars" class="star" id="5-s"></label>
 	                            </div>
 	                            <div class="speech-bubble sb-writer">
 	                                <textarea name="" id="" cols="30" rows="10"></textarea>
 	                            </div>
 	                        </div>
-	
+							<button type="button" class="delete-btn">삭제</button>
 	                        <button type="button" class="submit">등록</button>
 	                        </div>
                     		</c:when>
@@ -399,8 +487,8 @@
 	
 	// 마커를 생성합니다
 	var marker = new kakao.maps.Marker({
-	position: markerPosition,
-	image: markerImage // 마커이미지 설정 
+	position: markerPosition
+	//image: markerImage // 마커이미지 설정 
 	});
 	
 	// 마커가 지도 위에 표시되도록 설정합니다
