@@ -1212,7 +1212,7 @@
                     let joindetails = $('.joindetails');
                     if (joindetails.length > 0) {
 							joindetails.remove();
-							
+							/**/
 							return;
                         
                     } else {
