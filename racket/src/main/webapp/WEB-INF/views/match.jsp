@@ -25,10 +25,10 @@
 	padding-right: 45px;
 }
 
-/* 최 상단바 */
+/* 최 상단바  d3eaff*/
 #outer-nav {
 	border: 1px solid rgb(255, 255, 255);
-	background-color: #edfbff;
+	background-color: #d3eaff;
 	width: 99.9%;
 	/*99퍼로 하면 스크롤바 사라짐*/
 	height: 120px;
@@ -134,15 +134,24 @@
 }
 
 #ad {
-	border: 1px solid black;
+	border: 1px solid rgb(255, 255, 255);
 	height: 150px;
 	margin-top: 20px;
 }
 
+#ad img {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
 #ranking {
-	border: 1px solid black;
+	border: 1px solid #f7f7f7;
+	background-color: #f7f7f7;
+
 	height: 350px;
 	margin-top: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 #ranking_box {
@@ -190,7 +199,7 @@
 
 /* 공지사항 바 */
 #lightning {
-	background-color: #bdf2ff;
+	background-color: #87DBC0;
 	cursor: pointer;
 	display: inline-block;
 	width: 49%;
@@ -201,9 +210,9 @@
 	border-top-right-radius: 15px;
 }
 
-/* 문의하기 바*/
+/* 문의하기 바 */
 #club {
-	background-color: #e4f9ff;
+	background-color: #d7f1e9;
 	cursor: pointer;
 	display: inline-block;
 	width: 49%;
@@ -578,29 +587,29 @@
 				/* nav 클릭 로직 함수 */
                 function section_One() {
                     document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Two() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Three() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Four() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
                 }
 
@@ -608,16 +617,16 @@
                 function ArtOne() {
                     document.getElementById("art-1").style.display = "block";
                     document.getElementById("art-2").style.display = "none";
-                    document.getElementById("lightning").style.backgroundColor = "#bdf2ff";
-                    document.getElementById("club").style.backgroundColor = "#e4f9ff";
+                    document.getElementById("lightning").style.backgroundColor = "#87DBC0";
+                    document.getElementById("club").style.backgroundColor = "#d7f1e9";
                 }
 
                 // 문의하기 클릭했을 때 호출되는 함수
                 function ArtTwo() {
                     document.getElementById("art-1").style.display = "none";
                     document.getElementById("art-2").style.display = "block";
-                    document.getElementById("lightning").style.backgroundColor = "#e4f9ff";
-                    document.getElementById("club").style.backgroundColor = "#bdf2ff";
+                    document.getElementById("lightning").style.backgroundColor = "#d7f1e9";
+                    document.getElementById("club").style.backgroundColor = "#87DBC0";
                 }
                 
                 //마감일 계산 함수1
@@ -881,7 +890,9 @@ function submitDate() {
 
 	<div id=wrap>
 
-		<div id="ad">스탬프 광고</div>
+		<div id="ad">
+			<img src="resources/images/stampAD.jpg" alt="Thumbnail">
+		</div>
 
 
 		<!-- 인기모집공고 -->
@@ -954,11 +965,10 @@ function submitDate() {
 								</h1>
 
 								<h1 class="region">
-									
+
 									<select id="region" name="region">
-											<option value="" disabled selected>선택하세요</option>
-									</select> 
-									<select id="place" name="place">
+										<option value="" disabled selected>선택하세요</option>
+									</select> <select id="place" name="place">
 										<option value="" disabled selected>선택하세요</option>
 									</select>
 								</h1>
