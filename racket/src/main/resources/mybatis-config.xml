@@ -22,5 +22,10 @@
 		<typeAlias alias="tennisDTO" type="com.acorn.racket.match.domain.tennisDTO"/>
 		<typeAlias alias="tabletennisDTO" type="com.acorn.racket.match.domain.tabletennisDTO"/>
 		<typeAlias alias="badmintonDTO" type="com.acorn.racket.match.domain.badmintonDTO"/>
+		<typeAlias alias="MatchCreateDTO" type="com.acorn.racket.match.domain.MatchCreateDTO"/>
+		<typeAlias alias="MatchViewDTO" type="com.acorn.racket.match.domain.MatchViewDTO"/>
+		<typeAlias alias="matchdetailDTO" type="com.acorn.racket.match.domain.matchdetailDTO"/>
+		<typeAlias alias="MatchDetailInsertDTO" type="com.acorn.racket.match.domain.MatchDetailInsertDTO"/>
+		<typeAlias alias="MatchCreateInsertDTO" type="com.acorn.racket.match.domain.MatchCreateInsertDTO"/>
 	</typeAliases>
 </configuration>

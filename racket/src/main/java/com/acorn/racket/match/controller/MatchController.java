@@ -1,10 +1,17 @@
 package com.acorn.racket.match.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,11 +28,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acorn.racket.match.domain.Club;
-
+import com.acorn.racket.match.domain.MatchCreateDTO;
+import com.acorn.racket.match.domain.MatchCreateInsertDTO;
+import com.acorn.racket.match.domain.MatchDetailInsertDTO;
+import com.acorn.racket.match.domain.MatchViewDTO;
 import com.acorn.racket.match.domain.Stamp;
 import com.acorn.racket.match.repository.MatchRepository;
 
 import com.acorn.racket.match.domain.badmintonDTO;
+import com.acorn.racket.match.domain.matchdetailDTO;
 import com.acorn.racket.match.domain.tabletennisDTO;
 import com.acorn.racket.match.domain.tennisDTO;
 import com.acorn.racket.match.repository.MatchRepository;
@@ -50,7 +62,12 @@ public class MatchController {
 		List<Club> list = nr.selectAll();
 		System.out.println(list);
 		model.addAttribute("data", list);
-
+		
+		// 매치 뷰
+		List<MatchViewDTO> list2 = ms.mainMatchViewSV();
+		model.addAttribute("main", list2);
+		
+		System.out.println(list2);
 		return "match";
 	}
 
@@ -182,14 +199,75 @@ public class MatchController {
 	//매치생성 form post 
 	//날짜 MM-DD / 시간 / 종목 / 지역 / 시설이름 / 모집인원 / 아이디 /
 	
-	@PostMapping("/matchCreate")
-	public String matchCreate(@RequestParam("date") String date , @RequestParam("matchhhour") String hour , @RequestParam("sport") String sport , @RequestParam("region") String region , @RequestParam("place") String place , @RequestParam("membersu") String membersu) {
+	@RequestMapping(value = "createMatchBoard" , method = RequestMethod.POST , produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String matchCreate(@RequestBody MatchCreateDTO data) {
 		
+		System.out.println(data);
+
 		
-		
-		return null;
+        
+        ms.createMatchSV(data); //생성
+             	
+        
+		return "success";
 		
 	}
-
+	// 메치 디테일 표시
+	@RequestMapping(value = "/getMatchDetail" , method = RequestMethod.GET , produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String getMatchDetail(@RequestParam("num") int num){
+		
+		List<matchdetailDTO> list = ms.MatchDetailViewSV(num);
+		
+		 Gson gson = new Gson();
+	     String json = gson.toJson(list);
+	        
+	     System.out.println(json);
+		
+		
+		
+		return json;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/insertMatchDetail" , method = RequestMethod.POST , produces = "text/plain;charset=UTF-8")
+	public String matchDetailInsert(@RequestBody Map<String, Object> request) {
+		
+		String user_id =(String) request.get("user_Id");
+		int match_num =(int) request.get("match_num");
+		
+		System.out.println("받아온 값 : "+user_id);
+		System.out.println("받아온 값 : "+match_num);
+		// id 값으로 유저 정보 찾기
+		
+		MatchCreateInsertDTO userdata = ms.getUserDataSV(user_id);
+		
+		
+		// match_num 값으로 매치 디테일에 인서트
+		
+		MatchDetailInsertDTO insert = new MatchDetailInsertDTO();
+		
+		insert.setMatch_num(match_num);
+		insert.setUser_Image_Url(userdata.getUser_Image_Url());
+		insert.setUser_Nickname(userdata.getUser_Nickname());
+		insert.setBirthday(userdata.getBirthday());
+		insert.setUser_Level(userdata.getUser_Level());
+		
+			LocalDateTime now = LocalDateTime.now();
+
+	        
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+	        
+	        String formattedNow = now.format(formatter);
+		
+		insert.setInserttime(formattedNow);
+		
+		System.out.println("유저 정보 :" +insert);
+		
+		ms.insertMatchDetailSV(insert);
+		
+		return "success";
+	}
 }
