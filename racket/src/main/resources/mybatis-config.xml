@@ -17,6 +17,7 @@
 		<typeAlias alias="CommunityDetailDTO" type="com.acorn.racket.community.domain.CommunityDetailDTO"/>
 		<typeAlias alias="CommentDTO" type="com.acorn.racket.community.domain.CommentDTO"/>
 		<typeAlias alias="ajaxCommentDTO" type="com.acorn.racket.community.domain.ajaxCommentDTO"/>
+		<typeAlias alias="review" type="com.acorn.racket.community.domain.ReviewlistDTO"/>
 		
 		<!-- 매치 부분 -->
 		<typeAlias alias="tennisDTO" type="com.acorn.racket.match.domain.tennisDTO"/>

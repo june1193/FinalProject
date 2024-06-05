@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.acorn.racket.community.domain.CommentDTO;
 import com.acorn.racket.community.domain.CommentinsertDTO;
 import com.acorn.racket.community.domain.CommunityDetailDTO;
+import com.acorn.racket.community.domain.ReviewlistDTO;
 import com.acorn.racket.community.repository.CommunityRepository;
 
 
@@ -49,4 +50,19 @@ public class CommunityService   implements CommunityServiceI {
 		
 	}
 	
+	//커뮤니티 메인 목록 관련
+	public List<ReviewlistDTO> commain(){
+		
+		
+		return cr.selectC();
+		
+	}
+	
+	
+	//커뮤니티 메인 목록 관련
+		public List<ReviewlistDTO> commainFilter( String search){		
+			
+			return cr.selectCFilter( search );
+			
+		}
 }	

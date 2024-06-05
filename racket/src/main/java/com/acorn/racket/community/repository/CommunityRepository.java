@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.acorn.racket.community.domain.CommentDTO;
 import com.acorn.racket.community.domain.CommentinsertDTO;
 import com.acorn.racket.community.domain.CommunityDetailDTO;
+import com.acorn.racket.community.domain.ReviewlistDTO;
 import com.acorn.racket.community.domain.ajaxCommentDTO;
 
 @Repository
@@ -72,5 +73,16 @@ public class CommunityRepository  implements CommunityRepositoryI {
 		 
 		return list;
 	}
-
+	
+//	커뮤니티 메인관련 메소드
+	public List<ReviewlistDTO> selectC() {	 
+		return session.selectList(ns+"selectC");
+	}
+	
+	
+//	커뮤니티 메인 검색관련 메소드
+	public List<ReviewlistDTO> selectCFilter( String search) {	 
+		return session.selectList(ns+"selectCFilter" , search);
+	}
+	
 }

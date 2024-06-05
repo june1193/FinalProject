@@ -45,7 +45,25 @@
 		WHERE post_id = #{post_id} AND user_id = #{user_id} AND commentdatetime = #{commentdatetime}
 	</select>
 	
+	<select id="selectC"  resultType="review">
+		select post_id, board_name, user_id, post_title, post_content, post_date, post_time, post_viewes from post
+	</select>
+	
+		
+	<select id="selectCFilter" resultType="review" parameterType="String">
+  
+    SELECT post_id, board_name, user_id, post_title, post_content, post_date, post_time, post_viewes 
+    FROM post
+    WHERE post_content LIKE CONCAT('%',  #{search}, '%')
+	</select>
+
+	
 </mapper>
 <!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
 	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 
 	tel , price FROM ordera o JOIN membera m ON o.userid = m.userid </select> -->
+	
+	
+	
+	
+	

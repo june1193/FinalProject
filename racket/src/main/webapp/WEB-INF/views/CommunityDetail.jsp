@@ -79,6 +79,7 @@
             margin: 0 auto;
 
             margin-bottom: 100px;
+            line-height: 25px;
         }
 
         .realcontent {
