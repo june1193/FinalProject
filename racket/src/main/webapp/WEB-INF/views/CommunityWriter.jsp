@@ -98,18 +98,21 @@
 
 <body>
     <div class="container">
+    <form action="/racket/insertPost" method="post">
         <div class="content_container">
+        <input type="hidden" name="user_id" value="jungkiwon" >
             <div class="border_title">
                 <h1 style="margin-left: 15px;">게시판이름</h1>
+                <input type="hidden" name="board_name"  value="후기 게시판">
             </div>
 
             <div class="border_content">
                 <div class="title">
                     <span style="font-weight: bold; font-size: 10pt;">제목</span>
-                    <input type="text" style="width: 600px;">
+                    <input type="text" style="width: 600px;" name="post_title">
                 </div>
                 <div class="content">
-                    <textarea name="contentdata" id="summernote"></textarea>
+                    <textarea name="post_content" id="summernote"></textarea>
                 </div>
             </div>
             <div class="controller">
@@ -117,37 +120,59 @@
                 <button style="background-image:url(${pageContext.request.contextPath}/resources/img/취소.png);"></button>
             </div>
         </div>
+        </form>
     </div>
 </body>
 <!-- summernote 관련 -->
 <script>
-    $(document).ready(function () {
-        //여기 아래 부분
-        $('#summernote').summernote({
-
-            height: 1000,                 // 에디터 높이
-            minHeight: 1000,             // 최소 높이            
-            focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
-            lang: "ko-KR",					// 한글 설정
-            placeholder: "누구든지 영리목적의 광고성 정보를 본 게시판에 게시할 수 없습니다. 이를 위반할 경우 게시자 동의 없이 광고성 정보가 삭제됨은 물론, 정보통신망법에 의해 과태료 가 부과될수 있음을 유념하시기 바랍니다.",	//placeholder 설정
-
-            toolbar: [
-                // [groupName, [list of button]]
-                ['fontname', ['fontname']],
-                ['fontsize', ['fontsize']],
-                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
-                ['color', ['forecolor', 'color']],
-                ['table', ['table']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['insert', ['picture', 'link', 'video']],
-                ['view', ['fullscreen','codeview' , 'help']]
-            ],
-            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
-            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72']
+$(document).ready(function () {
+    $('#summernote').summernote({
+        height: 1000,
+        minHeight: 1000,
+        focus: false,
+        lang: "ko-KR",
+        placeholder: "누구든지 영리목적의 광고성 정보를 본 게시판에 게시할 수 없습니다. 이를 위반할 경우 게시자 동의 없이 광고성 정보가 삭제됨은 물론, 정보통신망법에 의해 과태료가 부과될 수 있음을 유념하시기 바랍니다.",
+        toolbar: [
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+            ['color', ['forecolor', 'color']],
+            ['table', ['table']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['insert', ['picture', 'link', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
+        fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
+        callbacks: {
+            onImageUpload: function(files) {
+                for (var i = 0; i < files.length; i++) {
+                    imageUploader(files[i]);
+                }
+            }
         }
-        );
     });
+
+    function imageUploader(file) {
+        var data = new FormData();
+        data.append("file", file);
+
+        $.ajax({
+            url: '/racket/imgUpload',
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('#summernote').summernote('insertImage', response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Upload failed:', textStatus, errorThrown);
+            }
+        });
+    }
+});
 </script>
 
 </html>

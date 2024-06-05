@@ -181,6 +181,13 @@ public class MatchRepository {
     	
     	session.selectOne(ns+"MatchCreateInsert" , data);
     }
+    
+    //매치 맴버수 업데이트
+    
+    public void updateMemberRP(int data) {
+    	
+    	session.selectOne(ns+"updateMember", data);
+    }
 }
 
 

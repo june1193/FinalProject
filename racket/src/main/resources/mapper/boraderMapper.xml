@@ -44,7 +44,17 @@
 		FROM comments
 		WHERE post_id = #{post_id} AND user_id = #{user_id} AND commentdatetime = #{commentdatetime}
 	</select>
+	<insert id="insertPost" parameterType="InsertPostDTO">
+		INSERT INTO post (board_name, user_id, post_title, post_content, post_date, post_time)
+		VALUES (#{board_name} , #{user_id} , #{post_title} , #{post_content} ,#{post_date} , #{post_time} )
+	</insert>
 	
+
+	<select id="getreply" parameterType="int" resultType="replyDTO">
+			select commentnumber , post_id , commentcontent , commentdatetime , user_id
+			from reply
+			where post_id = #{post_id}
+	</select>
 </mapper>
 <!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
 	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 

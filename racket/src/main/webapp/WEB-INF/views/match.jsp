@@ -429,21 +429,21 @@
     width: 100%;
     height: 50px;
     display: flex;
-    justify-content: space-between;
     background-color: #d8f9ee;
     
 }
 
 .joindetails > :nth-child(1){
-	margin-right: auto;
-	width:20%;
+	
+	width:10%;
 }
 .joindetails > :nth-child(2){
-	width: 40%;
 	
+	
+	width: 30%;
 }
 .joindetails > :nth-child(3){
-	width: 20%
+	width: 40%;
 	text-align: center;
 }
 .joindetails > :nth-child(4){
@@ -516,10 +516,10 @@
 }
 
 .joinshow > :nth-child(4) {
-	width: 20%;
+	width: 15%;
 }
 .joinshow > :nth-child(5) {
-	width: 10%;
+	width: 15%;
 }
 
 </style>
@@ -994,6 +994,29 @@
 
 <!-- 매치생성 DB등록 -->
 
+
+<!-- 맴버수가 0 이면 마감 + 버튼 제거 -->
+<script>
+$(document).ready(function() {
+    
+    $('.joinshow').each(function() {
+        
+        let memberSpan = $(this).find('.member');
+        
+        
+        let membersu = parseInt(memberSpan.text());
+        
+        
+       
+        if (membersu === 0) {
+            
+            $(this).find('button').remove();
+            $(this).find('.member').text('마감');
+        }
+    });
+});
+</script>
+
 </head>
 
 
@@ -1088,7 +1111,8 @@
 						<a href="/racket/facility/${items.facilityID}" onclick="event.stopPropagation()">${items.place}</a>
 					</div>
 					<div class="j4"> ${items.matchdate}</div>
-					<div class="j5" style="display: flex;  align-items: center;">모집인원:${items.membersu}
+					<div class="j5" style="display: flex;  align-items: center;">
+						모집인원:<span class="member" style="margin-left: 5px;">${items.membersu}</span>
 						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
 					</div>
 				</div>
@@ -1117,21 +1141,16 @@
 						contentType: "application/json",
 						dataType: "json" ,
 						
-						success: function(data){
-									
-				                alert("참여했습니다.");
+						success: function(data){		
 				                
-				                location.reload();
-								},
-
+								},								
 						error: function(err){
 							console.log(err);
-						}
-					
+						}	
 				}); 
-					
-					
-					
+				alert("참여했습니다."); 	
+				location.reload();
+										
 				}
 			</script>
 			<div class="createjoin">
@@ -1161,7 +1180,6 @@
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
-										<option value="4">4</option>
 								</select>
 							</div>
 

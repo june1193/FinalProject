@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 import com.acorn.racket.community.domain.CommentDTO;
 import com.acorn.racket.community.domain.CommentinsertDTO;
 import com.acorn.racket.community.domain.CommunityDetailDTO;
+import com.acorn.racket.community.domain.InsertPostDTO;
 import com.acorn.racket.community.domain.ajaxCommentDTO;
+import com.acorn.racket.community.domain.replyDTO;
 
 @Repository
 public class CommunityRepository  implements CommunityRepositoryI {
@@ -72,5 +74,24 @@ public class CommunityRepository  implements CommunityRepositoryI {
 		 
 		return list;
 	}
+	//게시글 작성 부분
+	public void insertPostRP(InsertPostDTO data) {
+		
+		 session.selectOne(ns+"insertPost", data);
+	}
+	
+	
+
+	
+	//대댓글 뷰 부분
+		
+	public List<replyDTO> getReplyRP(int post_id){
+		
+
+		List<replyDTO> list = session.selectList(ns+"getreply", post_id);
+		
+		return list;
+	}
+	
 
 }

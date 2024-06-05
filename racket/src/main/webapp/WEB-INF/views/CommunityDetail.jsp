@@ -319,6 +319,21 @@
                             <div class="comment_date" style="font-size: 10pt;">${comment.commentdatetime}</div>
                         </div>
                     </li>
+                    <c:forEach items="${reply}" var="reply">
+                    <c:if test="${comment.commentNumber} == ${reply.commentnumber}">
+                    <li data-comment-id="${comment.commentNumber}">
+                        <div class="commnet_content_box">
+                            <div class="commnet_id">${reply.user_id}</div>
+                            <div class="commnet_content" style="font-size: 10pt;">
+                                 ${reply.commentcontent}
+                                <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
+                                    class="recomment">
+                            </div>
+                            <div class="comment_date" style="font-size: 10pt;">${reply.commentdatetime}</div>
+                        </div>
+                    </li>
+                    </c:if>
+                    </c:forEach>
                    </c:forEach>
                 </ul>
             </div>

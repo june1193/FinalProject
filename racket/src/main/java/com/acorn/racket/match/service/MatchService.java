@@ -121,5 +121,9 @@ public class MatchService  {
 		MRP.insertMatchDetailRP(data);
 		
 	}
-	
+	// 맴버업데이트
+	public void updateMemberSV(int data) {
+		
+		MRP.updateMemberRP(data);
+	}
 }

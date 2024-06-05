@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.acorn.racket.community.domain.CommentDTO;
 import com.acorn.racket.community.domain.CommentinsertDTO;
 import com.acorn.racket.community.domain.CommunityDetailDTO;
+import com.acorn.racket.community.domain.InsertPostDTO;
+import com.acorn.racket.community.domain.replyDTO;
 import com.acorn.racket.community.repository.CommunityRepository;
 
 
@@ -48,5 +50,18 @@ public class CommunityService   implements CommunityServiceI {
 		return list;
 		
 	}
+	//게시물 작성 부분
+	public void insertPostSV(InsertPostDTO data) {
+		System.out.println(data);
+		
+		cr.insertPostRP(data);
+	}
 	
+	public List<replyDTO> getReplySV(int post_id) {
+		
+		List<replyDTO> reply = cr.getReplyRP(post_id);
+		
+		return reply;
+		
+	}
 }	
