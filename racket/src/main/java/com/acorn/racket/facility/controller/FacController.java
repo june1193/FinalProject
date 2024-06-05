@@ -45,7 +45,7 @@ public class FacController {
 	
  	//시설 찾기 뷰로 이동
    @RequestMapping("/facilityList")
- 	public void selectAll(Model model) {
+ 	public void selectAll() {
  	 
  	}
 	
@@ -195,6 +195,23 @@ public class FacController {
 		param.put("facID", facID);
 		param.put("user", user);
 		return service.deleteReview(param);
+	}
+	
+	//마이페이지
+	@RequestMapping(value = "/mypage/{userID}", method = RequestMethod.GET)
+	public String mypage(@PathVariable String userID, Model model) {
+		Map list = service.selectMyFac(userID);
+		Map map = service.selectUser(userID);
+		model.addAttribute("list", list);
+		model.addAttribute("user", map);
+		return "mypage";
+	}
+	
+	//마이페이지 수정
+	@ResponseBody
+	@RequestMapping(value = "/mypage/{userID}/update", method = RequestMethod.GET) //pathvariable 지우고 세션 받는걸로
+	public Map myPageEdit(@PathVariable String userID) {
+		return service.selectMyFac(userID);
 	}
 
 	
