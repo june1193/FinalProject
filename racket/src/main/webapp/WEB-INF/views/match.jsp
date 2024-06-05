@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -7,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
+ --%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
 * {
 	padding: 0px;
@@ -21,10 +24,10 @@
 	padding-right: 45px;
 }
 
-/* 최 상단바 */
+/* 최 상단바  d3eaff*/
 #outer-nav {
 	border: 1px solid rgb(255, 255, 255);
-	background-color: #edfbff;
+	background-color: #d3eaff;
 	width: 99.9%;
 	/*99퍼로 하면 스크롤바 사라짐*/
 	height: 120px;
@@ -130,15 +133,24 @@
 }
 
 #ad {
-	border: 1px solid black;
+	border: 1px solid rgb(255, 255, 255);
 	height: 150px;
 	margin-top: 20px;
 }
 
+#ad img {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
 #ranking {
-	border: 1px solid black;
+	border: 1px solid #f7f7f7;
+	background-color: #f7f7f7;
+
 	height: 350px;
 	margin-top: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 #ranking_box {
@@ -186,7 +198,7 @@
 
 /* 공지사항 바 */
 #lightning {
-	background-color: #bdf2ff;
+	background-color: #87DBC0;
 	cursor: pointer;
 	display: inline-block;
 	width: 49%;
@@ -197,9 +209,9 @@
 	border-top-right-radius: 15px;
 }
 
-/* 문의하기 바*/
+/* 문의하기 바 */
 #club {
-	background-color: #e4f9ff;
+	background-color: #d7f1e9;
 	cursor: pointer;
 	display: inline-block;
 	width: 49%;
@@ -398,37 +410,368 @@
 	color: #00c8ff;
 	font-weight: bold;
 }
-</style>
 
+/* 조인 부분 */
+.joinshow_container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3eaff;
+    position: relative;
+    font-size: 10pt;
+}
+
+.joinshow:hover {
+    background-color: #d3eaff;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.joinshow {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    border-bottom: 1px solid #d3eaff;
+}
+
+.joindetails {
+	border-bottom:1px solid  #9dd0ff;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #d8f9ee;
+    
+}
+
+.joindetails > :nth-child(1){
+	margin-right: auto;
+	width:20%;
+}
+.joindetails > :nth-child(2){
+	width: 40%;
+	
+}
+.joindetails > :nth-child(3){
+	width: 20%
+	text-align: center;
+}
+.joindetails > :nth-child(4){
+	width: 20%;
+	text-align: center;
+}
+
+
+.joinhidden {
+
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 1000;
+    display: none;
+}
+
+.createjoin {
+    margin: 0 auto;
+    width: 800px;
+    height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    background-color: #edfbff;
+    display: flex;
+    flex-direction: column;
+    display: none;
+    padding: 5px;
+    border-radius: 3px;
+    
+    
+}
+
+.textdiv{
+	margin-top: 20px;
+}
+.createjoin textarea {
+    margin: 0 auto;
+    width: 80%;
+    height: 20px;
+}
+
+.createjoin button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.joinshow > :nth-child(1) {
+	width: 10%;
+}
+
+.joinshow > :nth-child(2) {
+	width: 10%;
+	text-align: center;
+}
+
+.joinshow > :nth-child(3) {
+	
+	width: 50%;
+	text-align:center;
+}
+
+.joinshow > :nth-child(4) {
+	width: 20%;
+}
+.joinshow > :nth-child(5) {
+	width: 10%;
+}
+
+</style>
+<!-- 옵션값 정의  -->
+<script>						
+		function changeValue(){
+								
+								
+								let option =  document.querySelector('#sprots').value;
+								if(option == "테니스"){
+									
+									$.ajax({
+							            url: 'machjoinTennis',  // 서버 엔드포인트 URL
+							            type: 'GET',  // 요청 방식
+							            dataType: 'json',  // 반환받을 데이터 타입
+							            success: function(data) {
+											
+							            	
+							            	
+							            	let uniqueRegions = new Set(); // 중복 제거용 Set 객체
+							            	let regionOption = $('#region');
+							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
+							            	regionOption.empty();
+							            	let hiddenURL = $('#placeURL');
+							            	
+							            	regionOption.append(innerhtml);
+							            	for(let i=0 ; i < data.length ; i++){
+							            		
+							            		
+							            		
+							            		let items = data[i];
+							            		if(!uniqueRegions.has(items.region_name)){ //Set 에 region_name 이 없다면 has (검증)
+							            			uniqueRegions.add(items.region_name); // Set 에 추가 add (추가)
+							            			
+							            			let itemstr = "<option  value='"  + items.region_name +"'>"   +  items.region_name  + "</option> ";
+								            		regionOption.append( itemstr);
+							            			
+							            		}
+							            		
+							            		
+							            	}
+							                $('#region').change(function() {
+							                    let selectedRegion = $(this).val();
+							                    let placeOption = $('#place'); // place select 태그
+							                    placeOption.empty(); // 기존 옵션 제거
+							                    placeOption.append(innerhtml); // 첫번째 옵션 다시생성
+							                   
+							                    
+							                    	
+							                    data.forEach(item => {
+							                        if (item.region_name === selectedRegion) {
+							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
+							                            placeOption.append(optionStr);
+							                        }
+							                        	
+							                    });
+							                });
+							                
+							                //여기서부터 복사 ( 장소 주소 받아오기 )
+							                let placeOption = $('#place');
+							                placeOption.change(function(){
+							                	
+							                	let selectPlace = $(this).val();
+							                	data.forEach(item =>{
+							                		if( item.place === selectPlace){
+							                			hiddenURL.val(item.facilityID);
+							                			alert("test :" + item.facilityID);
+							                		}
+							                		
+							                	});
+							                });
+							            	
+
+							            },
+							            error: function(err) {
+							              
+							                console.log(err)
+							            }
+							        });
+									
+								}else if(option == "탁구" ){
+									
+									$.ajax({
+							            url: 'matchjoinTableTennis',  // 서버 엔드포인트 URL
+							            type: 'GET',  // 요청 방식
+							            dataType: 'json',  // 반환받을 데이터 타입
+							            success: function(data) {
+											
+							            	let uniqueRegions = new Set(); // 중복 제거용 Set 객체
+							            	let regionOption = $('#region');
+							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
+							            	regionOption.empty();
+							            	let hiddenURL = $('#placeURL');
+							            	regionOption.append(innerhtml);
+							            	for(let i=0 ; i < data.length ; i++){
+							            		
+							            		
+							            		
+							            		let items = data[i];
+							            		if(!uniqueRegions.has(items.region_name)){ //Set 에 region_name 이 없다면 has (검증)
+							            			uniqueRegions.add(items.region_name); // Set 에 추가 add (추가)
+							            			
+							            			let itemstr = "<option  value='"  + items.region_name +"'>"   +  items.region_name  + "</option> ";
+								            		regionOption.append( itemstr);
+							            			
+							            		}
+							            		
+							            		
+							            	}
+							                $('#region').change(function() {
+							                    let selectedRegion = $(this).val();
+							                    let placeOption = $('#place'); // place select 태그
+							                    placeOption.empty(); // 기존 옵션 제거
+							                    placeOption.append(innerhtml); // 첫번째 옵션 다시생성
+							                   
+							                    
+							                    	
+							                    data.forEach(item => {
+							                        if (item.region_name === selectedRegion) {
+							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
+							                            placeOption.append(optionStr);
+							                        }
+							                    });
+							                });
+							                
+							                let placeOption = $('#place');
+							                placeOption.change(function(){
+							                	
+							                	let selectPlace = $(this).val();
+							                	data.forEach(item =>{
+							                		if( item.place === selectPlace){
+							                			hiddenURL.val(item.facilityID);
+							                			alert("test :" + item.facilityID);
+							                		}
+							                		
+							                	});
+							                });
+							            		
+		
+							            },
+							            error: function(err) {
+							              
+							                console.log(err)
+							            }
+							        });
+									
+								}else{
+									
+									$.ajax({
+							            url: 'matchjoinbadminton',  // 서버 엔드포인트 URL
+							            type: 'GET',  // 요청 방식
+							            dataType: 'json',  // 반환받을 데이터 타입
+							            success: function(data) {
+											
+							            	let uniqueRegions = new Set(); // 중복 제거용 Set 객체
+							            	let regionOption = $('#region');
+							            	let innerhtml = '<option value="" disabled selected>선택하세요</option>';
+							            	regionOption.empty();
+							            	let hiddenURL = $('#placeURL');
+							            	regionOption.append(innerhtml);
+							            	for(let i=0 ; i < data.length ; i++){
+							            		
+							            		
+							            		
+							            		let items = data[i];
+							            		if(!uniqueRegions.has(items.region_name)){ //Set 에 region_name 이 없다면 has (검증)
+							            			uniqueRegions.add(items.region_name); // Set 에 추가 add (추가)
+							            			
+							            			let itemstr = "<option  value='"  + items.region_name +"'>"   +  items.region_name  + "</option> ";
+								            		regionOption.append( itemstr);
+							            			
+							            		}
+							            		
+							            		
+							            	}
+							                $('#region').change(function() {
+							                    let selectedRegion = $(this).val();
+							                    let placeOption = $('#place'); // place select 태그
+							                    placeOption.empty(); // 기존 옵션 제거
+							                    placeOption.append(innerhtml); // 첫번째 옵션 다시생성
+							                   
+							                    
+							                    	
+							                    data.forEach(item => {
+							                        if (item.region_name === selectedRegion) {
+							                            let optionStr = "<option value='" + item.place + "'>" + item.place + "</option>";
+							                            placeOption.append(optionStr);
+							                        }
+							                    });
+							                });
+							                
+							                let placeOption = $('#place');
+							                placeOption.change(function(){
+							                	
+							                	let selectPlace = $(this).val();
+							                	data.forEach(item =>{
+							                		if( item.place === selectPlace){
+							                			hiddenURL.val(item.facilityID);
+							                			alert("test :" + item.facilityID);
+							                		}
+							                		
+							                	});
+							                });
+
+							            },
+							            error: function(err) {
+							              
+							                console.log(err)
+							            }
+							        });
+									
+								}
+		}
+</script>
 
 <script>
 
 				/* nav 클릭 로직 함수 */
                 function section_One() {
                     document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Two() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Three() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Four() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
                 }
 
@@ -436,16 +779,16 @@
                 function ArtOne() {
                     document.getElementById("art-1").style.display = "block";
                     document.getElementById("art-2").style.display = "none";
-                    document.getElementById("lightning").style.backgroundColor = "#bdf2ff";
-                    document.getElementById("club").style.backgroundColor = "#e4f9ff";
+                    document.getElementById("lightning").style.backgroundColor = "#87DBC0";
+                    document.getElementById("club").style.backgroundColor = "#d7f1e9";
                 }
 
                 // 문의하기 클릭했을 때 호출되는 함수
                 function ArtTwo() {
                     document.getElementById("art-1").style.display = "none";
                     document.getElementById("art-2").style.display = "block";
-                    document.getElementById("lightning").style.backgroundColor = "#e4f9ff";
-                    document.getElementById("club").style.backgroundColor = "#bdf2ff";
+                    document.getElementById("lightning").style.backgroundColor = "#d7f1e9";
+                    document.getElementById("club").style.backgroundColor = "#87DBC0";
                 }
                 
                 //마감일 계산 함수1
@@ -485,7 +828,7 @@
                         console.error(`Element with ID '${elementId}' not found.`);
                     }
                 }
-
+				
                 /* 지역선택 함수 */
                 function local_One() {
                     document.querySelectorAll(".local:nth-child(1)")[0].style.color = "#000000";
@@ -657,7 +1000,14 @@
                     form.submit();
                 }
             </script>
+
+<!-- 매치생성 DB등록 -->
+
 </head>
+
+
+
+
 
 <body>
 
@@ -690,7 +1040,9 @@
 
 	<div id=wrap>
 
-		<div id="ad">스탬프 광고</div>
+		<div id="ad">
+			<img src="resources/images/stampAD.jpg" alt="Thumbnail">
+		</div>
 
 
 		<!-- 인기모집공고 -->
@@ -702,8 +1054,8 @@
 
 				<div id="rankingList">
 					<c:forEach var="club" items="${r_data}">
-					<!-- p_num으로 어떤 게시글 가져올지 판별하기 위해 -->
-						<div class="r_box" onclick="submitForm('${club.p_num}')"> 
+						<!-- p_num으로 어떤 게시글 가져올지 판별하기 위해 -->
+						<div class="r_box" onclick="submitForm('${club.p_num}')">
 							<div class="r_img">
 								<img src="resources/images/${club.club_thumbnail}"
 									alt="Thumbnail">
@@ -737,102 +1089,262 @@
 
 			<!-- 번개모임 -->
 			<article id="art-1">
-				<table id="board">
-
-
-					<tr>
-						<th>글번호</th>
-						<th>공간</th>
-						<th>제목</th>
-						<th>등록일</th>
-					</tr>
-
-				
-
-				</table>
-
-				<!-- 페이징 -->
-				<div class="paging">[ 1 2 3 4 5 ]</div>
-
-			</article>
-
-
-
-
-			<!-- 클럽 -->
-
-			<article id="art-2">
-
-
-				<div id="board-2">
-
-					<div id="local-box">
-						<div class="local" onclick=local_One()>전체</div>
-						<div class="local" onclick=local_Two()>용산구</div>
-						<div class="local" onclick=local_Three()>서대문구</div>
-						<div class="local" onclick=local_Four()>강남구</div>
-						<div class="local" onclick=local_Five()>종로구</div>
-						<div class="local" onclick=local_Six()>관악구</div>
-						<div class="local" onclick=local_Seven()>영등포구</div>
-						<div class="local" onclick=local_Eight()>송파구</div>
+			<div class="joinshow_container">
+				<!-- 보여지는 뷰 -->
+				<c:forEach var="items" items="${main}">
+				<div class="joinshow" onclick="joindetails(this)" data-matchnum="${items.match_num}" style="align-items: center;" >
+					<div class="j1">${items.sprots}</div>
+					<div class="j2">${items.region}</div>
+					<div class="j3">
+						<a href="/racket/facility/${items.facilityID}" onclick="event.stopPropagation()">${items.place}</a>
 					</div>
+					<div class="j4"> ${items.matchdate}</div>
+					<div class="j5" style="display: flex;  align-items: center;">모집인원:${items.membersu}
+						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
+					</div>
+				</div>
+				</c:forEach>
+			</div>
+			<!-- 게시물 조인 스크립트 -->
+			<script>
+				function joinMatch(button){
+				
+					event.stopPropagation();
+				 datadiv = button.parentElement.parentElement.parentElement;
+				 let match_num = parseInt( datadiv.getAttribute('data-matchnum') , 10 );
+				 
+				 alert(match_num);
+					let jsondata = { 
+							"user_Id" : "duckgu" ,
+							"match_num" : 	match_num
+							
+					};
+					
+				 	$.ajax({
+						
+						url: "/racket/insertMatchDetail" ,
+						type: "POST" ,
+						data: JSON.stringify(jsondata) ,
+						contentType: "application/json",
+						dataType: "json" ,
+						
+						success: function(data){
+									
+				                alert("참여했습니다.");
+				                
+				                location.reload();
+								},
 
-					<!-- 한줄 단위 -->
-					<c:forEach var="club" items="${data}" varStatus="status">
-						<c:choose>
-							<c:when test="${status.index % 2 == 0}">
-								<form action="updateViews" method="post"
-									class="update-views-form">
-									<input type="hidden" name="p_num" value="${club.p_num}">
-									<input type="hidden" name="targetUrl" value="C_detail">
-									<a href="#" class="box-link"
-										onclick="this.closest('form').submit(); return false;">
-										<div class="box-1-textarea">
-											<span class="rounded">${club.region}</span> <span
-												class="rounded">${club.sport}</span>
-											<h3>${club.c_name}</h3>
-											<p>${club.p_title}</p>
-											<br> <span class="magamill"> D-<span
-												id="d_day_${status.index}"></span>
-											</span> <span class="johwesu">조회수: ${club.views}</span>
-										</div>
-										<div class="thumbnail">
-											<img src="resources/images/${club.club_thumbnail}"
-												alt="이미지 설명">
-										</div>
-									</a>
-								</form>
-							</c:when>
-							<c:otherwise>
-								<form action="updateViews" method="post"
-									class="update-views-form">
-									<input type="hidden" name="p_num" value="${club.p_num}">
-									<input type="hidden" name="targetUrl" value="C_detail">
-									<a href="#" class="box-link"
-										onclick="this.closest('form').submit(); return false;">
-										<!-- a태그의 부모요소중 가장 가까운 폼태그를 찾아서 전송함. return false는 a태그 링크의 기본 동작(페이지 이동)을 막음. -->
-										<div class="box-2-textarea">
-											<span class="rounded">${club.region}</span> <span
-												class="rounded">${club.sport}</span>
-											<h3>${club.c_name}</h3>
-											<p>${club.p_title}</p>
-											<br> <span class="magamill"> D-<span
-												id="d_day2_${status.index}"></span>
-											</span> <span class="johwesu">조회수: ${club.views}</span>
-										</div>
-										<div class="thumbnail">
-											<img src="resources/images/${club.club_thumbnail}"
-												alt="이미지 설명">
-										</div>
-									</a>
-								</form>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					<!-- 여기까지 한줄단위 -->
+						error: function(err){
+							console.log(err);
+						}
+					
+				}); 
+					
+					
+					
+				}
+			</script>
+			<div class="createjoin">
+							<div style="margin-left: auto; margin-bottom: 30px;">
+								<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
+							</div>
+							<div style="display: flex; margin-bottom: 30px; flex-direction: column;">
+								<div style="margin: 0 auto; justify-content: space-between;">
+									<input type="date" id="matchdate"> 
+									<input type="hidden" name="date" id="realDate">
+									<input type="time" id="matchhhour" name="matchhhour">
+									<select id="sprots" onchange="changeValue()" name="sport">
+										<option value="" disabled selected>선택하세요</option>
+										<option value="테니스">테니스</option>
+										<option value="탁구">탁구</option>
+										<option value="배드민턴">배드민턴</option>
+									</select>
 
-					<!-- 모집공고 인덱스 모두 부여하고나서 함수호출. 안그러면 인덱스가 아직 덜 부여된 상태라 오류남-->
-					<script>
+									<select id="region" name="region">
+										<option value="" disabled selected>선택하세요</option>
+									</select> <select id="place" name="place">
+										<option value="" disabled selected>선택하세요</option>
+									</select>
+									<input type="hidden" id="placeURL"></input>
+								<select id="membersu" name="membersu">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+								</select>
+							</div>
+
+						<div class="textdiv">
+							<textarea name="intro" id="intro" placeholder="간단한 번개 소개글을 입력해 보세요." style="display: block; margin: 0 auto;"></textarea>
+							<button onclick="matchform()">등록</button>
+						</div>
+					</div>
+				</div>
+	<!-- 번개모임 상세보기
+                <div class="joindetails">
+                    <div>종목</div>
+                    <div>프로필사진</div>
+                    <div>아이디</div>
+                    <div>나이</div>
+                    <div>구력</div>
+                </div>
+                 -->
+	<!-- 번개등록 div -->
+
+	<div style="display: flex; margin-top: 10px;">
+		<button style="margin-left: auto;" onclick="createjoin()">번개등록</button>
+	</div>
+
+	<!-- 번개생성 투명도 스타일 부여용 -->
+	<div class="joinhidden"></div>
+
+
+	<!-- 번개모임 상세보기 -->
+    <script>
+        // div 클릭 시 플레이어 상세 정보 호출
+        function joindetails(buttonElement) {
+
+            let existingDetails = buttonElement.nextElementSibling;
+
+            var matchNumStr = buttonElement.dataset.matchnum;
+            var matchNum = parseInt(matchNumStr, 10);
+
+            $.ajax({
+                url: "/racket/getMatchDetail",
+                type: "GET",
+                data: { num: matchNum },
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+
+                    // 기존 상세 정보 제거
+                    let joindetails = $('.joindetails');
+                    if (joindetails.length > 0) {
+							joindetails.remove();
+							/**/
+							return;
+                        
+                    } else {
+                        // 데이터 순회하여 HTML 요소 추가
+                        data.forEach(function(item) {
+                            let tempDiv = document.createElement('div');
+                            
+                            
+                            tempDiv.innerHTML = `
+                                <div class="joindetails" style="height:auto; align-items: center;">
+                                    <div class="jd1"><img src="${pageContext.request.contextPath}/resources/img/냥이1.jpg" style="width:100px; height:100px;"></div>
+                                    <div class="jd2">닉네임 : <%= "${item.user_Nickname}"%></div>
+                                    <div class="jd3">나이 : <%="${item.birthday}"%></div>
+                                    <div class="jd4">구력 : <%="${item.user_Level}"%></div>
+                                    
+                                </div>
+                            `;
+                            buttonElement.insertAdjacentElement('afterend', tempDiv.firstElementChild);
+                        });
+                        
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+    </script>
+
+	<!-- 번개모임 생성하기 -->
+	<script>
+
+    let togglecreatejoin = document.querySelector('.createjoin');
+    let hidden = document.querySelector('.joinhidden');
+    function createjoin() {
+
+        hidden.style.display = 'block';
+        togglecreatejoin.style.display = 'flex';
+    }
+    function createjoinclose() {
+        hidden.style.display = 'none';
+        togglecreatejoin.style.display = 'none';
+    }
+</script>
+
+	<!-- 페이징 -->
+	<div class="paging">[ 1 2 3 4 5 ]</div>
+
+	</article>
+
+
+
+
+	<!-- 클럽 -->
+
+	<article id="art-2">
+
+
+		<div id="board-2">
+
+			<div id="local-box">
+				<div class="local" onclick=local_One()>전체</div>
+				<div class="local" onclick=local_Two()>용산구</div>
+				<div class="local" onclick=local_Three()>서대문구</div>
+				<div class="local" onclick=local_Four()>강남구</div>
+				<div class="local" onclick=local_Five()>종로구</div>
+				<div class="local" onclick=local_Six()>관악구</div>
+				<div class="local" onclick=local_Seven()>영등포구</div>
+				<div class="local" onclick=local_Eight()>송파구</div>
+			</div>
+
+			<!-- 한줄 단위 -->
+			<c:forEach var="club" items="${data}" varStatus="status">
+				<c:choose>
+					<c:when test="${status.index % 2 == 0}">
+						<form action="updateViews" method="post" class="update-views-form">
+							<input type="hidden" name="p_num" value="${club.p_num}">
+							<input type="hidden" name="targetUrl" value="C_detail"> <a
+								href="#" class="box-link"
+								onclick="this.closest('form').submit(); return false;">
+								<div class="box-1-textarea">
+									<span class="rounded">${club.region}</span> <span
+										class="rounded">${club.sport}</span>
+									<h3>${club.c_name}</h3>
+									<p>${club.p_title}</p>
+									<br> <span class="magamill"> D-<span
+										id="d_day_${status.index}"></span>
+									</span> <span class="johwesu">조회수: ${club.views}</span>
+								</div>
+								<div class="thumbnail">
+									<img src="resources/images/${club.club_thumbnail}" alt="이미지 설명">
+								</div>
+							</a>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<form action="updateViews" method="post" class="update-views-form">
+							<input type="hidden" name="p_num" value="${club.p_num}">
+							<input type="hidden" name="targetUrl" value="C_detail"> <a
+								href="#" class="box-link"
+								onclick="this.closest('form').submit(); return false;"> <!-- a태그의 부모요소중 가장 가까운 폼태그를 찾아서 전송함. return false는 a태그 링크의 기본 동작(페이지 이동)을 막음. -->
+								<div class="box-2-textarea">
+									<span class="rounded">${club.region}</span> <span
+										class="rounded">${club.sport}</span>
+									<h3>${club.c_name}</h3>
+									<p>${club.p_title}</p>
+									<br> <span class="magamill"> D-<span
+										id="d_day2_${status.index}"></span>
+									</span> <span class="johwesu">조회수: ${club.views}</span>
+								</div>
+								<div class="thumbnail">
+									<img src="resources/images/${club.club_thumbnail}" alt="이미지 설명">
+								</div>
+							</a>
+						</form>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<!-- 여기까지 한줄단위 -->
+
+			<!-- 모집공고 인덱스 모두 부여하고나서 함수호출. 안그러면 인덱스가 아직 덜 부여된 상태라 오류남-->
+			<script>
 					document.addEventListener('DOMContentLoaded', function() {
 					    <c:forEach var="club" items="${data}" varStatus="status">
 					        if (${status.index} % 2 === 0) {
@@ -842,22 +1354,89 @@
 					        }
 					    </c:forEach>
 					});
-
-
+			
 					</script>
 
-				</div>
+		</div>
 
-				<!-- 페이징 -->
-				<div class="paging">[ 1 2 3 4 5 ]</div>
+		<!-- 페이징 -->
+		<div class="paging">[ 1 2 3 4 5 ]</div>
 
-			</article>
+	</article>
 
 
-		</section>
+	</section>
 
 	</div>
 
+<!-- 매치 게시물 생성 부분  -->
+<script>
+
+
+
+function matchform() {
+
+		let matchdatee = $('#matchdate').val(); // 매치날짜
+		let matchhhour = $('#matchhhour').val();  // 매치시간
+		
+		
+		
+		
+		let matchdate = matchdatee +" "+ matchhhour+":00"; // mysql datetime 형식
+		
+		
+		
+		let sprots = $('#sprots ').val(); // 종목
+		let region = $('#region').val(); // 지역
+		let place = $('#place').val(); // 시설이름
+		let membersu = $('#membersu').val(); // 모집인원
+		let intro = $('#intro').val();  // 소개글 
+		let placeURL = $('#placeURL').val(); // 시설물 
+		let user_id = "jungkiwon";
+		
+        let jsonObject = {
+        		matchdate: matchdate,
+                sprots: sprots,
+                region: region,
+                place: place,
+                membersu: membersu,
+                intro: intro,
+                placeURL: placeURL,
+                user_id: user_id
+            };
+		
+        let jsonString = JSON.stringify(jsonObject);
+        
+		
+    $.ajax({
+        url: '/racket/createMatchBoard',
+        method: 'POST',
+        contentType: 'application/json',
+    	dataType: 'text',
+    	data: jsonString,
+    	
+        success: function(data) {
+            
+        	
+        	alert("매치 게시물 생성 완료");
+        	location.reload();
+        	
+        },
+        error: function(err) {
+           console.log(err);
+        }
+    });
+    
+     
+}
+
+</script>
+
+
+
 </body>
+
+
+
 
 </html>

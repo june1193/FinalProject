@@ -1,0 +1,566 @@
+@font-face {
+   font-family: '학교안심';
+   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+}
+
+.fade-out {
+   opacity: 0;
+   transition: opacity 0.25s ease-out;
+}
+
+html,
+body {
+   margin: 0 auto;
+   box-sizing: border-box;
+   font-family: 'Pretendard';
+   font-weight: 400;
+   color: #2a2a2a;
+}
+
+body::before {
+   content: '';
+   background: url('/racket/resources/imgs/bac2.png') no-repeat center / cover;
+   position: absolute;
+   width: 100%;
+   height: 640px;
+   top: -240px;
+   z-index: 1;
+   pointer-events: none;
+}
+
+header {
+   position: relative;
+   z-index: 2;
+}
+
+a {
+   text-decoration: none;
+   color: #2a2a2a;
+}
+
+li {
+   list-style: none;
+}
+
+aside {
+   position: fixed;
+   right: 0%;
+   z-index: 11;
+   top: 50%;
+}
+
+#wrap {
+   width: 1240px;
+   margin: 0 auto;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   z-index: 3;
+   padding: 20px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#mapContainer {
+   position: relative;
+   align-items: center; /* 수직 가운데 정렬 */
+   width: 100%;
+   height: 800px; /* 원하는 높이로 조정 */
+}
+
+#map {
+   position: relative;
+   width: 100%;
+   height: 100%;
+}
+.mapImg {
+   display: flex; /* Flexbox 설정 */
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   justify-content: space-between;
+   z-index: 10;
+   pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
+}
+
+.map_left,
+.map_right {
+   height: 100%;
+   pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
+}
+
+.map_left {
+   background-image: url('/racket/resources/imgs/지도 좌측.png');
+   background-size: cover; /* 이미지를 컨테이너에 맞춤 */
+   background-position: left; /* 이미지를 가운데 정렬 */
+   width: 140px;
+}
+
+.map_right {
+   background-image: url('/racket/resources/imgs/지도 우측.png');
+   background-size: cover;
+   background-position: right;
+   width: 160px;
+}
+
+.gmnoprint a,
+.gmnoprint span,
+.gm-style-cc {
+   display: none;
+}
+.gmnoprint div {
+   background: none !important;
+}
+
+.gm-style > div > div > a > div > img {
+   display: none;
+}
+
+.nav_list {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   gap: 10px;
+   padding: 0;
+}
+
+.nav_list i {
+   font-size: 50px;
+}
+
+/* Remove this container when use*/
+.component-title {
+   width: 100%;
+   position: absolute;
+   z-index: 999;
+   top: 30px;
+   left: 0;
+   padding: 0;
+   margin: 0;
+   font-size: 36px;
+   font-weight: 700;
+
+   color: #888;
+   text-align: center;
+}
+
+.tab-container {
+   position: relative;
+
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+
+   padding: 2px;
+   border-radius: 9px;
+}
+
+.indicator {
+   content: '';
+   width: 130px;
+   height: 28px;
+   background: #ffffff;
+   position: absolute;
+   z-index: 9;
+   border: 0.5px solid rgba(0, 0, 0, 0.04);
+   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+   border-radius: 7px;
+   /* 수정된 부분: transition 속성과 cubic-bezier 함수 */
+   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tab {
+   width: 130px;
+   height: 28px;
+   position: absolute;
+   z-index: 99;
+   outline: none;
+   opacity: 0;
+}
+
+.tab_label {
+   width: 130px;
+   height: 28px;
+
+   position: relative;
+   z-index: 999;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   border: 0;
+
+   font-size: 16px;
+   opacity: 0.6;
+   font-weight: bolder;
+
+   cursor: pointer;
+   /* 추가된 부분: hover 시 scale 변화 */
+   transition: opacity 0.2s, transform 0.2s; /* transform 추가 */
+   transform: scale(1);
+}
+
+.tab_label:hover {
+   /* 추가된 부분: hover 시 scale 적용 */
+   transform: scale(1.1);
+   opacity: 1;
+}
+
+/* checked 상태일 때 label의 opacity를 1로 설정 */
+.tab:checked + .tab_label {
+   transform: scale(1.1);
+   opacity: 1;
+}
+
+.tab--1:checked ~ .indicator {
+   left: 2px;
+}
+
+.tab--2:checked ~ .indicator {
+   left: calc(130px + 2px);
+}
+
+.tab--3:checked ~ .indicator {
+   left: calc(130px * 2 + 2px);
+}
+
+.button {
+   cursor: pointer;
+   position: relative;
+   padding: 10px 24px;
+   margin-left: 5px;
+   font-size: 14px;
+   color: #87dbc0;
+   border: 2px solid rgba(135, 219, 192, 0);
+   background-color: transparent;
+   font-weight: 600;
+   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+   overflow: hidden;
+}
+
+.button::before {
+   content: '';
+   position: absolute;
+   inset: 0;
+   margin: auto;
+   width: 50px;
+   height: 50px;
+   border-radius: inherit;
+   scale: 0;
+   z-index: -1;
+   background-color: #60b99d;
+   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button:hover::before {
+   scale: 3;
+}
+
+.button:hover {
+   color: #212121;
+   scale: 1.1;
+   box-shadow: 0 0px 20px #69b59d;
+}
+
+.button:active {
+   scale: 1;
+}
+
+.button > i {
+   font-size: 30px;
+}
+
+.btn_wrap {
+   width: 121px;
+   height: 90px;
+}
+
+.stamp_box {
+   padding: 30px 24px 10px 24px;
+   width: 100%;
+   background-color: #d3eaff;
+   border-radius: 5px;
+   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.stamp_box:hover {
+   color: #212121;
+   scale: 1.05;
+   box-shadow: 0 0px 20px #a8c2d8;
+   font-weight: bolder;
+}
+
+.img_box {
+   position: absolute;
+   top: -2rem;
+}
+
+.stamp_img {
+   width: 61px;
+}
+
+.top_btn {
+   cursor: pointer;
+   padding: 10px 24px;
+   width: 100%;
+   background-color: #87dbc0;
+   color: #ebebeb;
+   border: none;
+   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+   border-radius: 5px;
+}
+
+.top_btn:hover {
+   color: #212121;
+   scale: 1.1;
+   box-shadow: 0 0px 20px #69b59d;
+   font-weight: bolder;
+}
+
+.top_btn:active {
+   scale: 1;
+}
+
+.direction {
+   display: flex;
+   justify-content: space-between;
+}
+
+.facility_container::before {
+   content: '';
+   background: url('/racket/resources/imgs/bac1.png') no-repeat center / cover;
+   position: absolute;
+   z-index: -1;
+   width: 100%;
+   height: 100%;
+}
+
+.facility_title {
+   padding: 0 150px;
+}
+
+/* Swiper 슬라이드 커스텀 스타일 */
+
+.swiper-wrapper {
+   transition-timing-function: ease-in-out;
+}
+
+.swiper-slide {
+   padding: 30px;
+}
+
+.swiper-slide img {
+   width: 362px; /* 이미지가 슬라이드의 전체 너비를 차지하도록 설정 */
+   height: 330px; /* 이미지의 비율을 유지하면서 높이 조절 */
+   border-radius: 20px; /* 이미지의 모서리 둥글게 */
+}
+
+/* Swiper 네비게이션 버튼 스타일 */
+.swiper-button-prev,
+.swiper-button-next {
+   color: #000; /* 버튼 색상 */
+   /* 추가 스타일링이 필요하면 여기에 작성 */
+}
+
+/* 페이지네이션 스타일 */
+.swiper-pagination-bullet {
+   background: #000; /* 페이지네이션 색상 */
+   /* 추가 스타일링이 필요하면 여기에 작성 */
+}
+
+/* 기타 필요한 스타일링 */
+.swiper-container {
+   height: auto; /* Swiper의 높이를 자동으로 설정, 필요에 따라 조정 */
+   overflow: visible; /* Swiper의 기본 동작에 맞게 overflow 설정 */
+}
+
+.button-container {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 20px;
+}
+
+.button-container button {
+   padding: 10px 20px;
+   font-size: 16px;
+}
+
+.post_container {
+   position: relative;
+   padding: 0 150px;
+   margin: 0 auto;
+}
+
+.main_container {
+   position: relative;
+   margin-top: 30px;
+   border: 3px solid #dbd6e5;
+   border-radius: 35px;
+}
+
+.post_box {
+   display: flex; /* 가로로 나열 */
+   justify-content: center;
+   flex-wrap: wrap; /* 필요시 줄바꿈 */
+   list-style: none; /* 기본 리스트 스타일 제거 */
+   padding: 0; /* 기본 패딩 제거 */
+}
+
+.post_item {
+   padding: 15px 25px; /* 항목 내부 여백 */
+   border-right: 1px solid #dbd6e5; /* 오른쪽에 구분선 추가 */
+}
+
+.post_item:last-child {
+   border-right: none; /* 마지막 항목에는 구분선 제거 */
+}
+
+footer {
+   background-color: #84adea;
+   padding: 30px 150px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+footer a {
+   color: #fff;
+}
+
+.foot_left {
+   border: 1px solid #fff;
+   padding: 20px 50px;
+   width: 100%;
+}
+
+.left_title > a {
+   border-bottom: 2px solid white;
+}
+
+.foot_right {
+   border: 1px solid #fff;
+   width: 100%;
+   padding: 20px 50px;
+}
+
+.right_list {
+   margin: 0 auto;
+   display: flex;
+   gap: 30px;
+   align-items: center;
+}
+
+.post_best {
+   display: flex;
+   flex-wrap: wrap;
+   border: 1px solid black;
+   margin-bottom: 15px;
+}
+
+.best_post1,
+.best_post2,
+.best_post3,
+.best_post4 {
+   width: 540px;
+   height: 250px;
+   margin: 0 auto;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   padding: 30px;
+   border: 1px solid black;
+   display: flex;
+   flex-direction: column;
+   background-color: #ebebeb;
+}
+
+.post1_contents {
+   flex: 1;
+   margin-bottom: 10px;
+}
+
+.post1_footer,
+.post2_footer,
+.post3_footer,
+.post4_footer {
+   display: flex;
+   justify-content: space-between;
+   margin-top: auto;
+   align-items: center;
+}
+
+.container input {
+   position: absolute;
+   opacity: 0;
+   cursor: pointer;
+   height: 0;
+   width: 0;
+}
+
+.container input {
+   position: absolute;
+   opacity: 0;
+   cursor: pointer;
+   height: 0;
+   width: 0;
+}
+
+.container {
+   display: block;
+   position: relative;
+   cursor: pointer;
+   font-size: 20px;
+   user-select: none;
+   transition: 100ms;
+}
+
+.checkmark {
+   top: 0;
+   left: 0;
+   height: 2em;
+   width: 2em;
+   transition: 100ms;
+   animation: dislike_effect 400ms ease;
+}
+
+.container input:checked ~ .checkmark path {
+   fill: #ff5353;
+   stroke-width: 0;
+}
+
+.container input:checked ~ .checkmark {
+   animation: like_effect 400ms ease;
+}
+
+.container:hover {
+   transform: scale(1.1);
+}
+
+@keyframes like_effect {
+   0% {
+      transform: scale(0);
+   }
+
+   50% {
+      transform: scale(1.2);
+   }
+
+   100% {
+      transform: scale(1);
+   }
+}
+
+@keyframes dislike_effect {
+   0% {
+      transform: scale(0);
+   }
+
+   50% {
+      transform: scale(1.2);
+   }
+
+   100% {
+      transform: scale(1);
+   }
+}
