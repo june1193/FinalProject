@@ -128,7 +128,11 @@ value(#{match_num} , #{user_Image_Url} , #{user_Nickname} , #{birthday} , #{user
 
 
 	</select>
-
+	<update id="updateMember" parameterType="int" >
+	UPDATE matchjoin
+	SET membersu = membersu - 1
+	WHERE match_num = #{match_num}
+	</update>
 </mapper>
 <!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
 	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 

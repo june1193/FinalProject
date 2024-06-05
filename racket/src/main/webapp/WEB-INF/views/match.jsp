@@ -455,6 +455,28 @@ display: flex;
 }
 
 .joindetails {
+
+	border-bottom:1px solid  #9dd0ff;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    background-color: #d8f9ee;
+    
+}
+
+.joindetails > :nth-child(1){
+	
+	width:10%;
+}
+.joindetails > :nth-child(2){
+	
+	
+	width: 30%;
+}
+.joindetails > :nth-child(3){
+	width: 40%;
+	text-align: center;
+
 	border-bottom: 1px solid #9dd0ff;
 	width: 100%;
 	height: 50px;
@@ -474,6 +496,7 @@ display: flex;
 
 .joindetails>:nth-child(3) {
 	width: 20% text-align: center;
+
 }
 
 .joindetails>:nth-child(4) {
@@ -540,12 +563,20 @@ display: flex;
 	text-align: center;
 }
 
+
+.joinshow > :nth-child(4) {
+	width: 15%;
+}
+.joinshow > :nth-child(5) {
+	width: 15%;
+
 .joinshow>:nth-child(4) {
 	width: 20%;
 }
 
 .joinshow>:nth-child(5) {
 	width: 10%;
+
 }
 
 .p-div {
@@ -1034,6 +1065,29 @@ display: flex;
 
 <!-- 매치생성 DB등록 -->
 
+
+<!-- 맴버수가 0 이면 마감 + 버튼 제거 -->
+<script>
+$(document).ready(function() {
+    
+    $('.joinshow').each(function() {
+        
+        let memberSpan = $(this).find('.member');
+        
+        
+        let membersu = parseInt(memberSpan.text());
+        
+        
+       
+        if (membersu === 0) {
+            
+            $(this).find('button').remove();
+            $(this).find('.member').text('마감');
+        }
+    });
+});
+</script>
+
 </head>
 
 
@@ -1133,6 +1187,22 @@ display: flex;
 
 			<!-- 번개모임 -->
 			<article id="art-1">
+
+			<div class="joinshow_container">
+				<!-- 보여지는 뷰 -->
+				<c:forEach var="items" items="${main}">
+				<div class="joinshow" onclick="joindetails(this)" data-matchnum="${items.match_num}" style="align-items: center;" >
+					<div class="j1">${items.sprots}</div>
+					<div class="j2">${items.region}</div>
+					<div class="j3">
+						<a href="/racket/facility/${items.facilityID}" onclick="event.stopPropagation()">${items.place}</a>
+					</div>
+					<div class="j4"> ${items.matchdate}</div>
+					<div class="j5" style="display: flex;  align-items: center;">
+						모집인원:<span class="member" style="margin-left: 5px;">${items.membersu}</span>
+						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
+					</div>
+
 				<div class="joinshow_container">
 					<!-- 보여지는 뷰 -->
 					<c:forEach var="items" items="${main}">
@@ -1153,6 +1223,7 @@ display: flex;
 							</div>
 						</div>
 					</c:forEach>
+
 				</div>
 				<!-- 게시물 조인 스크립트 -->
 				<script>
@@ -1177,23 +1248,49 @@ display: flex;
 						contentType: "application/json",
 						dataType: "json" ,
 						
-						success: function(data){
-									
-				                alert("참여했습니다.");
+						success: function(data){		
 				                
-				                location.reload();
-								},
-
+								},								
 						error: function(err){
 							console.log(err);
-						}
-					
+						}	
 				}); 
-					
-					
-					
+				alert("참여했습니다."); 	
+				location.reload();
+										
 				}
 			</script>
+
+			<div class="createjoin">
+							<div style="margin-left: auto; margin-bottom: 30px;">
+								<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
+							</div>
+							<div style="display: flex; margin-bottom: 30px; flex-direction: column;">
+								<div style="margin: 0 auto; justify-content: space-between;">
+									<input type="date" id="matchdate"> 
+									<input type="hidden" name="date" id="realDate">
+									<input type="time" id="matchhhour" name="matchhhour">
+									<select id="sprots" onchange="changeValue()" name="sport">
+										<option value="" disabled selected>선택하세요</option>
+										<option value="테니스">테니스</option>
+										<option value="탁구">탁구</option>
+										<option value="배드민턴">배드민턴</option>
+									</select>
+									
+									<select id="region" name="region">
+											<option value="" disabled selected>선택하세요</option>
+									</select> 
+									<select id="place" name="place">
+										<option value="" disabled selected>선택하세요</option>
+									</select>
+									<input type="hidden" id="placeURL"></input>
+								<select id="membersu" name="membersu">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+								</select>
+							</div>
+
 				<div class="createjoin">
 					<div style="margin-left: auto; margin-bottom: 30px;">
 						<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
@@ -1221,6 +1318,7 @@ display: flex;
 								<option value="4">4</option>
 							</select>
 						</div>
+
 
 						<div class="textdiv">
 							<textarea name="intro" id="intro"

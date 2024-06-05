@@ -2,6 +2,7 @@ package com.acorn.racket.match.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -226,6 +227,37 @@ public class MatchController {
 
 		List<matchdetailDTO> list = ms.MatchDetailViewSV(num);
 
+		
+	for(matchdetailDTO list2 : list) {
+			
+			String birthdate = list2.getBirthday();
+			  // 현재 날짜 가져오기
+	        LocalDate currentDate = LocalDate.now();
+	        
+	        // 생년월일 파싱
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        LocalDate birthDate = LocalDate.parse(birthdate, formatter);
+
+	        // 현재 연도와 생년월일 연도 차이 계산
+	        int currentYear = currentDate.getYear();
+	        int birthYear = birthDate.getYear();
+	        
+	        // 한국식 나이 계산 (생일이 지났는지 여부는 고려하지 않음)
+	        int koreanAge = currentYear - birthYear + 1;
+	        
+	         
+			
+	        list2.setBirthday(String.valueOf(koreanAge));
+		}
+		 Gson gson = new Gson();
+	     String json = gson.toJson(list);
+	        
+	     System.out.println(json);
+		
+		
+		
+
+
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 
@@ -268,6 +300,9 @@ public class MatchController {
 		System.out.println("유저 정보 :" + insert);
 
 		ms.insertMatchDetailSV(insert);
+
+		
+		ms.updateMemberSV(match_num);
 
 		return "success";
 	}
