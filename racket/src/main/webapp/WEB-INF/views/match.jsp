@@ -464,27 +464,6 @@ display: flex;
     
 }
 
-.joindetails > :nth-child(1){
-	
-	width:10%;
-}
-.joindetails > :nth-child(2){
-	
-	
-	width: 30%;
-}
-.joindetails > :nth-child(3){
-	width: 40%;
-	text-align: center;
-
-	border-bottom: 1px solid #9dd0ff;
-	width: 100%;
-	height: 50px;
-	display: flex;
-	justify-content: space-between;
-	background-color: #d8f9ee;
-}
-
 .joindetails>:nth-child(1) {
 	margin-right: auto;
 	width: 20%;
@@ -495,7 +474,8 @@ display: flex;
 }
 
 .joindetails>:nth-child(3) {
-	width: 20% text-align: center;
+	width: 20%;
+	text-align: center;
 
 }
 
@@ -569,6 +549,7 @@ display: flex;
 }
 .joinshow > :nth-child(5) {
 	width: 15%;
+	}
 
 .joinshow>:nth-child(4) {
 	width: 20%;
@@ -1187,21 +1168,6 @@ $(document).ready(function() {
 
 			<!-- 번개모임 -->
 			<article id="art-1">
-
-			<div class="joinshow_container">
-				<!-- 보여지는 뷰 -->
-				<c:forEach var="items" items="${main}">
-				<div class="joinshow" onclick="joindetails(this)" data-matchnum="${items.match_num}" style="align-items: center;" >
-					<div class="j1">${items.sprots}</div>
-					<div class="j2">${items.region}</div>
-					<div class="j3">
-						<a href="/racket/facility/${items.facilityID}" onclick="event.stopPropagation()">${items.place}</a>
-					</div>
-					<div class="j4"> ${items.matchdate}</div>
-					<div class="j5" style="display: flex;  align-items: center;">
-						모집인원:<span class="member" style="margin-left: 5px;">${items.membersu}</span>
-						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
-					</div>
 
 				<div class="joinshow_container">
 					<!-- 보여지는 뷰 -->
