@@ -19,7 +19,10 @@
 }
 
 #map {
-	border: 1px solid black;
+	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+	margin: 0 auto;
+	border: 2px solid rgb(229, 234, 101);
+	border-radius: 8px;
 	width: 1230px;
 	height: 500px;
 }
@@ -30,7 +33,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border: 1px solid #ccc;
 	padding: 40px 50px;
 }
 
@@ -48,6 +50,19 @@
 	width: 50px;
 	height: 50px;
 	margin-right: 15px; /* 텍스트와 이미지 사이의 간격 조정 */
+}
+
+#aram {
+	border-radius: 50%;
+	height: 25px;
+	width: 25px;
+	background-color: rgb(228, 228, 228);
+	margin-left: 10px;
+	margin-top: 5px;
+	font-weight: bold;
+	display: flex; /* Flexbox 사용 */
+	justify-content: center; /* 가로 방향 가운데 정렬 */
+	margin-right: auto;
 }
 </style>
 <script type="text/javascript"
@@ -169,6 +184,7 @@
 
 		<div class="container">
 			<h1>내 스탬프</h1>
+			<div id="aram">1</div>
 
 			<div class="counter">
 				<img src="resources/images/stampimg.png" alt="인증 아이콘"> 인증수:
@@ -181,17 +197,17 @@
 		<div id="space"></div>
 
 	</div>
-	
-	<!-- 스탬프 추가시 알람 -->
-	  <script>
-        // 서버로부터 받은 메시지를 변수에 저장
-        var message = "${message}";
 
-        // 메시지가 비어 있지 않은 경우에만 alert 함수를 사용하여 메시지를 표시
-        if (message.trim() !== "") {
-            alert(message);
-        }
-    </script>
+	<!-- 스탬프 추가시 알람 -->
+	<script>
+		// 서버로부터 받은 메시지를 변수에 저장
+		var message = "${message}";
+
+		// 메시지가 비어 있지 않은 경우에만 alert 함수를 사용하여 메시지를 표시
+		if (message.trim() !== "") {
+			alert(message);
+		}
+	</script>
 </body>
 
 </html>
