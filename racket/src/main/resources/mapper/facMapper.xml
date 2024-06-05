@@ -108,7 +108,7 @@
 
 <!-- 회원 정보 받아오기 -->
 <select id="selectUser" resultType="java.util.Map">
-	select user_Image_Url, user_Nickname,user_ID from usertbl where user_ID = #{user};
+	select * from usertbl where user_ID = #{user};
 </select>
 
 <!-- api에서 받은 데이터 db에 insert -->
@@ -194,5 +194,23 @@
 <!-- 평균 별점 -->
 <select id="avgRating" parameterType="String" resultType="String">
 	select format( avg(rating),1) rating from reviewtbl where facilityID = #{facID}
+</select>
+
+<!-- 특정 사용자가 찜한 시설 -->
+<resultMap type="facDTO" id="myFac">
+	<result property="facilityID" column="facilityID"/>
+</resultMap>
+<select id="myFacility" parameterType="String" resultMap="myFac">
+	select f.facilityID, minclassname, service_status, facName, payment, place, service_target, region_name, image, user_ID, 
+	(select count(*) from bookmarktbl where facilityID = f.facilityID ) count , 
+	ifnull((select user_ID from bookmarktbl where facilityID = f.facilityID and user_ID = #{userID}), 0) liked ,
+	format(ifnull((select avg(rating) from reviewtbl where facilityID = f.facilityID), 0.0 ),1) rating from facilitytbl f
+	join bookmarktbl b
+	on f.facilityID = b.facilityID where b.user_ID = #{userID}
+</select>
+
+<!-- 특정 시설에 북마크한 사용자들 출력 -->
+<select id="selectBookmarkUser" resultType="String">
+	select user_ID from bookmarktbl where facilityID = #{facID}
 </select>
 </mapper>

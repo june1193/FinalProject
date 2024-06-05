@@ -18,8 +18,6 @@ import com.acorn.racket.facility.domain.ReviewDTO;
 @Component
 public class FacRepository implements FacRepositoryI {
 	@Autowired
-	DataSource ds;
-	@Autowired
     private SqlSession session;
     private static String namespace = "test.facMapper.";
     
@@ -91,6 +89,16 @@ public class FacRepository implements FacRepositoryI {
 	//리뷰 삭제
 	public int deleteReview(Map<String, String> param) {
 		return session.delete(namespace+"deleteReview", param);
+	}
+	
+	//찜한 시설 불러오기
+	public List<FacDTO> selectMyFac(String userID){
+		return session.selectList(namespace+"myFacility", userID);
+	}
+	
+	//특정 시설 북마크한 사용자 리스트 불러오기
+	public List<String> selectBookMarkUser(String facID){
+		return session.selectList(namespace+"selectBookmarkUser", facID);
 	}
    
 

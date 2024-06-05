@@ -139,12 +139,14 @@
 	    					    					
 	    				}
 	    				str = `<li>
+	    				<a href="/racket/mypage/\${user.userID}">
 	                        <div class="profile">
 		                        <div class="img-in">
 		                            <img src="\${user.userImageUrl}" alt="">
 		                        </div>
 	                    	<span>\${user.userNickname}</span>
 	                		</div>
+	                	</a>
 		               		 <div class="sa2">
 		                    	<div class='reviewStar'>
 							  		<div class='reviewScore'>

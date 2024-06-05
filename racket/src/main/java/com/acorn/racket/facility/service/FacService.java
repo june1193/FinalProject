@@ -123,4 +123,21 @@ public class FacService {
 	public int deleteReview(Map<String, String> param) {
 		return repository.deleteReview(param);
 	}
+	
+	//찜한 시설 불러오기
+	public Map selectMyFac(String userID){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<FacDTO> list = repository.selectMyFac(userID);
+		List<List<String>> likeList = new ArrayList<>();
+		for(FacDTO fac : list) {
+			String id = fac.getFacilityID();
+			List<String> bookmark = repository.selectBookMarkUser(id);
+			likeList.add(bookmark);
+		}
+		map.put("facList", list);
+		map.put("bookmark", likeList);
+		return map;
+	}
+	
+
 }
