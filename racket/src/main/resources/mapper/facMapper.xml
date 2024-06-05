@@ -45,9 +45,12 @@
 		</where>
 </select>
 
-<!-- 필터 검색 기능 -->
-<select id="selectFilter" resultType="facDTO" parameterType="java.util.Map">
-	select * from facilityTbl 
+<!-- 전체 시설 목록 불러옴(필터, 검색 포함) -->
+<select id="selectFilter" resultType="FacDTO" parameterType="java.util.Map">
+	select facilityID, minclassname, service_status,  facName, payment, service_target, image, region_name, place, (select count(*) from bookmarktbl where facilityID = f.facilityID ) count , 
+	ifnull((select user_ID from bookmarktbl where facilityID = f.facilityID and user_ID = #{user}), 0) liked,
+	format(ifnull((select avg(rating) from reviewtbl where facilityID = f.facilityID), 0.0 ),1) rating 
+	from facilitytbl f
 	<where>
 		<if test="options != null and options.sport != null">
 			<choose>	
@@ -95,9 +98,18 @@
 </select>
 
 <!-- 특정 시설 상세보기 -->
-<select id="selectDesc" resultType="facDTO" parameterType="String">
-	select * from facilitytbl where facilityID = #{facID}
+<select id="selectDesc" resultType="facDTO" parameterType="java.util.Map">
+	select * ,(select count(*) from bookmarktbl where facilityID = f.facilityID ) count , 
+	ifnull((select user_ID from bookmarktbl where facilityID = f.facilityID and user_ID = #{user}), 0) liked,
+	format(ifnull((select avg(rating) from reviewtbl where facilityID = f.facilityID), 0.0 ),1) rating
+	from facilitytbl f
+	where facilityID = #{facID}
 </select>	
+
+<!-- 회원 정보 받아오기 -->
+<select id="selectUser" resultType="java.util.Map">
+	select * from usertbl where user_ID = #{user};
+</select>
 
 <!-- api에서 받은 데이터 db에 insert -->
 <insert id="insert" parameterType="java.util.List">
@@ -127,4 +139,78 @@
             )
         </foreach>
   </insert>
+  
+<!-- 북마크에 아이디 존재하는지 확인 -->
+<select id="checkBookmark" resultType="int" parameterType="java.util.Map">
+	select count(*) from bookmarktbl where facilityID = #{facID} and user_ID = #{user}
+</select>
+
+<!-- 북마크 삭제 -->
+<delete id="deleteBookmark" parameterType="java.util.Map">
+	delete from bookmarktbl where facilityID = #{facID} and user_ID = #{user}
+</delete>
+
+<!-- 북마크 추가 -->
+<insert id="insertBookmark">
+	insert into bookmarktbl values(#{facID}, #{user});
+</insert>
+
+<!-- 북마크 수 조회 -->
+<select id="countBookmark" parameterType="String" resultType="int">
+	select count(*) from bookmarktbl where facilityID = #{facID}
+</select>
+
+
+<!-- 리뷰 등록 -->
+<insert id="insertReview" parameterType="java.util.Map">
+	insert into reviewtbl values (#{facID}, #{user}, #{content}, #{rating}, SYSDATE());
+</insert>
+
+<!-- 리뷰 조회 -->
+<resultMap type="reviewDTO" id="selectReviewMap">
+	<result property="userID" column="user_ID"/>
+	<result property="userImageUrl" column="user_Image_Url"/>
+    <result property="userNickname" column="user_Nickname"/>
+    <result property="rating" column="rating"/>
+    <result property="reviewText" column="review_Text"/>
+    <result property="date" column="insert_time"/>
+</resultMap>
+<select id="selectReview" parameterType="String" resultMap="selectReviewMap">
+	select u.user_ID, u.user_Image_Url,u.user_Nickname,r.rating,r.review_Text, DATE_FORMAT(r.insert_time, '%Y.%m.%d %H:%i') insert_time  from reviewtbl r
+	join usertbl u
+	on r.user_ID = u.user_ID where r.facilityID = #{facID} order by insert_time desc
+</select>
+
+<!-- 리뷰 삭제 -->
+<delete id="deleteReview" parameterType="java.util.Map">
+	delete from reviewtbl where facilityID = #{facID} and user_ID = #{user}
+</delete>
+
+<!-- 리뷰 수정 -->
+<update id="updateReview" parameterType="java.util.Map">
+	update reviewtbl set rating = #{rating}, review_Text = #{text}, insert_time = SYSDATE() where facilityID = #{facID} and user_ID = #{user}
+</update>
+
+<!-- 평균 별점 -->
+<select id="avgRating" parameterType="String" resultType="String">
+	select format( avg(rating),1) rating from reviewtbl where facilityID = #{facID}
+</select>
+
+<!-- 특정 사용자가 찜한 시설 -->
+<resultMap type="facDTO" id="myFac">
+	<result property="facilityID" column="facilityID"/>
+</resultMap>
+<select id="myFacility" parameterType="String" resultMap="myFac">
+	select f.facilityID, minclassname, service_status, facName, payment, place, service_target, region_name, image, user_ID, 
+	(select count(*) from bookmarktbl where facilityID = f.facilityID ) count , 
+	ifnull((select user_ID from bookmarktbl where facilityID = f.facilityID and user_ID = #{userID}), 0) liked ,
+	format(ifnull((select avg(rating) from reviewtbl where facilityID = f.facilityID), 0.0 ),1) rating from facilitytbl f
+	join bookmarktbl b
+	on f.facilityID = b.facilityID where b.user_ID = #{userID}
+</select>
+
+<!-- 특정 시설에 북마크한 사용자들 출력 -->
+<select id="selectBookmarkUser" resultType="String">
+	select user_ID from bookmarktbl where facilityID = #{facID}
+</select>
 </mapper>

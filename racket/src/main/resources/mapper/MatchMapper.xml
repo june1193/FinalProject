@@ -6,25 +6,43 @@
 	<!-- 원하는 쿼리문 작성 -->
 
 	<!-- 클럽 -->
-	<select id="selectAll" resultType="Club"> <!--resultType는 DTO파일명 -->
-		select *
-		from club_posts_tbl
-		order by p_num asc
+	<select id="selectAll" parameterType="map" resultType="Club"> <!--resultType는 DTO파일명 -->
+		SELECT *
+		FROM club_posts_tbl
+		ORDER BY p_num ASC
+		LIMIT #{pageSize} OFFSET
+		#{offset}
+	</select>
+
+	<!-- 클럽 게시글 총 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		club_posts_tbl
 	</select>
 
 	<!-- 조회수 업데이트 -->
 	<update id="updateViews">
 		UPDATE club_posts_tbl
 		SET views = views + 1
-		WHERE p_num = #{p_num}
+		WHERE p_num
+		= #{p_num}
 	</update>
 
 	<!-- 상위 5개의 클럽 정보를 가져옴 -->
 	<select id="selectTopClubs" resultType="Club">
 		SELECT *
-		FROM club_posts_tbl
+		FROM
+		club_posts_tbl
 		ORDER BY views DESC
 		LIMIT #{count}
+	</select>
+
+	<!-- 검색관련 -->
+	<select id="searchPosts" parameterType="String" resultType="Club">
+		SELECT * FROM club_posts_tbl
+		WHERE c_name LIKE CONCAT('%', #{query}, '%')
+		OR p_title LIKE CONCAT('%', #{query}, '%');
 	</select>
 
 	<!-- p_num에 맞는 데이터를 가져오는 쿼리 -->
@@ -35,9 +53,17 @@
 	</select>
 
 	<!-- 스탬프 관련 특정 user_ID의 데이터를 모두 가져오는 쿼리 -->
-	<select id="getStampsByUserID" resultType="com.acorn.racket.match.domain.Stamp">
+	<select id="getStampsByUserID"
+		resultType="com.acorn.racket.match.domain.Stamp">
 		SELECT * FROM stamps WHERE user_ID = #{user_ID}
 	</select>
+
+	<!-- 스탬프 찍기 인서트 -->
+	<insert id="insertStamp"
+		parameterType="com.acorn.racket.match.domain.Stamp">
+		INSERT INTO stamps (user_ID, facilityID) VALUES
+		(#{user_ID}, #{facilityID})
+	</insert>
 
 </mapper>
 

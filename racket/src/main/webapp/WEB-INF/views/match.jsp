@@ -9,7 +9,8 @@
 
 <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
  --%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
 * {
 	padding: 0px;
@@ -24,10 +25,10 @@
 	padding-right: 45px;
 }
 
-/* 최 상단바 */
+/* 최 상단바  d3eaff*/
 #outer-nav {
 	border: 1px solid rgb(255, 255, 255);
-	background-color: #edfbff;
+	background-color: #d3eaff;
 	width: 99.9%;
 	/*99퍼로 하면 스크롤바 사라짐*/
 	height: 120px;
@@ -40,7 +41,6 @@
 	width: 1000px;
 	height: 100px;
 }
-
 /* 검색창 관련 */
 .search-area {
 	display: flex;
@@ -66,8 +66,12 @@
 	background: #fff;
 	width: 100%;
 }
+.search-in>form{
+display: flex;
+    align-items: center;
+    }
 
-.search-in>input {
+.search-in input {
 	height: 31px;
 	border: none;
 	margin-left: 15px;
@@ -77,11 +81,11 @@
 	font-weight: 300;
 }
 
-.search-in>input:focus {
+.search-in input:focus {
 	outline: none;
 }
 
-.search-in>button {
+.search-in button {
 	display: flex;
 	border: none;
 	height: 100%;
@@ -133,15 +137,23 @@
 }
 
 #ad {
-	border: 1px solid black;
+	border: 1px solid rgb(255, 255, 255);
 	height: 150px;
 	margin-top: 20px;
 }
 
+#ad img {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
 #ranking {
-	border: 1px solid black;
+	border: 1px solid #f7f7f7;
+	background-color: #f7f7f7;
 	height: 350px;
 	margin-top: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 #ranking_box {
@@ -189,7 +201,7 @@
 
 /* 공지사항 바 */
 #lightning {
-	background-color: #bdf2ff;
+	background-color: #87DBC0;
 	cursor: pointer;
 	display: inline-block;
 	width: 49%;
@@ -200,9 +212,9 @@
 	border-top-right-radius: 15px;
 }
 
-/* 문의하기 바*/
+/* 문의하기 바 */
 #club {
-	background-color: #e4f9ff;
+	background-color: #d7f1e9;
 	cursor: pointer;
 	display: inline-block;
 	width: 49%;
@@ -324,6 +336,7 @@
 	text-decoration: none;
 	color: black;
 	background-color: #ffffff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 /* .box-1 {
 	box-sizing: border-box;
@@ -379,11 +392,28 @@
 	padding: 5px;
 }
 
-/* 임시 페이징 형태 */
-.paging {
+/* 진짜 페이징 형태 */
+#paging {
 	margin: 50px;
 	text-align: center;
 	font-size: 17px;
+}
+
+#paging a {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	margin: 0;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	text-decoration: none;
+	color: #000;
+}
+
+#paging a:hover {
+	background-color: #f0f0f0;
 }
 
 /* 초기 상태 */
@@ -404,27 +434,28 @@
 
 /* 조인 부분 */
 .joinshow_container {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #d3eaff;
-    position: relative;
-    font-size: 10pt;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #d3eaff;
+	position: relative;
+	font-size: 10pt;
 }
 
 .joinshow:hover {
-    background-color: #d3eaff;
-    transition: 0.3s;
-    cursor: pointer;
+	background-color: #d3eaff;
+	transition: 0.3s;
+	cursor: pointer;
 }
 
 .joinshow {
-    display: flex;
-    justify-content: space-between;
-    height: 80px;
-    border-bottom: 1px solid #d3eaff;
+	display: flex;
+	justify-content: space-between;
+	height: 80px;
+	border-bottom: 1px solid #d3eaff;
 }
 
 .joindetails {
+
 	border-bottom:1px solid  #9dd0ff;
     width: 100%;
     height: 50px;
@@ -445,83 +476,123 @@
 .joindetails > :nth-child(3){
 	width: 40%;
 	text-align: center;
+
+	border-bottom: 1px solid #9dd0ff;
+	width: 100%;
+	height: 50px;
+	display: flex;
+	justify-content: space-between;
+	background-color: #d8f9ee;
 }
-.joindetails > :nth-child(4){
+
+.joindetails>:nth-child(1) {
+	margin-right: auto;
+	width: 20%;
+}
+
+.joindetails>:nth-child(2) {
+	width: 40%;
+}
+
+.joindetails>:nth-child(3) {
+	width: 20% text-align: center;
+
+}
+
+.joindetails>:nth-child(4) {
 	width: 20%;
 	text-align: center;
 }
 
-
 .joinhidden {
-
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: black;
-    opacity: 0.3;
-    z-index: 1000;
-    display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	opacity: 0.3;
+	z-index: 1000;
+	display: none;
 }
 
 .createjoin {
-    margin: 0 auto;
-    width: 800px;
-    height: auto;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1001;
-    background-color: #edfbff;
-    display: flex;
-    flex-direction: column;
-    display: none;
-    padding: 5px;
-    border-radius: 3px;
-    
-    
+	margin: 0 auto;
+	width: 800px;
+	height: auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1001;
+	background-color: #edfbff;
+	display: flex;
+	flex-direction: column;
+	display: none;
+	padding: 5px;
+	border-radius: 3px;
 }
 
-.textdiv{
+.textdiv {
 	margin-top: 20px;
 }
+
 .createjoin textarea {
-    margin: 0 auto;
-    width: 80%;
-    height: 20px;
+	margin: 0 auto;
+	width: 80%;
+	height: 20px;
 }
 
 .createjoin button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
-.joinshow > :nth-child(1) {
+.joinshow>:nth-child(1) {
 	width: 10%;
 }
 
-.joinshow > :nth-child(2) {
+.joinshow>:nth-child(2) {
 	width: 10%;
 	text-align: center;
 }
 
-.joinshow > :nth-child(3) {
-	
+.joinshow>:nth-child(3) {
 	width: 50%;
-	text-align:center;
+	text-align: center;
 }
+
 
 .joinshow > :nth-child(4) {
 	width: 15%;
 }
 .joinshow > :nth-child(5) {
 	width: 15%;
+
+.joinshow>:nth-child(4) {
+	width: 20%;
 }
 
+.joinshow>:nth-child(5) {
+	width: 10%;
+
+}
+
+.p-div {
+	text-align: right; /* 버튼을 오른쪽으로 정렬 */
+}
+
+.p-button {
+	padding: 5px 10px; /* 버튼 안의 여백 설정 */
+	font-size: 15px; /* 글자 크기 설정 */
+	background-color: #87DBC0; /* 버튼 배경색 */
+	border: none; /* 버튼 테두리 제거 */
+	border-radius: 5px; /* 버튼 테두리 둥글게 */
+	cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+	margin-right: 70px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 </style>
 <!-- 옵션값 정의  -->
 <script>						
@@ -740,29 +811,29 @@
 				/* nav 클릭 로직 함수 */
                 function section_One() {
                     document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Two() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Three() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
-                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid #d3eaff";
                 }
 
                 function section_Four() {
-                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #edfbff";
-                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #edfbff";
+                    document.querySelectorAll(".event:nth-child(1)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(2)")[0].style.borderBottom = "5px solid #d3eaff";
+                    document.querySelectorAll(".event:nth-child(3)")[0].style.borderBottom = "5px solid #d3eaff";
                     document.querySelectorAll(".event:nth-child(4)")[0].style.borderBottom = "5px solid rgb(0, 255, 166)";
                 }
 
@@ -770,16 +841,16 @@
                 function ArtOne() {
                     document.getElementById("art-1").style.display = "block";
                     document.getElementById("art-2").style.display = "none";
-                    document.getElementById("lightning").style.backgroundColor = "#bdf2ff";
-                    document.getElementById("club").style.backgroundColor = "#e4f9ff";
+                    document.getElementById("lightning").style.backgroundColor = "#87DBC0";
+                    document.getElementById("club").style.backgroundColor = "#d7f1e9";
                 }
 
                 // 문의하기 클릭했을 때 호출되는 함수
                 function ArtTwo() {
                     document.getElementById("art-1").style.display = "none";
                     document.getElementById("art-2").style.display = "block";
-                    document.getElementById("lightning").style.backgroundColor = "#e4f9ff";
-                    document.getElementById("club").style.backgroundColor = "#bdf2ff";
+                    document.getElementById("lightning").style.backgroundColor = "#d7f1e9";
+                    document.getElementById("club").style.backgroundColor = "#87DBC0";
                 }
                 
                 //마감일 계산 함수1
@@ -1030,13 +1101,26 @@ $(document).ready(function() {
 		<div id="outer-nav">
 			<div id="outer-board">
 
+<!-- 				<div class="search-area">
+					<div class="search">
+						<div class="search-in">
+							<input id="searchinput" type="text" placeholder="찾으시는 클럽이 있나요?">
+							<button id="searchbutton">
+								<span class="tabler--search"></span>
+							</button>
+						</div>
+					</div>
+				</div> -->
+
 				<div class="search-area">
 					<div class="search">
 						<div class="search-in">
-							<input type="text" placeholder="찾으시는 클럽이 있나요?">
-							<button>
-								<span class="tabler--search"></span>
-							</button>
+							<form action="/racket/search" method="get">
+								<input type="text" name="query" placeholder="찾으시는 클럽이 있나요?">
+								<button type="submit">
+									<span class="tabler--search"></span>
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -1054,7 +1138,9 @@ $(document).ready(function() {
 
 	<div id=wrap>
 
-		<div id="ad">스탬프 광고</div>
+		<div id="ad">
+			<img src="resources/images/stampAD.jpg" alt="Thumbnail">
+		</div>
 
 
 		<!-- 인기모집공고 -->
@@ -1101,6 +1187,7 @@ $(document).ready(function() {
 
 			<!-- 번개모임 -->
 			<article id="art-1">
+
 			<div class="joinshow_container">
 				<!-- 보여지는 뷰 -->
 				<c:forEach var="items" items="${main}">
@@ -1115,11 +1202,31 @@ $(document).ready(function() {
 						모집인원:<span class="member" style="margin-left: 5px;">${items.membersu}</span>
 						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
 					</div>
+
+				<div class="joinshow_container">
+					<!-- 보여지는 뷰 -->
+					<c:forEach var="items" items="${main}">
+						<div class="joinshow" onclick="joindetails(this)"
+							data-matchnum="${items.match_num}" style="align-items: center;">
+							<div class="j1">${items.sprots}</div>
+							<div class="j2">${items.region}</div>
+							<div class="j3">
+								<a href="/racket/facility/${items.facilityID}"
+									onclick="event.stopPropagation()">${items.place}</a>
+							</div>
+							<div class="j4">${items.matchdate}</div>
+							<div class="j5" style="display: flex; align-items: center;">
+								모집인원:${items.membersu}
+								<div style="display: flex; width: 30%; margin-left: auto;">
+									<button onclick="joinMatch(this)">참여</button>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+
 				</div>
-				</c:forEach>
-			</div>
-			<!-- 게시물 조인 스크립트 -->
-			<script>
+				<!-- 게시물 조인 스크립트 -->
+				<script>
 				function joinMatch(button){
 				
 					event.stopPropagation();
@@ -1153,6 +1260,7 @@ $(document).ready(function() {
 										
 				}
 			</script>
+
 			<div class="createjoin">
 							<div style="margin-left: auto; margin-bottom: 30px;">
 								<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
@@ -1183,13 +1291,44 @@ $(document).ready(function() {
 								</select>
 							</div>
 
+				<div class="createjoin">
+					<div style="margin-left: auto; margin-bottom: 30px;">
+						<a onclick="createjoinclose()" style="cursor: pointer;">닫기</a>
+					</div>
+					<div
+						style="display: flex; margin-bottom: 30px; flex-direction: column;">
+						<div style="margin: 0 auto; justify-content: space-between;">
+							<input type="date" id="matchdate"> <input type="hidden"
+								name="date" id="realDate"> <input type="time"
+								id="matchhhour" name="matchhhour"> <select id="sprots"
+								onchange="changeValue()" name="sport">
+								<option value="" disabled selected>선택하세요</option>
+								<option value="테니스">테니스</option>
+								<option value="탁구">탁구</option>
+								<option value="배드민턴">배드민턴</option>
+							</select> <select id="region" name="region">
+								<option value="" disabled selected>선택하세요</option>
+							</select> <select id="place" name="place">
+								<option value="" disabled selected>선택하세요</option>
+							</select> <input type="hidden" id="placeURL"></input> <select
+								id="membersu" name="membersu">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+						</div>
+
+
 						<div class="textdiv">
-							<textarea name="intro" id="intro" placeholder="간단한 번개 소개글을 입력해 보세요." style="display: block; margin: 0 auto;"></textarea>
+							<textarea name="intro" id="intro"
+								placeholder="간단한 번개 소개글을 입력해 보세요."
+								style="display: block; margin: 0 auto;"></textarea>
 							<button onclick="matchform()">등록</button>
 						</div>
 					</div>
 				</div>
-	<!-- 번개모임 상세보기
+				<!-- 번개모임 상세보기
                 <div class="joindetails">
                     <div>종목</div>
                     <div>프로필사진</div>
@@ -1198,18 +1337,18 @@ $(document).ready(function() {
                     <div>구력</div>
                 </div>
                  -->
-	<!-- 번개등록 div -->
+				<!-- 번개등록 div -->
 
-	<div style="display: flex; margin-top: 10px;">
-		<button style="margin-left: auto;" onclick="createjoin()">번개등록</button>
-	</div>
+				<div style="display: flex; margin-top: 10px;">
+					<button style="margin-left: auto;" onclick="createjoin()">번개등록</button>
+				</div>
 
-	<!-- 번개생성 투명도 스타일 부여용 -->
-	<div class="joinhidden"></div>
+				<!-- 번개생성 투명도 스타일 부여용 -->
+				<div class="joinhidden"></div>
 
 
-	<!-- 번개모임 상세보기 -->
-    <script>
+				<!-- 번개모임 상세보기 -->
+				<script>
         // div 클릭 시 플레이어 상세 정보 호출
         function joindetails(buttonElement) {
 
@@ -1230,7 +1369,7 @@ $(document).ready(function() {
                     let joindetails = $('.joindetails');
                     if (joindetails.length > 0) {
 							joindetails.remove();
-							
+							/**/
 							return;
                         
                     } else {
@@ -1242,7 +1381,7 @@ $(document).ready(function() {
                             tempDiv.innerHTML = `
                                 <div class="joindetails" style="height:auto; align-items: center;">
                                     <div class="jd1"><img src="${pageContext.request.contextPath}/resources/img/냥이1.jpg" style="width:100px; height:100px;"></div>
-                                    <div class="jd2">닉네임 : <%= "${item.user_Nickname}"%></div>
+                                    <div class="jd2">닉네임 : <%="${item.user_Nickname}"%></div>
                                     <div class="jd3">나이 : <%="${item.birthday}"%></div>
                                     <div class="jd4">구력 : <%="${item.user_Level}"%></div>
                                     
@@ -1260,8 +1399,8 @@ $(document).ready(function() {
         }
     </script>
 
-	<!-- 번개모임 생성하기 -->
-	<script>
+				<!-- 번개모임 생성하기 -->
+				<script>
 
     let togglecreatejoin = document.querySelector('.createjoin');
     let hidden = document.querySelector('.joinhidden');
@@ -1276,83 +1415,85 @@ $(document).ready(function() {
     }
 </script>
 
-	<!-- 페이징 -->
-	<div class="paging">[ 1 2 3 4 5 ]</div>
 
-	</article>
+			</article>
 
 
 
 
-	<!-- 클럽 -->
+			<!-- 클럽 -->
 
-	<article id="art-2">
+			<article id="art-2">
 
 
-		<div id="board-2">
+				<div id="board-2">
 
-			<div id="local-box">
-				<div class="local" onclick=local_One()>전체</div>
-				<div class="local" onclick=local_Two()>용산구</div>
-				<div class="local" onclick=local_Three()>서대문구</div>
-				<div class="local" onclick=local_Four()>강남구</div>
-				<div class="local" onclick=local_Five()>종로구</div>
-				<div class="local" onclick=local_Six()>관악구</div>
-				<div class="local" onclick=local_Seven()>영등포구</div>
-				<div class="local" onclick=local_Eight()>송파구</div>
-			</div>
+					<div id="local-box">
+						<div class="local" onclick=local_One()>전체</div>
+						<div class="local" onclick=local_Two()>용산구</div>
+						<div class="local" onclick=local_Three()>서대문구</div>
+						<div class="local" onclick=local_Four()>강남구</div>
+						<div class="local" onclick=local_Five()>종로구</div>
+						<div class="local" onclick=local_Six()>관악구</div>
+						<div class="local" onclick=local_Seven()>영등포구</div>
+						<div class="local" onclick=local_Eight()>송파구</div>
+					</div>
 
-			<!-- 한줄 단위 -->
-			<c:forEach var="club" items="${data}" varStatus="status">
-				<c:choose>
-					<c:when test="${status.index % 2 == 0}">
-						<form action="updateViews" method="post" class="update-views-form">
-							<input type="hidden" name="p_num" value="${club.p_num}">
-							<input type="hidden" name="targetUrl" value="C_detail"> <a
-								href="#" class="box-link"
-								onclick="this.closest('form').submit(); return false;">
-								<div class="box-1-textarea">
-									<span class="rounded">${club.region}</span> <span
-										class="rounded">${club.sport}</span>
-									<h3>${club.c_name}</h3>
-									<p>${club.p_title}</p>
-									<br> <span class="magamill"> D-<span
-										id="d_day_${status.index}"></span>
-									</span> <span class="johwesu">조회수: ${club.views}</span>
-								</div>
-								<div class="thumbnail">
-									<img src="resources/images/${club.club_thumbnail}" alt="이미지 설명">
-								</div>
-							</a>
-						</form>
-					</c:when>
-					<c:otherwise>
-						<form action="updateViews" method="post" class="update-views-form">
-							<input type="hidden" name="p_num" value="${club.p_num}">
-							<input type="hidden" name="targetUrl" value="C_detail"> <a
-								href="#" class="box-link"
-								onclick="this.closest('form').submit(); return false;"> <!-- a태그의 부모요소중 가장 가까운 폼태그를 찾아서 전송함. return false는 a태그 링크의 기본 동작(페이지 이동)을 막음. -->
-								<div class="box-2-textarea">
-									<span class="rounded">${club.region}</span> <span
-										class="rounded">${club.sport}</span>
-									<h3>${club.c_name}</h3>
-									<p>${club.p_title}</p>
-									<br> <span class="magamill"> D-<span
-										id="d_day2_${status.index}"></span>
-									</span> <span class="johwesu">조회수: ${club.views}</span>
-								</div>
-								<div class="thumbnail">
-									<img src="resources/images/${club.club_thumbnail}" alt="이미지 설명">
-								</div>
-							</a>
-						</form>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<!-- 여기까지 한줄단위 -->
+					<!-- 한줄 단위 -->
+					<c:forEach var="club" items="${data}" varStatus="status">
+						<c:choose>
+							<c:when test="${status.index % 2 == 0}">
+								<form action="updateViews" method="post"
+									class="update-views-form">
+									<input type="hidden" name="p_num" value="${club.p_num}">
+									<input type="hidden" name="targetUrl" value="C_detail">
+									<a href="#" class="box-link"
+										onclick="this.closest('form').submit(); return false;">
+										<div class="box-1-textarea">
+											<span class="rounded">${club.region}</span> <span
+												class="rounded">${club.sport}</span>
+											<h3>${club.c_name}</h3>
+											<p>${club.p_title}</p>
+											<br> <span class="magamill"> D-<span
+												id="d_day_${status.index}"></span>
+											</span> <span class="johwesu">조회수: ${club.views}</span>
+										</div>
+										<div class="thumbnail">
+											<img src="resources/images/${club.club_thumbnail}"
+												alt="이미지 설명">
+										</div>
+									</a>
+								</form>
+							</c:when>
+							<c:otherwise>
+								<form action="updateViews" method="post"
+									class="update-views-form">
+									<input type="hidden" name="p_num" value="${club.p_num}">
+									<input type="hidden" name="targetUrl" value="C_detail">
+									<a href="#" class="box-link"
+										onclick="this.closest('form').submit(); return false;"> <!-- a태그의 부모요소중 가장 가까운 폼태그를 찾아서 전송함. return false는 a태그 링크의 기본 동작(페이지 이동)을 막음. -->
+										<div class="box-2-textarea">
+											<span class="rounded">${club.region}</span> <span
+												class="rounded">${club.sport}</span>
+											<h3>${club.c_name}</h3>
+											<p>${club.p_title}</p>
+											<br> <span class="magamill"> D-<span
+												id="d_day2_${status.index}"></span>
+											</span> <span class="johwesu">조회수: ${club.views}</span>
+										</div>
+										<div class="thumbnail">
+											<img src="resources/images/${club.club_thumbnail}"
+												alt="이미지 설명">
+										</div>
+									</a>
+								</form>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<!-- 여기까지 한줄단위 -->
 
-			<!-- 모집공고 인덱스 모두 부여하고나서 함수호출. 안그러면 인덱스가 아직 덜 부여된 상태라 오류남-->
-			<script>
+					<!-- 모집공고 인덱스 모두 부여하고나서 함수호출. 안그러면 인덱스가 아직 덜 부여된 상태라 오류남-->
+					<script>
 					document.addEventListener('DOMContentLoaded', function() {
 					    <c:forEach var="club" items="${data}" varStatus="status">
 					        if (${status.index} % 2 === 0) {
@@ -1365,20 +1506,36 @@ $(document).ready(function() {
 			
 					</script>
 
-		</div>
+				</div>
 
-		<!-- 페이징 -->
-		<div class="paging">[ 1 2 3 4 5 ]</div>
+				<div class="p-div">
+					<button class="p-button">게시 요청</button>
+				</div>
 
-	</article>
+				<!-- 페이징 -->
+				<div id="paging">
+					<c:if test="${handler.currentGrp > 1}">
+						<a href="/racket/club?p=${handler.grpStartPage - 1}"><</a>
+					</c:if>
+
+					<c:forEach var="i" begin="${handler.grpStartPage}"
+						end="${handler.grpEndPage}">
+						<a href="/racket/club?p=${i}">${i}</a>
+					</c:forEach>
+
+					<c:if test="${handler.totalPage > handler.grpEndPage}">
+						<a href="/racket/club?p=${handler.grpEndPage + 1}">></a>
+					</c:if>
+				</div>
+			</article>
 
 
-	</section>
+		</section>
 
 	</div>
 
-<!-- 매치 게시물 생성 부분  -->
-<script>
+	<!-- 매치 게시물 생성 부분  -->
+	<script>
 
 
 

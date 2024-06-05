@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
-      <link rel="stylesheet" href="/../resources/css/style.css" />
-      <script src="https://kit.fontawesome.com/353e3b9f74.js" crossorigin="anonymous"></script>
-      <!-- Swiper 라이브러리 추가 -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-      <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Document</title>
+<link rel="stylesheet" href="/racket/resources/css/style.css" />
+<link rel="stylesheet" href="/racket/resources/css/font.css">
+<script src="https://kit.fontawesome.com/353e3b9f74.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Swiper 라이브러리 추가 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
       <style>
          .swiper-slide {
@@ -19,6 +25,18 @@
       </style>
    </head>
    <body>
+      <aside class="btn_wrap">
+         <a href="/racket/stamp.jsp">
+            <div class="stamp_box">
+               <div class="img_box"><img src="/racket/resources/imgs/스탬프.png" alt="" class="stamp_img" /></div>
+               <div class="title_box">
+                  스탬프 <br />
+                  찍으러가기 !
+               </div>
+            </div>
+         </a>
+         <button class="top_btn" id="top_btn">TOP <i class="fa-solid fa-caret-up"></i></button>
+      </aside>
       <header>
          <div id="wrap">
             <div class="logo">
@@ -39,7 +57,7 @@
                </ul> -->
                <div class="tab-container">
                   <input type="radio" name="tab" id="tab1" class="tab tab--1" />
-                  <label class="tab_label" for="tab1">매 칭</label>
+                  <label class="tab_label" for="tab1">매칭</label>
 
                   <input type="radio" name="tab" id="tab2" class="tab tab--2" />
                   <label class="tab_label" for="tab2">시설찾기</label>
@@ -47,7 +65,7 @@
                   <input type="radio" name="tab" id="tab3" class="tab tab--3" />
                   <label class="tab_label" for="tab3">커뮤니티</label>
 
-                  <button class="button"><i class="fa-regular fa-circle-user"></i></button>
+                  <button class="button" id="user_btn"><i class="fa-regular fa-circle-user"></i></button>
 
                   <div class="indicator"></div>
                </div>
@@ -61,6 +79,7 @@
             <div class="map_left"></div>
             <div class="map_right"></div>
          </div>
+         <div class="mapLogo"></div>
       </div>
 
       <!-- <div class="map_marker">
@@ -102,25 +121,6 @@
                   <img src="/img/인천수봉문화회관 소극장.jpg" alt="" />
                   <h3>인천수봉문화회관 소극장</h3>
                   <p>수봉공원에 위치해 다양한 연령층이 함께 즐길 수 있는 공연을 선보이고자 합니다.</p>
-               </div>
-               <div class="swiper-slide">
-                  <div class="img_box">
-                     <img src="/img/애관극장.jpg" alt="" />
-                  </div>
-                  <div class="text_box">
-                     <h3>애관극장</h3>
-                     <p>대한민국 최초의 극장, 애관극장입니다.</p>
-                  </div>
-               </div>
-
-               <div class="swiper-slide">
-                  <div class="img_box">
-                     <img src="/img/제물포도서관.jpg" alt="" />
-                  </div>
-                  <div class="text_box">
-                     <h3>제물포도서관</h3>
-                     <p>숭의동에 위치한 미추홀구립 제물포도서관</p>
-                  </div>
                </div>
             </div>
             <!-- Add Pagination -->
@@ -278,7 +278,7 @@
          </div>
       </footer>
 
-      <script src="/../resources/js/main.js"></script>
+      <script src="/racket/resources/js/main.js"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8wsx0LtLG5OxLSA5UzXpbEAbUjnPEE0&callback=initMap"></script>
    </body>
 </html>

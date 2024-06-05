@@ -12,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.acorn.racket.facility.domain.FacDTO;
+import com.acorn.racket.facility.domain.ReviewDTO;
 
 
 @Component
 public class FacRepository implements FacRepositoryI {
-	@Autowired
-	DataSource ds;
 	@Autowired
     private SqlSession session;
     private static String namespace = "test.facMapper.";
@@ -28,19 +27,10 @@ public class FacRepository implements FacRepositoryI {
     }
     
     //시설 상세보기
-    public FacDTO selectDesc(String facID) {
-    	return session.selectOne(namespace+"selectDesc", facID);
+    public FacDTO selectDesc(Map<String, String> param) {
+    	return session.selectOne(namespace+"selectDesc", param);
     }
 
-	@Override
-	public List<FacDTO> selectSport(@Param("limit") int offset, @Param("offset") int limit, @Param("sport") String sport) {
-		return session.selectList(namespace+"selectSport",  new HashMap<String, Object>() {{
-	        put("limit", limit);
-	        put("offset", offset);
-	        put("sport",sport);
-	    }});
-	}
-	
 	//총 데이터 건수
 	public int selectTotalCount(@Param("parameters") Map<String,Object> parameters) {
 		return session.selectOne(namespace+"selectTotalCount", parameters);
@@ -49,16 +39,67 @@ public class FacRepository implements FacRepositoryI {
 	//필터링 검색
 	public List<FacDTO> selecFilter(@Param("parameters") Map<String,Object> parameters){
 		return session.selectList(namespace+"selectFilter", parameters);
-		
 	}
-
-	@Override
-	public List<FacDTO> selectAll(int offset, int limit) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	//북마크에 아이디 존재 확인
+	public int checkBookmark(@Param("param") Map<String, String> param) {
+		return session.selectOne(namespace+"checkBookmark", param);
 	}
-
-
+	
+	//북마크 수 조회
+	public int selectBookmark(String facID) {
+		return session.selectOne(namespace+"countBookmark", facID);
+	}
+	
+	//북마크 추가
+	public void insertBookmark(@Param("param") Map<String, String> param) {
+		session.insert(namespace+"insertBookmark", param);
+	}
+	
+	//북마크 삭제
+	public void deleteBookmark(@Param("param") Map<String, String> param) {
+		session.delete(namespace+"deleteBookmark", param);
+	}
+	
+	//리뷰 등록
+	public void insertReview(@Param("param") Map<String, Object> param) {
+		session.insert(namespace+"insertReview", param);
+	}
+	
+	//리뷰 조회
+	public List<ReviewDTO> selectReview(String facID){
+		return session.selectList(namespace+"selectReview", facID);
+	}
+	
+	//평균 별점
+	public String seletRating(String facID) {
+		return session.selectOne(namespace+"avgRating", facID);
+	}
+	
+	//회원 정보
+	public Map<String,Object> selectUser(String user) {
+		return session.selectOne(namespace+"selectUser", user);
+	}
+	
+	//리뷰 수정
+	public int updateReview(@Param("param") Map<String, Object> param){
+		return session.update(namespace+"updateReview", param);
+	}
+	
+	//리뷰 삭제
+	public int deleteReview(Map<String, String> param) {
+		return session.delete(namespace+"deleteReview", param);
+	}
+	
+	//찜한 시설 불러오기
+	public List<FacDTO> selectMyFac(String userID){
+		return session.selectList(namespace+"myFacility", userID);
+	}
+	
+	//특정 시설 북마크한 사용자 리스트 불러오기
+	public List<String> selectBookMarkUser(String facID){
+		return session.selectList(namespace+"selectBookmarkUser", facID);
+	}
    
 
 }
