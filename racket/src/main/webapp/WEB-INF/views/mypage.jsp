@@ -70,6 +70,7 @@
             });
             
             let session = '<%=session.getAttribute("user")%>';
+            console.log(session);
             
     		//status 클래스
     		function getStatus(service_status){
@@ -95,7 +96,6 @@
             		let item = data[i];
             		let status = getStatus(item.service_status);
     				let pay = item.payment == '무료' ? 'free':'pay';
-    				let like = item.liked == 'test3' ? 'full':''; //'test3' session으로 변경
     				str = `
     					<div class="item">
     							<div class="badge">
@@ -132,7 +132,7 @@
     	                        <span class="rating">\${item.rating}</span>
     	                    </div>
     	                    <div class="like" id="\${item.facilityID}">
-    	                        <span class="basil--heart-outline \${like}"></span> <span class="footer-font">\${item.count}</span>
+    	                        <span class="basil--heart-outline full"></span> <span class="footer-font">\${item.count}</span>
     	                    </div>
     	                </div>
     	            </div>
@@ -145,7 +145,6 @@
     		$(document).on("click",".like",function(){
     			let click = $(this); 
     			let facID = click.attr('id');
-    			console.log(session);
     			$.ajax({
     				method : "get",
     				url : "/racket/facility/"+facID+"/bookmark",
@@ -153,19 +152,21 @@
     					if(data === -1){
     					}else{
     						click.children('.basil--heart-outline').toggleClass("full");
-    						if(${user.user_ID != 'test3'}){ //session랑 user_id랑 다르면(=다른사람이 북마크한거 찜한거임)
+    						if(${user.user_ID != session}){ //session랑 user_id랑 다르면(=다른사람이 북마크한거 찜한거임)
     							click.children(".footer-font").empty();
     							click.children(".footer-font").append(data);
     						}else{
+    							//마이페이지 찜하기 관련
     							$(".item-list").empty();    					
         						$.ajax({
         							method : "get",
-        							url : "/racket/mypage/"+'test3'+"/update", //session으로 변경
+        							url : "/racket/mypage/"+session+"/update", //session으로 변경
         							success: function(data){
         								console.log(data);
+        								//내가 찜한 시설이 있을 경우 시설 출력
         								if(data.facList.length > 0){
         									render(data.facList);
-        								}else{
+        								}else{ //찜한 시설이 없는 경우
         									let str = `<p class="non-bookmark">
         		                    			<span class="pepicons-print--heart"></span> <span>→</span> <span class="pepicons-print--heart-filled"></span>
         			                    		</p>
@@ -210,7 +211,7 @@
                         <p><strong>스탬프</strong><span class="my">1</span><span>/9</span> 개</p>
                     </div>
                     <!-- sessionScope.user로 변경 -->
-                    <c:if test="${'test3' eq user.user_ID }">
+                    <c:if test="${sessionScope.user eq user.user_ID }">
 	                    <div class="edit">
 	                        <span class="solar--settings-linear"></span>프로필 수정
 	                    </div>
@@ -242,6 +243,7 @@
                 <c:choose>
                     	<c:when test="${not empty list.facList }">
                     <div class="item-list">
+                    		<!-- 반복문 시작 -->
                     		<c:forEach var="facility" items="${list.facList }" varStatus="facStatus">
                 			<div class="item">
                             <div class="badge">
@@ -296,14 +298,14 @@
                                     <div class="like" id="${facility.facilityID}"> 
                                     <c:set var="bookmarkList" value="${list.bookmark[facStatus.index]}" />
                                     	<c:choose>
-                                    		<c:when test="${'test3' eq facility.liked }">
+                                    		<c:when test="${sessionScope.user eq facility.liked }">
                                     			<span class="basil--heart-outline full"></span> <span class="footer-font">${facility.count }</span>
                                     		</c:when>
                                     		<c:otherwise>
                                     			<c:set var="loop_flag" value="false" />
                                     			<c:forEach var="item" items="${bookmarkList}">
                                     				<c:if test="${not loop_flag }">
-												        <c:if test="${'test3' eq item }">
+												        <c:if test="${sessionScope.user eq item }"> 
 												            <c:set var="loop_flag" value="true" />
 												        </c:if>
 												    </c:if>
@@ -319,7 +321,7 @@
                 		</c:forEach>                                 
                     </div>
                     </c:when>
-                    	<c:when test="${'test3' eq user.user_ID }">
+                    	<c:when test="${sessionScope.user eq user.user_ID }">
                     		<p class="non-bookmark">
                     			<span class="pepicons-print--heart"></span> <span>→</span> <span class="pepicons-print--heart-filled"></span>
                     		</p>

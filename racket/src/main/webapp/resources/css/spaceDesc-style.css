@@ -8,7 +8,7 @@ a {
     text-decoration: none;
     color: #b0c7fa;
 }
-.wrap{
+#wrap{
     width: 100%;
 }
 .inner-star::before{color: #FF9600;}

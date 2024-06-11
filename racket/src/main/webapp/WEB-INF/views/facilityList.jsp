@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="/racket/resources/css/space-style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> 
+<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
+<link rel="stylesheet" href="/racket/resources/css/footer-style.css">
+<link rel="stylesheet" href="/racket/resources/css/header-style.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
 <script>
 	var postScroll = true;
@@ -251,8 +254,7 @@
 </head>
 <body>
     <div id="wrap">
-        <header>
-        </header>
+        <jsp:include page="header.jsp"></jsp:include>
         <section>
             <div class="space-content">
                 <h4>시설 찾기</h4>
@@ -452,6 +454,8 @@
             	</div>
             </div>
       </section>
+      <jsp:include page="footer.jsp"></jsp:include>
     </div>
+    <jsp:include page="popup.jsp"></jsp:include>
 </body>
 </html>

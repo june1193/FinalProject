@@ -14,6 +14,17 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+		  <!-- websocket 라이브러리 추가  -->
+		<dependency> 
+            <groupId>org.springframework</groupId> 
+            <artifactId>spring-websocket</artifactId> 
+            <version>${org.springframework-version}</version> 
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.6</version>
+        </dependency>
 	
 		<!-- @ResponseBoy  @RequestBody 시 필요함 , json응답, json을 자바객체로 바인딩시  -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->

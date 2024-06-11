@@ -10,6 +10,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/racket/resources/css/font.css">
 <link rel="stylesheet" href="/racket/resources/css/spaceDesc-style.css">
+<link rel="stylesheet" href="/racket/resources/css/footer-style.css">
+<link rel="stylesheet" href="/racket/resources/css/header-style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa33c4d6f8e26463d3f4c1d31afd3571"></script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
@@ -98,6 +100,8 @@
 	    	}
 	    	
 	    });
+
+	 
 	    
 	    //리뷰 조회
 	    function loadReview(facID){
@@ -118,6 +122,8 @@
 	    				console.log()
 	    				let user = data[i];
 	    				let userRating = user.rating;
+	    	            let session = '<%=session.getAttribute("user")%>';
+	    	            console.log(session);
 	    				//세션 아이디값과 데이터의 유저 아이디가 같으면
 	    				if(uID == user.userID){
 	    					let srating = user.rating;
@@ -139,7 +145,7 @@
 	    					    					
 	    				}
 	    				str = `<li>
-	    				<a href="/racket/mypage/\${user.userID}">
+	    				<a href="/racket/mypage/\${user.userID}.do">
 	                        <div class="profile">
 		                        <div class="img-in">
 		                            <img src="\${user.userImageUrl}" alt="">
@@ -299,8 +305,9 @@
 
 </head>
 <body>
-	<input type="hidden" value="${userInfo.user_ID }" name="uId">
-    <div class="wrap">
+	<input type="hidden" value="${sessionScope.user}" name="uId"  id="uId">
+    <div id="wrap">
+    <jsp:include page="header.jsp"></jsp:include>
         <div class="sub-main">
         	<div class="title-area">
         		<h4>${facility.facName }</h4>
@@ -467,6 +474,7 @@
                 </div>
             </div>
         </div>
+        <jsp:include page="footer.jsp"></jsp:include>
     </div>
 <script type="text/javascript">
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 

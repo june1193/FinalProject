@@ -170,33 +170,7 @@ public class FacDTO {
 	public void setService_end_time(String service_end_time) {
 		this.service_end_time = service_end_time;
 	}
-//	public FacDTO(String facilityID, String minclassname, String service_status, String facName, String payment,
-//			String place, String service_target, String url, String location_x, String location_y,
-//			String service_start_day, String service_end_day, String reception_start_date, String reception_end_date,
-//			String region_name, String image, String details, String tel_num, String service_start_time,
-//			String service_end_time) {
-//		super();
-//		this.facilityID = facilityID;
-//		this.minclassname = minclassname;
-//		this.service_status = service_status;
-//		this.facName = facName;
-//		this.payment = payment;
-//		this.place = place;
-//		this.service_target = service_target;
-//		this.url = url;
-//		this.location_x = location_x;
-//		this.location_y = location_y;
-//		this.service_start_day = service_start_day;
-//		this.service_end_day = service_end_day;
-//		this.reception_start_date = reception_start_date;
-//		this.reception_end_date = reception_end_date;
-//		this.region_name = region_name;
-//		this.image = image;
-//		this.details = details;
-//		this.tel_num = tel_num;
-//		this.service_start_time = service_start_time;
-//		this.service_end_time = service_end_time;
-//	}
+
 	public FacDTO() {
 		// TODO Auto-generated constructor stub
 	}

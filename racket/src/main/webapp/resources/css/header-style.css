@@ -1,0 +1,314 @@
+@charset "UTF-8";
+.fade-out {
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+         }
+         html,
+         body {
+            margin: 0 auto;
+            box-sizing: border-box;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            color: #2a2a2a;
+         }
+         header {
+            position: relative;
+            z-index: 2;
+         }
+
+         a {
+            text-decoration: none;
+            color: #2a2a2a;
+         }
+
+         li {
+            list-style: none;
+         }
+
+         aside {
+            position: fixed;
+            right: 0%;
+            z-index: 11;
+            top: 50%;
+         }
+
+         .wrap {
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 3;
+         }
+         .gmnoprint a,
+         .gmnoprint span,
+         .gm-style-cc {
+            display: none;
+         }
+         .gmnoprint div {
+            background: none !important;
+         }
+
+         .gm-style > div > div > a > div > img {
+            display: none;
+         }
+
+         .nav_list {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 10px;
+            padding: 0;
+         }
+
+         .nav_list i {
+            font-size: 50px;
+         }
+
+         /* Remove this container when use*/
+         .component-title {
+            width: 100%;
+            position: absolute;
+            z-index: 999;
+            top: 30px;
+            left: 0;
+            padding: 0;
+            margin: 0;
+            font-size: 36px;
+            font-weight: 700;
+
+            color: #888;
+            text-align: center;
+         }
+
+         .tab-container {
+            position: relative;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            padding: 2px;
+            border-radius: 9px;
+         }
+
+         .indicator {
+            content: '';
+            width: 130px;
+            height: 28px;
+            background: #ffffff;
+            position: absolute;
+            z-index: 9;
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+            border-radius: 7px;
+            /* 수정된 부분: transition 속성과 cubic-bezier 함수 */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+         }
+
+         .tab {
+            width: 130px;
+            height: 28px;
+            position: absolute;
+            z-index: 99;
+            outline: none;
+            opacity: 0;
+         }
+
+         .tab_label {
+            width: 130px;
+            height: 28px;
+
+            position: relative;
+            z-index: 999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+
+            font-size: 16px;
+            opacity: 0.6;
+            font-weight: bolder;
+
+            cursor: pointer;
+            /* 추가된 부분: hover 시 scale 변화 */
+            transition: opacity 0.2s, transform 0.2s; /* transform 추가 */
+            transform: scale(1);
+         }
+
+         .tab_label:hover {
+            /* 추가된 부분: hover 시 scale 적용 */
+            transform: scale(1.1);
+            opacity: 1;
+         }
+
+         /* checked 상태일 때 label의 opacity를 1로 설정 */
+         .tab:checked + .tab_label {
+            transform: scale(1.1);
+            opacity: 1;
+         }
+
+         .tab--1:checked ~ .indicator {
+            left: 2px;
+         }
+
+         .tab--2:checked ~ .indicator {
+            left: calc(130px + 2px);
+         }
+
+         .tab--3:checked ~ .indicator {
+            left: calc(130px * 2 + 2px);
+         }
+
+         .button {
+            cursor: pointer;
+            position: relative;
+            padding: 10px 24px;
+            margin-left: 5px;
+            font-size: 14px;
+            color: #87dbc0;
+            border: 2px solid rgba(135, 219, 192, 0);
+            background-color: transparent;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+         }
+
+         .button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            border-radius: inherit;
+            scale: 0;
+            z-index: -1;
+            background-color: #60b99d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+         }
+
+         .button:hover::before {
+            scale: 3;
+         }
+
+         .button:hover {
+            color: #212121;
+            scale: 1.1;
+            box-shadow: 0 0px 20px #69b59d;
+         }
+
+         .button:active {
+            scale: 1;
+         }
+
+         .button > i {
+            font-size: 30px;
+         }
+
+         .btn_wrap {
+            width: 121px;
+            height: 90px;
+         }
+         .user_container {
+            position: absolute;
+            margin-top: 40px;
+            text-align: center;
+            width: 280px;
+            margin-left: 100px;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s linear 0.3s, opacity 0.3s linear; /* 부드러운 전환 효과 */
+         }
+
+         .user_container.visible {
+            visibility: visible;
+            opacity: 1;
+            transition-delay: 0s; /* visible 시 효과 지연 없음 */
+         }
+
+         .logout_box {
+            position: relative;
+            border: 2px solid black;
+            margin: 10px;
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #ebebeb;
+         }
+
+         .logout_user i,
+         .login_user i {
+            font-size: 40px;
+            padding: 10px;
+         }
+
+         .login_form,
+         .register_form {
+            cursor: pointer;
+            border: 3px solid rgb(61, 61, 61);
+            padding: 10px;
+            font-weight: bold;
+         }
+
+         .login_form:hover,
+         .register_form:hover {
+            color: #212121;
+            scale: 1.1;
+            box-shadow: 0 0px 20px #a8c2d8;
+         }
+
+         .login_form:active,
+         .register_form:active {
+            scale: 1;
+         }
+
+         .login_box {
+            position: relative;
+            margin: 10px;
+            padding: 30px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: #ebebeb;
+         }
+
+         #user_name {
+            border: 3px solid rgb(61, 61, 61);
+            padding: 10px;
+            font-weight: bold;
+         }
+
+         .user_bookmark,
+         .user_settings {
+            cursor: pointer;
+         }
+
+         .user_bookmark:hover,
+         .user_settings:hover {
+            color: #212121;
+            scale: 1.1;
+            box-shadow: 0 0px 0px #a8c2d8;
+         }
+
+         .user_bookmark:active,
+         .user_settings:active {
+            scale: 1;
+         }
+
+         .bookmark_settings {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 30px;
+         }
+
+         .user_logout {
+            padding: 5px 10px 5px 10px;
+            position: relative;
+            border: 1px solid black;
+            left: 57px;
+            font-size: 14px;
+         }

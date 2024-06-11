@@ -1,0 +1,97 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'Dongle-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108_2@1.0/Dongle-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.chatting-popup{
+width: 40px;
+height: 40px;
+background: linear-gradient(45deg, #87DBC0, #d3eaff);
+border-radius: 50%;
+position: absolute;
+bottom: 0;
+right: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.chatt-badminton, .chatt-pingpong, .chatt-tennis{
+    width: 40px;
+    height: 40px;
+    background-color: #bcbcbc;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chatt-wrap:hover .chatt-badminton{
+    bottom: 65px;
+    transition: all 0.2s 0.1s ease;
+}
+.chatt-wrap:hover .chatt-tennis{
+    right: 65px;
+    transition: all 0.23s 0.1s ease-in-out;
+}
+.chatt-wrap:hover .chatt-pingpong{
+    right: 45%;
+    bottom: 45%;
+    transition: all 0.3s 0.1s ease-in-out;
+}
+.chatt-wrap:hover .chatt-badminton, .chatt-wrap:hover .chatt-tennis, .chatt-wrap:hover .chatt-pingpong{
+    opacity: 1;
+}
+.chatt-wrap{
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    right: 20px;
+    bottom: 20px;
+}
+.chatt-wrap:hover{
+    width: 105px;
+    height: 105px;
+} 
+.fluent--chat-24-filled {
+  display: inline-block;
+  width: 1.3em;
+  height: 1.3em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.96 9.96 0 0 1-4.644-1.142l-4.29 1.117a.85.85 0 0 1-1.037-1.036l1.116-4.289A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2m1.252 11H8.75l-.102.007a.75.75 0 0 0 0 1.486l.102.007h4.502l.101-.007a.75.75 0 0 0 0-1.486zm1.998-3.5h-6.5l-.102.007a.75.75 0 0 0 0 1.486L8.75 11h6.5l.102-.007a.75.75 0 0 0 0-1.486z'/%3E%3C/svg%3E");
+}
+.fluent-emoji-high-contrast--badminton {
+  display: inline-block;
+  width: 1.6em;
+  height: 1.6em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='%23fff'%3E%3Cpath d='M22.23 2.43a7.274 7.274 0 0 0-9.934 2.665l-1.32 2.28a7.276 7.276 0 0 0 1.597 9.185L6.166 27.65c-.33.59-.13 1.33.45 1.67c.58.33 1.33.13 1.67-.45l6.392-11.065a7.276 7.276 0 0 0 8.897-3.16l1.32-2.28l.001-.002c1.995-3.477.803-7.925-2.665-9.932zm-1.07 1.127l-1.031 1.758l-2.195-1.268l.641-1.09a5.74 5.74 0 0 1 2.585.6m-3.404-.539l-.406.692l-.712-.411a5.81 5.81 0 0 1 1.118-.28m-1.88.62l1.133.654l-1.249 2.125l-1.845-1.066a5.737 5.737 0 0 1 1.96-1.714M13.552 5.92l1.867 1.079l-1.253 2.132l-1.854-1.07zm-1.55 2.741l1.823 1.052l-1.25 2.128l-1.069-.616a5.739 5.739 0 0 1 .496-2.564m-.403 3.396l.634.366l-.362.616a5.81 5.81 0 0 1-.272-.982m.615 1.73l.603-1.027l2.199 1.269l-1.018 1.734a5.736 5.736 0 0 1-1.784-1.976m2.361 2.326l1.025-1.747l2.198 1.268l-.674 1.148a5.743 5.743 0 0 1-2.549-.67m3.352.633l.456-.774l.827.477a5.805 5.805 0 0 1-1.283.297m2.05-.633l-1.253-.723l1.252-2.13L21.95 14.4a5.737 5.737 0 0 1-1.973 1.714m2.337-2.283l-1.996-1.151l1.25-2.128l1.981 1.145zm1.546-2.734L21.91 9.97l1.25-2.126l1.199.693c.03.86-.13 1.735-.499 2.56m.41-3.39l-.77-.444l.428-.727c.154.378.269.77.341 1.17m-.7-1.894l-.653 1.113l-2.204-1.273l1.032-1.76a5.737 5.737 0 0 1 1.826 1.92m-4.178 7.111l-1.252 2.13l-2.199-1.269l1.25-2.13zm-2.785-1.606l-1.25 2.13l-2.198-1.268l1.25-2.13zM14.75 9.468l1.252-2.132l2.195 1.268l-1.25 2.131zm2.781 1.604l1.25-2.13l2.202 1.272l-1.25 2.128zm5.043-3.566l-1.25 2.126l-2.201-1.272l1.247-2.126zm-2.788-1.61L18.54 8.023l-2.196-1.269l1.249-2.125z'/%3E%3Cpath d='M21.506 23.94a.932.932 0 0 0-.63-1.37l-2.996-.6l-.006.003l.002-.003l-.51-.28a1.72 1.72 0 0 0-2.34.66c-.46.82-.17 1.87.66 2.33l.51.28l.002-.005l.002.005l2.066 2.26c.43.47 1.19.38 1.5-.17a.941.941 0 0 0-.268-1.213a.86.86 0 0 0 1.138-.337c.23-.41.08-.92-.32-1.15l-.114-.064l.034.014c.45.25 1.02.09 1.27-.36'/%3E%3C/g%3E%3C/svg%3E");
+}
+.fa6-solid--table-tennis-paddle-ball {
+  display: inline-block;
+  width: 1.25em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'%3E%3Cpath fill='%23fff' d='M480 288c-50.1 0-93.6 28.8-114.6 70.8L132.9 126.3l.6-.6l60.1-60.1c87.5-87.5 229.3-87.5 316.8 0c67.1 67.1 82.7 166.3 46.8 248.3C535.8 297.6 509 288 480 288M113.3 151.9l240.8 240.8c-1.4 7.5-2.1 15.3-2.1 23.3c0 23.2 6.2 44.9 16.9 63.7c-3 .2-6.1.3-9.2.3H357c-33.9 0-66.5-13.5-90.5-37.5l-9.8-9.8c-13.1-13.1-34.6-12.4-46.8 1.7L152.2 501c-5.8 6.7-14.2 10.7-23 11s-17.5-3.1-23.8-9.4l-32-32c-6.3-6.3-9.7-14.9-9.4-23.8s4.3-17.2 11-23l66.6-57.7c14-12.2 14.8-33.7 1.7-46.8l-9.8-9.8c-24-24-37.5-56.6-37.5-90.5v-2.7c0-22.8 6.1-44.9 17.3-64.3zM480 320a96 96 0 1 1 0 192a96 96 0 1 1 0-192'/%3E%3C/svg%3E");
+}
+.ic--round-sports-tennis {
+  display: inline-block;
+  position: relative;
+  left: -1px;
+  width: 1.5em;
+  height: 1.5em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M19.52 2.49C17.18.15 12.9.62 9.97 3.55c-1.6 1.6-2.52 3.87-2.54 5.46c-.02 1.58.26 3.89-1.35 5.5l-3.54 3.53c-.39.39-.39 1.02 0 1.42c.39.39 1.02.39 1.42 0l3.53-3.54c1.61-1.61 3.92-1.33 5.5-1.35s3.86-.94 5.46-2.54c2.93-2.92 3.41-7.2 1.07-9.54m-9.2 9.19c-1.53-1.53-1.05-4.61 1.06-6.72s5.18-2.59 6.72-1.06c1.53 1.53 1.05 4.61-1.06 6.72s-5.18 2.59-6.72 1.06M18 17c.53 0 1.04.21 1.41.59c.78.78.78 2.05 0 2.83c-.37.37-.88.58-1.41.58s-1.04-.21-1.41-.59c-.78-.78-.78-2.05 0-2.83c.37-.37.88-.58 1.41-.58m0-2a3.998 3.998 0 0 0-2.83 6.83c.78.78 1.81 1.17 2.83 1.17a3.998 3.998 0 0 0 2.83-6.83A3.998 3.998 0 0 0 18 15'/%3E%3C/svg%3E");
+}
+.chatt-wrap a{
+    display: flex;
+}
