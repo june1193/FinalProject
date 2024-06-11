@@ -19,6 +19,7 @@
 		<typeAlias alias="ajaxCommentDTO" type="com.acorn.racket.community.domain.ajaxCommentDTO"/>
 		<typeAlias alias="InsertPostDTO" type="com.acorn.racket.community.domain.InsertPostDTO"/>
 		<typeAlias alias="replyDTO" type="com.acorn.racket.community.domain.replyDTO"/>
+		<typeAlias alias="review" type="com.acorn.racket.community.domain.ReviewlistDTO"/>
 		
 		<!-- 매치 부분 -->
 		<typeAlias alias="tennisDTO" type="com.acorn.racket.match.domain.tennisDTO"/>
@@ -29,5 +30,8 @@
 		<typeAlias alias="matchdetailDTO" type="com.acorn.racket.match.domain.matchdetailDTO"/>
 		<typeAlias alias="MatchDetailInsertDTO" type="com.acorn.racket.match.domain.MatchDetailInsertDTO"/>
 		<typeAlias alias="MatchCreateInsertDTO" type="com.acorn.racket.match.domain.MatchCreateInsertDTO"/>
+		
+		<!-- 메인 부분 -->
+		<typeAlias alias="MapDTO" type="com.acorn.racket.map.domain.MapDTO"/>
 	</typeAliases>
 </configuration>

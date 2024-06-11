@@ -7,7 +7,7 @@ function initMap() {
 
    // Google Maps 동적 지도 초기화
    const map = new google.maps.Map(mapElement, {
-      center: { lat: 37.6065, lng: 126.778 }, // 서울 중심 좌표
+      center: { lat: 37.5665, lng: 127.178 }, // 서울 중심 좌표
       zoom: 10.9, // 초기 줌 레벨
       disableDefaultUI: true,
    });
@@ -203,7 +203,6 @@ function initMap() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
    // Swiper 초기화
    var mySwiper = new Swiper('.swiper', {
       direction: 'horizontal',
@@ -229,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
          prevEl: '.swiper-button-prev',
       },
    });
-
+   
    // 'top_btn' ID를 가진 요소를 찾아서 변수에 저장합니다.
    var topButton = document.getElementById('top_btn');
 
@@ -244,11 +243,18 @@ document.addEventListener('DOMContentLoaded', function () {
    tabs.forEach(function (tab) {
       tab.addEventListener('change', function () {
          var url = this.getAttribute('data-url'); // 선택된 탭의 URL을 가져옵니다.
-         setTimeout(function () {
-            window.location = url; // 0.2초 후 페이지 이동
-         }, 600); // 탭 변화 효과를 보여준 후 페이지 이동을 위해 0.2초 대기
+         if (url) {
+            document.body.classList.add('fade-out');
+
+            setTimeout(function () {
+               window.location = url; // 0.5초 후 페이지 이동
+            }, 600); // 탭 변화 효과를 보여준 후 페이지 이동을 위해 0.5초 대기
+         }
       });
    });
+   
+   
+   // 스탬프 페이지 이동 부드러운 효과
    var links = document.querySelectorAll('a');
    links.forEach(function (link) {
       link.addEventListener('click', function (event) {
@@ -262,7 +268,69 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       });
    });
+   
+   // 버튼과 사용자 컨테이너 요소를 선택
+   var userButton = document.querySelector('#user_btn');
+   var userContainer = document.querySelector('.user_container');
+   
+   // userButton 클릭 이벤트 리스너 추가
+   userButton.addEventListener('click', function () {
+      // userContainer의 표시 상태를 토글
+      if (userContainer.classList.contains('visible')) {
+         userContainer.classList.remove('visible');
+         setTimeout(function () {
+            userContainer.style.display = 'none';
+         }, 300); // opacity 트랜지션이 완료될 시간 후에 display 변경
+      } else {
+         userContainer.style.display = 'block';
+         requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+               userContainer.classList.add('visible');
+            });
+         });
+      }
+   });
+   
+   const checkboxes = document.querySelectorAll('[id^="checkbox"]');
+   const checkNumElements = document.querySelectorAll('[id^="check_num"]');
+
+   checkboxes.forEach((checkbox, index) => {
+      const checkNumElement = checkNumElements[index];
+      let checkNum = parseInt(checkNumElement.innerText);
+
+      checkbox.addEventListener('change', () => {
+         if (checkbox.checked) {
+            checkNum += 1;
+         } else {
+            checkNum -= 1;
+         }
+         checkNumElement.innerText = checkNum;
+      });
+   });
+
+
 });
 
+function login() {
+   fetch('/racket/login?user_Id=Test123') // user_Id에 기본값을 설정
+      .then((response) => {
+         if (response.ok) {
+            location.reload(); // 페이지 새로고침
+         } else {
+            console.error('로그인 실패');
+         }
+      })
+      .catch((error) => console.error('로그인 중 오류 발생:', error));
+}
 
-
+function logout() {
+   fetch('/racket/logout')
+      .then((response) => {
+         if (response.ok) {
+            location.reload(); // 페이지 새로고침
+         } else {
+            console.error('로그아웃 실패');
+         }
+      })
+      .catch((error) => console.error('로그아웃 중 오류 발생:', error));
+}

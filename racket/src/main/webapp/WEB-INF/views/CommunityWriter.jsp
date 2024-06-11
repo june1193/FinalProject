@@ -102,7 +102,7 @@
         <div class="content_container">
         <input type="hidden" name="user_id" value="jungkiwon" >
             <div class="border_title">
-                <h1 style="margin-left: 15px;">게시판이름</h1>
+                <h1 style="margin-left: 15px;">후기 게시판</h1>
                 <input type="hidden" name="board_name"  value="후기 게시판">
             </div>
 
