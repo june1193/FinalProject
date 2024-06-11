@@ -30,5 +30,8 @@
 		<typeAlias alias="matchdetailDTO" type="com.acorn.racket.match.domain.matchdetailDTO"/>
 		<typeAlias alias="MatchDetailInsertDTO" type="com.acorn.racket.match.domain.MatchDetailInsertDTO"/>
 		<typeAlias alias="MatchCreateInsertDTO" type="com.acorn.racket.match.domain.MatchCreateInsertDTO"/>
+		
+		<!-- 메인 부분 -->
+		<typeAlias alias="MapDTO" type="com.acorn.racket.map.domain.MapDTO"/>
 	</typeAliases>
 </configuration>

@@ -187,7 +187,7 @@ button:hover {
 
 			<div id="info3">
 				<img src="resources/images/present.jpg" alt="인증 아이콘">
-				<p>2024년 07월 30일 까지 모든 스탬프를 모은 모두에게 "~~"를 드립니다!</p>
+				<p>2024년 07월 30일 까지 모든 스탬프를 모은 모두에게 상품을 드립니다!</p>
 			</div>
 		</div>
 
@@ -220,19 +220,19 @@ button:hover {
         function checkLocationRange(lat, lon) {
 
            
-            // 이촌 테니스장 범위     
-            /* var minLat = 37.509911;
+            // 이촌 테니스장 200m 범위     
+            var minLat = 37.509911;
             var maxLat = 37.520481;
             var minLon = 126.972446;
-            var maxLon = 126.995433;  */
+            var maxLon = 126.995433; 
             
 
 
             //서울 전체 범위
-             var minLat = 37.466681;
+        /*      var minLat = 37.466681;
             var maxLat = 37.611778;
             var minLon = 126.866408;
-            var maxLon = 127.094280;
+            var maxLon = 127.094280; */
 
 
 

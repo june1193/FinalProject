@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
- --%>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
@@ -548,8 +547,9 @@ display: flex;
 	width: 10%;
 }
 .joinshow > :nth-child(5) {
-	width: 20%;
-}
+	width: 15%;
+	}
+
 .matchbutton{
 	padding: 5px 10px;
     font-size: 14px;

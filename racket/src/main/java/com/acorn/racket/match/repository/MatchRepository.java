@@ -201,6 +201,7 @@ public class MatchRepository {
     	
     	session.selectOne(ns+"updateMember", data);
     }
+
     
     //매치 시설별 조회
     public List<MatchViewDTO> matchFacilityRP(String data){
@@ -212,6 +213,7 @@ public class MatchRepository {
     	
     	return session.selectList(ns+"Matchcheck", match_num);
     }
+
 
 
 	// ID에 일치하는 스탬프데이터 자체를 반환 관련

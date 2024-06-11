@@ -254,10 +254,7 @@ public class MatchController {
 	        
 	     System.out.println(json);
 		
-		
-		
-
-		System.out.println(json);
+	
 
 		return json;
 	}
