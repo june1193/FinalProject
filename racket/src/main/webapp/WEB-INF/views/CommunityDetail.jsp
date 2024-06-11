@@ -266,10 +266,10 @@
         </div>
         <div class="title_container">
             <div class="title">
-                <h2 style="font-size: 2.5rem; font-weight: bold;">${post.post_title}</h2>
+                <h2 style="font-size: 2rem; font-weight: bold;">${post.post_title}</h2>
             </div>
             <div class="data">
-                <div class="user_id">
+                <div class="user_id" >
                     <h6>${post.user_id}</h6>
                 </div>
                 <div class="date" style="margin-left: 10px;">
@@ -278,7 +278,7 @@
                 <div class="data_board">
                     <div class="1">조회 ${post.post_views}</div>
                     <div class="2">추천 ${post.uppost}</div>
-                    <div class="3">댓글 (25)</div>
+                    <div class="3">댓글 (0)</div>
                 </div>
             </div>
         </div>
@@ -291,13 +291,13 @@
             <div class="inner">
                 <div>
                     <p style="margin-top: 5px; color: #d31900;">${post.uppost}</p>
-                    <button onclick=""
+                    <button onclick="uppost()"
                         style="background-image: url('${pageContext.request.contextPath}/resources/img/좋아요.png'); background-position: center; background-size: 100% 100%;">
                     </button>
                 </div>
                 <div>
                     <p style="margin-top: 5px;">${post.downpost}</p>
-                    <button onclick=""
+                    <button onclick="downpost()"
                         style="background-image: url('${pageContext.request.contextPath}/resources/img/싫어요.png'); background-position: center; background-size: 100% 100%;">
                     </button>
                 </div>
@@ -314,20 +314,23 @@
                             <div class="commnet_content" style="font-size: 10pt;">
                                  ${comment.commentcontent}
                                 <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
-                                    class="recomment">
+                                    class="recomment" >
                             </div>
                             <div class="comment_date" style="font-size: 10pt;">${comment.commentdatetime}</div>
                         </div>
                     </li>
                     <c:forEach items="${reply}" var="reply">
-                    <c:if test="${comment.commentNumber} == ${reply.commentnumber}">
+                    <c:if test="${comment.commentNumber == reply.commentnumber}">                  
                     <li data-comment-id="${comment.commentNumber}">
                         <div class="commnet_content_box">
-                            <div class="commnet_id">${reply.user_id}</div>
+                            <div class="commnet_id" style="margin-left: 30px;">
+                            	<img src="${pageContext.request.contextPath}/resources/img/reply1.png" style="width: 10px; height: 10px;">
+                            	${reply.user_id}
+                            </div>
                             <div class="commnet_content" style="font-size: 10pt;">
                                  ${reply.commentcontent}
                                 <img src="${pageContext.request.contextPath}/resources/img/답글.png" style="height: 16px; margin-left: 5px; margin-top: 5px;"
-                                    class="recomment">
+                                    class="recomment" >
                             </div>
                             <div class="comment_date" style="font-size: 10pt;">${reply.commentdatetime}</div>
                         </div>
@@ -340,7 +343,7 @@
             <!-- 댓글 작성 부분 -->
         
                 <div class="comment_write_box">
-                    <div class="write_id">아이디</div>
+                    <div class="write_id">jungkiwon</div>
                     <div class="write_content"><textarea name="content"  id="content"
                             placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
                     </div>
@@ -435,19 +438,18 @@ function updateCommentList(ajaxdata){
 <script>
 
     document.addEventListener('DOMContentLoaded', () => {
-		
-    	
+    		
         class CommentForm {
             constructor() {
                 this.formHTML = `
-                    <div class="comment_write_box" id="replyForm">
-                        <div class="write_id">아이디</div>
+                    <div class="comment_write_box" id="replyForm" style="margin-left:30px;">
+                        <div class="write_id">jungkiwon</div>
                         <div class="write_content">
                             <textarea id="replyTextarea" placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
                         </div>
                         <div class="write_function">
                             <div class="write_button">
-                                <button>등록</button>
+                                <button onclick="insertreply()">등록</button>
                                 <button>추천 + 등록</button>
                             </div>
                         </div>
@@ -456,9 +458,7 @@ function updateCommentList(ajaxdata){
 
             }
 
-        }
-    	
-    	
+        };
     	
         let commentform = new CommentForm();
         let recomment = document.querySelectorAll('.recomment');
@@ -473,11 +473,126 @@ function updateCommentList(ajaxdata){
                     replyForm.remove();
                 } else {
                     target.insertAdjacentHTML('afterend', commentform.formHTML);
+                    
                 }
 
             });
-        });
-    }); 
+        }); 
+        }); 
+        
+    
+    
+    /* insertreply(); */
+</script>
+<!-- 대댓글 인서트 스크립트 -->
+<script>
+function insertreply(){
+	//먼저 comment_write_box 요소를 선택합니다.
+		var div = document.querySelector('div[data-post-id]');
+		var postid =  div.getAttribute('data-post-id') ;		
+		var commentWriteBox = $('.comment_write_box');
+		
+	
+	// 그 부모 요소인 li 태그를 찾습니다.
+		var parentLi = commentWriteBox.closest('li');
+		var replyTextarea = $('#replyTextarea').val();
+	// li 태그의 data-comment-id 값을 가져옵니다.
+		var commentId = parentLi.attr('data-comment-id');
+		var user_id = 'duckgu';
+		
+		console.log(commentId);
+		console.log(postid);     // 값이 잘 출력되는지 확인합니다.
+		
+		var replydata = {
+				post_id: postid,
+				user_id: user_id,
+				commentcontent: replyTextarea,
+				commentnumber: commentId			
+		}
+		
+		$.ajax({
+			
+			url: "/racket/insertreply" ,
+			type: "POST" ,
+			data: JSON.stringify(replydata) ,
+			contentType: "application/json",
+			dataType: "text" ,
+			
+			success: function(data){
+						
+	                location.reload();
+		
+					},
+
+			error: function(err){
+				console.log(err);
+			}
+		
+	});
+}
 </script>
 
+<!-- 게시글 추천 / 비추천 -->
+<script>
+	function uppost(){
+		
+		var div = document.querySelector('div[data-post-id]');
+		var postid =  div.getAttribute('data-post-id') ;			
+		var post_ids = Number(postid);
+		var post_id = {
+					post_id:post_ids
+		};
+		
+$.ajax({
+			
+			url: "/racket/uppost" ,
+			type: "POST" ,
+			data: JSON.stringify(post_id) ,
+			contentType: "application/json",
+			dataType: "text",
+			
+			success: function(data){
+						
+				location.reload();
+		
+					},
+
+			error: function(err){
+				console.log(err);
+			}
+		
+	});
+		
+	};
+	
+	function downpost(){
+		
+		var div = document.querySelector('div[data-post-id]');
+		var postid =  div.getAttribute('data-post-id') ;			
+		var post_ids = Number(postid);
+		
+		var post_id = {
+				post_id: post_ids
+	};
+$.ajax({
+			
+			url: "/racket/downpost" ,
+			type: "POST" ,
+			data: JSON.stringify(post_id) ,
+			contentType: "application/json",
+			dataType: "text" ,
+			
+			success: function(data){
+						
+	                location.reload();
+		
+					},
+
+			error: function(err){
+				console.log(err);
+			}
+		
+	});
+	};
+</script>
 </html>

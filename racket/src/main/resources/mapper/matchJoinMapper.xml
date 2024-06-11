@@ -116,7 +116,23 @@ value(#{match_num} , #{user_Image_Url} , #{user_Nickname} , #{birthday} , #{user
 		ORDER BY ABS(TIMESTAMPDIFF(SECOND, matchdate, NOW()))
 		ASC;
 	</select>
-
+	<!-- 매치 시설별 쿼리 -->
+	<select id="matchFacility"  parameterType="String"  resultType="MatchViewDTO">
+		SELECT 
+   		 match_num,
+    	sprots,
+    	region,
+   		place,
+    	DATE_FORMAT(matchdate, '%Y-%m-%d %H:%i:%s') AS matchdate,
+    	membersu,
+    	facilityID,
+    	intro,
+    	user_id
+		FROM matchjoin
+		where facilityID = #{facilityID}
+		ORDER BY ABS(TIMESTAMPDIFF(SECOND, matchdate, NOW())) ASC
+	</select>
+	
 	<!-- 매치 유저정보 상세보기 -->
 	<select id="matchdetailview" parameterType="matchdetailDTO"
 		resultType="matchdetailDTO">
@@ -133,6 +149,13 @@ value(#{match_num} , #{user_Image_Url} , #{user_Nickname} , #{birthday} , #{user
 	SET membersu = membersu - 1
 	WHERE match_num = #{match_num}
 	</update>
+	
+	<!-- 매칭 조인 중복 검사 -->
+	<select id="Matchcheck" parameterType="int" resultType="String">
+		select user_Nickname
+		from matchdetail
+		where match_num = #{match_num}
+	</select>
 </mapper>
 <!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
 	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 

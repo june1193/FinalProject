@@ -202,6 +202,19 @@ public class MatchRepository {
     	session.selectOne(ns+"updateMember", data);
     }
 
+    
+    //매치 시설별 조회
+    public List<MatchViewDTO> matchFacilityRP(String data){
+    	return session.selectList(ns+"matchFacility", data);
+    }
+    
+    //매치 중복검사
+    public List<String> MatchcheckRP(int match_num){
+    	
+    	return session.selectList(ns+"Matchcheck", match_num);
+    }
+
+
 
 	// ID에 일치하는 스탬프데이터 자체를 반환 관련
 	public List<Stamp> StampData(String user_ID) {
@@ -215,6 +228,6 @@ public class MatchRepository {
 		session.insert(namespace + "insertStamp", stampDTO);
 		// 인서트 하면 끝이기 때문에 반환값이 필요없음
 	}
-
 	
+
 }

@@ -9,7 +9,48 @@
 <link rel="stylesheet" href="/racket/resources/css/mypage-css.css">
 <link rel="stylesheet" href="font.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <script>
+<style>
+	.match_warp{
+		width:100%;
+		height:300px;
+		
+		
+		border: 1px solid black;
+	}
+	
+	.match_detail{
+		width:100%;
+		height:auto;
+		display: flex;
+		border-bottom: 1px solid black;
+		align-items: center;
+		text-align: center;
+		
+	}
+	.match_detail > :nth-child(1) {
+	width:10%;
+	border-right: 1px solid black;
+	
+}
+	.match_detail > :nth-child(2) {
+	width:30%;
+	text-align: center;
+	border-right: 1px solid black;
+}
+	.match_detail > :nth-child(3) {
+	width:10%;
+	text-align: center;
+	border-right: 1px solid black;
+	margin-left: 200px;
+}
+	.match_detail > :nth-child(4) {
+	width:50%;
+	
+}
+
+</style>
+
+<script>
         $(document).ready(function(){
             $(".tab > ul > li").click(function(){
                 $(".tab >  ul > li").removeClass("active");
@@ -296,7 +337,18 @@
                 </div>
                 <!-- 위에 test3 sessionScope.user로 변경 -->
                 <div class="match-con">
-                    <p>안녕하쇼</p>
+                    <div class="match_warp">
+                    	<div class="match_detail">
+                    		<div>테니스</div>
+                    		<div>마포구 월드컵공원 테니스장</div>
+                    		<div>2024-06-07</div>
+                    		<div>
+                    			<div>덕구</div>
+                    			<div>조패드림</div>
+                    			<div>내가제일잘나가</div>
+                    		</div>
+                    	</div>
+                    </div>
                 </div>
             </div>
         </section>

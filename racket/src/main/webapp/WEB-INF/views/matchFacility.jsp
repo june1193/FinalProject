@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
+ --%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
@@ -547,8 +548,8 @@ display: flex;
 	width: 10%;
 }
 .joinshow > :nth-child(5) {
-	width: 15%;
-	}
+	width: 20%;
+}
 
 .matchbutton{
 	padding: 5px 10px;
@@ -586,6 +587,7 @@ display: flex;
 	margin-right: 70px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 </style>
 <!-- 옵션값 정의  -->
 <script>						
@@ -1081,6 +1083,7 @@ $(document).ready(function() {
 });
 </script>
 
+
 </head>
 
 
@@ -1181,7 +1184,7 @@ $(document).ready(function() {
 			<!-- 번개모임 -->
 			<article id="art-1">
 
-				<div class="joinshow_container">
+				<div class="joinshow_container"  tabindex="0">
 					<!-- 보여지는 뷰 -->
 					<c:forEach var="items" items="${main}">
 						<div class="joinshow" onclick="joindetails(this)"
@@ -1224,22 +1227,17 @@ $(document).ready(function() {
 						type: "POST" ,
 						data: JSON.stringify(jsondata) ,
 						contentType: "application/json",
-						dataType: "text" ,
+						dataType: "json" ,
 						
-						success: function(data){
-				                if(data === "success"){
-				                	alert("참여했습니다.");				                	
-				                }else if(data === "err"){
-				                	alert("이미 참여한 회원입니다.");
-				                }
+						success: function(data){		
 				                
 								},								
 						error: function(err){
 							console.log(err);
 						}	
 				}); 
-				 	location.reload();	
-				
+				alert("참여했습니다."); 	
+				location.reload();
 										
 				}
 			</script>
@@ -1466,7 +1464,7 @@ $(document).ready(function() {
 				<!-- 페이징 -->
 				<div id="paging">
 					<c:if test="${handler.currentGrp > 1}">
-						<a href="/racket/club?p=${handler.grpStartPage - 1}"><</a>
+						<a href="/racket/club?p=${handler.grpStartPage - 1}"></a>
 					</c:if>
 
 					<c:forEach var="i" begin="${handler.grpStartPage}"

@@ -254,8 +254,7 @@ public class MatchController {
 	        
 	     System.out.println(json);
 		
-		
-
+	
 
 		return json;
 	}
@@ -266,12 +265,24 @@ public class MatchController {
 
 		String user_id = (String) request.get("user_Id");
 		int match_num = (int) request.get("match_num");
-
-		System.out.println("받아온 값 : " + user_id);
-		System.out.println("받아온 값 : " + match_num);
+		
+		
+		
+		
+		
 		// id 값으로 유저 정보 찾기
 
 		MatchCreateInsertDTO userdata = ms.getUserDataSV(user_id);
+		
+		// 게시물 중복검사
+		
+		 String checkNic = userdata.getUser_Nickname();
+		 
+		 boolean checkMember = ms.matchCheckSV(match_num , checkNic);
+		 
+		 System.out.println("체크값 : " + checkMember);
+		 if(checkMember == true) {
+		 
 
 		// match_num 값으로 매치 디테일에 인서트
 
@@ -299,5 +310,33 @@ public class MatchController {
 		ms.updateMemberSV(match_num);
 
 		return "success";
+		 }else {
+			 return "err";
+		 }
+		 
+	}
+	
+	// 시설 상세에서 매칭게시판 넘어오는 부분
+	// 매칭 메인
+	@RequestMapping("/match")
+	public String Matchfacility(Model model, @RequestParam(value = "p", defaultValue = "1") int currentPage , @RequestParam("Match") String data) {
+		// 인기랭킹
+		List<Club> r_clubs = nr.selectTopClubs(5);
+		model.addAttribute("r_data", r_clubs);
+		// 클럽 게시판
+		int pageSize = 8; // 페이지당 보여줄 데이터 수 설정
+		int totRecords = nr.getTotalCount();
+		PageHandler handler = new PageHandler(currentPage, totRecords, pageSize);
+		List<Club> list = nr.selectAll(currentPage, pageSize);
+		model.addAttribute("data", list);
+		model.addAttribute("handler", handler);
+		
+		// 매치 뷰
+		
+		
+		List<MatchViewDTO> list2 = ms.matchFacilitySV(data);
+		model.addAttribute("main", list2);
+
+		return "match";
 	}
 }
