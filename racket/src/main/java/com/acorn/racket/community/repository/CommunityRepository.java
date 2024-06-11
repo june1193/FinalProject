@@ -13,6 +13,7 @@ import com.acorn.racket.community.domain.CommentDTO;
 import com.acorn.racket.community.domain.CommentinsertDTO;
 import com.acorn.racket.community.domain.CommunityDetailDTO;
 import com.acorn.racket.community.domain.InsertPostDTO;
+import com.acorn.racket.community.domain.ReviewlistDTO;
 import com.acorn.racket.community.domain.ajaxCommentDTO;
 import com.acorn.racket.community.domain.replyDTO;
 
@@ -93,5 +94,32 @@ public class CommunityRepository  implements CommunityRepositoryI {
 		return list;
 	}
 	
-
+	//대댓글 인서트 부분
+	public void insertReplyRP(replyDTO data) {
+		
+		session.selectOne(ns+"insertreply", data);
+	}
+	
+	//게시글 추천/비추천 부분
+	
+	public void upPostRP(int post_id) {
+		
+		session.selectOne(ns+"uppost", post_id);
+	}
+	
+	public void downPostRP(int post_id) {
+		session.selectOne(ns+"downpost" , post_id);
+	}
+	
+	//게시물 목록 관련
+//  커뮤니티 메인관련 메소드
+  public List<ReviewlistDTO> selectC() {    
+     return session.selectList(ns+"selectC");
+  }
+  
+  
+//  커뮤니티 메인 검색관련 메소드
+  public List<ReviewlistDTO> selectCFilter( String search) {    
+     return session.selectList(ns+"selectCFilter" , search);
+  }
 }

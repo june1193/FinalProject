@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -29,6 +30,7 @@ import com.acorn.racket.community.domain.CommentinsertDTO;
 import com.acorn.racket.community.domain.CommunityDetailDTO;
 import com.acorn.racket.community.domain.CreateCommentDTO;
 import com.acorn.racket.community.domain.InsertPostDTO;
+import com.acorn.racket.community.domain.ReviewlistDTO;
 import com.acorn.racket.community.domain.replyDTO;
 import com.acorn.racket.community.service.CommunityService;
 
@@ -190,5 +192,65 @@ public class CommunityController {
 	            return ResponseEntity.badRequest().body("이미지 업로드 실패");
 	        }
 	    }
-	
+	// 대댓글 인서트 부분
+	 @RequestMapping(value = "/insertreply" , method = RequestMethod.POST , produces = "text/plain;charset=UTF-8")
+	 @ResponseBody
+	 public String insertReply(@RequestBody replyDTO replyDTO) {
+		 
+		 service.insertReplySV(replyDTO);
+		 
+		 return "success";
+	 }
+	 
+	 @RequestMapping(value = "/uppost" , method = RequestMethod.POST)
+	 @ResponseBody
+	 public String upPost(@RequestBody Map<String , Integer> data) {
+		 
+		 int post_id = data.get("post_id");
+		 
+		 service.upPostSV(post_id);
+		 
+		 return "success";
+	 }
+	 
+	 @RequestMapping(value = "/downpost" , method = RequestMethod.POST)
+	 @ResponseBody
+	 public String downPost(@RequestBody Map<String , Integer> data) {
+		 
+		 int post_id = data.get("post_id");
+		 service.downPostSV(post_id);
+		 
+		 return "success";
+	 }
+
+	 
+// 목록부분
+//   커뮤니티 메인 컨트롤러
+   
+	@RequestMapping("/Review")
+   public String commain(Model model) {
+      
+      List<ReviewlistDTO> list = service.commain();
+      
+      model.addAttribute("list", list);
+      
+      
+      return "review";
+      
+   }
+
+   
+   
+//   커뮤니티 메인 검책창 필터
+   @RequestMapping("/ReviewFilter")
+   public String commain2(Model model, String search ) {
+      
+      System.out.println( search);
+      
+      List<ReviewlistDTO> list = service.commainFilter(search);
+      model.addAttribute("list", list);
+      return "review";
+      
+   }
+	 
 }

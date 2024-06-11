@@ -2,6 +2,7 @@ package com.acorn.racket.match.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -125,5 +126,64 @@ public class MatchService  {
 	public void updateMemberSV(int data) {
 		
 		MRP.updateMemberRP(data);
+	}
+	
+	//매치 시설별 조회
+	public List<MatchViewDTO> matchFacilitySV(String data){
+		
+		List<MatchViewDTO> list = MRP.matchFacilityRP(data);
+		
+		// list 를 순회해 데이터를 세분화 하기위해 iterator 사용
+		Iterator<MatchViewDTO> iterator = list.iterator();
+		
+		// String 값을 날짜 형식으로 변환
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		//현재 날짜와 시간을 나타냄
+		Date now = new Date();
+		
+		// 리스트를 순회하며 각 항목의 matchdate를 확인
+		while( iterator.hasNext()) {
+			MatchViewDTO item = iterator.next();
+			try {
+				// matchdate 문자열을 Date 객체로 변환
+				Date matchDate = dateFormat.parse(item.getMatchdate());
+				// matchDate가 현재 시간(now)보다 이전인 경우 해당 항목을 리스트에서 제거
+				if (matchDate.before(now)) {
+                    iterator.remove();
+                }
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		for(MatchViewDTO item : list) {
+			
+			 String originalDate = item.getMatchdate();
+			 
+			 String modifiedDate = originalDate.substring(5, 16);
+			 
+			 item.setMatchdate(modifiedDate);
+		}
+		 
+		 return list;
+	}
+	//매치 중복검사
+	public boolean matchCheckSV(int match_num , String user_Nickname) {
+		
+		boolean check = true;
+		List<String> list = MRP.MatchcheckRP(match_num);
+		
+		System.out.println("매치테스트 : " + list);
+		
+		for(String checkList : list) {
+			
+			if(checkList.equals(user_Nickname)) {
+				check = false;
+				break;
+			}
+		}
+		return check;
 	}
 }

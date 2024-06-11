@@ -55,6 +55,34 @@
 			from reply
 			where post_id = #{post_id}
 	</select>
+	
+	<insert id="insertreply" parameterType="replyDTO">
+		insert into reply (commentnumber , post_id , commentcontent , commentdatetime , user_id)
+		values ( #{commentnumber} , #{post_id} , #{commentcontent} , NOW() , #{user_id} )
+	</insert>
+	
+	<update id="uppost" parameterType="int">
+		UPDATE post
+		SET uppost = uppost + 1
+		WHERE post_id = #{post_id}
+	</update>
+	
+	<update id="downpost" parameterType="int">
+		UPDATE post
+		SET downpost = downpost + 1
+		WHERE post_id = #{post_id}
+	</update>
+	<!-- 게시물 목록 부분 -->
+	<select id="selectC"  resultType="review">
+      select post_id, board_name, user_id, post_title, post_content, post_date, post_time, post_viewes from post
+   </select>
+      
+   <select id="selectCFilter" resultType="review" parameterType="String">
+  
+    SELECT post_id, board_name, user_id, post_title, post_content, post_date, post_time, post_viewes 
+    FROM post
+    WHERE post_content LIKE CONCAT('%',  #{search}, '%')
+   </select>
 </mapper>
 <!-- 쿼리결과 컬럼명과 객체의 속성이 다른경우 resultMap을 사용해서 해당컬럼의 속성을 임의로 정할 수 있다. <select 
 	id="selectAll2" resultMap="orderResult"> SELECT orderno, o.userid , username, 
