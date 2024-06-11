@@ -131,7 +131,7 @@ public class FacService {
 		List<List<String>> likeList = new ArrayList<>();
 		for(FacDTO fac : list) {
 			String id = fac.getFacilityID();
-			List<String> bookmark = repository.selectBookMarkUser(id);
+			List<String> bookmark = repository.selectBookMarkUser(id); //해당 시설에 좋아요한 아이디 확인
 			likeList.add(bookmark);
 		}
 		map.put("facList", list);

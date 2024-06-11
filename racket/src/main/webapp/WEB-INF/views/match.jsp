@@ -495,7 +495,8 @@ display: flex;
 }
 
 .joindetails>:nth-child(3) {
-	width: 20% text-align: center;
+	width: 20% ;
+	text-align: center;
 
 }
 
@@ -569,6 +570,7 @@ display: flex;
 }
 .joinshow > :nth-child(5) {
 	width: 15%;
+}
 
 .joinshow>:nth-child(4) {
 	width: 20%;
@@ -1188,21 +1190,6 @@ $(document).ready(function() {
 			<!-- 번개모임 -->
 			<article id="art-1">
 
-			<div class="joinshow_container">
-				<!-- 보여지는 뷰 -->
-				<c:forEach var="items" items="${main}">
-				<div class="joinshow" onclick="joindetails(this)" data-matchnum="${items.match_num}" style="align-items: center;" >
-					<div class="j1">${items.sprots}</div>
-					<div class="j2">${items.region}</div>
-					<div class="j3">
-						<a href="/racket/facility/${items.facilityID}" onclick="event.stopPropagation()">${items.place}</a>
-					</div>
-					<div class="j4"> ${items.matchdate}</div>
-					<div class="j5" style="display: flex;  align-items: center;">
-						모집인원:<span class="member" style="margin-left: 5px;">${items.membersu}</span>
-						<div style="display: flex; width: 30%; margin-left: auto;"><button onclick="joinMatch(this)">참여</button></div>
-					</div>
-
 				<div class="joinshow_container">
 					<!-- 보여지는 뷰 -->
 					<c:forEach var="items" items="${main}">
@@ -1290,6 +1277,10 @@ $(document).ready(function() {
 										<option value="3">3</option>
 								</select>
 							</div>
+							<div class="textdiv">
+                     <textarea name="intro" id="intro" placeholder="간단한 번개 소개글을 입력해 보세요." style="display: block; margin: 0 auto;"></textarea>
+                     <button onclick="matchform()">등록</button>
+                  </div>
 
 				<div class="createjoin">
 					<div style="margin-left: auto; margin-bottom: 30px;">

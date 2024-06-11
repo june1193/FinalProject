@@ -254,14 +254,6 @@ public class MatchController {
 	        
 	     System.out.println(json);
 		
-		
-		
-
-
-		Gson gson = new Gson();
-		String json = gson.toJson(list);
-
-		System.out.println(json);
 
 		return json;
 	}

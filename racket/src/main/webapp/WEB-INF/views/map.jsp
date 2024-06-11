@@ -72,7 +72,6 @@
             </nav>
          </div>
       </header>
-
       <div id="mapContainer">
          <div id="map"></div>
          <div class="mapImg">
@@ -276,8 +275,8 @@
                </nav>
             </div>
          </div>
+         
       </footer>
-
       <script src="/racket/resources/js/main.js"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8wsx0LtLG5OxLSA5UzXpbEAbUjnPEE0&callback=initMap"></script>
    </body>

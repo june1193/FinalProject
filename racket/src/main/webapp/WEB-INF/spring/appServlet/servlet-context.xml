@@ -28,6 +28,15 @@
       <beans:property name="maxUploadSize" value="10485760" />  <!--  10M   1024byte * 1024  1mbyte  *10  = 10M -->
       <beans:property name="defaultEncoding" value="utf-8" />   <!--  l024byte =>1kbyte   , 1024kbyte == >1M   *10   =>10M -->
    </beans:bean>
+   
+   <!-- 로그인 인터셉터 -->
+   <interceptors>	
+	         <interceptor>	
+	                  <mapping path="/*/*.do" /> 	
+	                  <mapping path="/*.acorn" /> 	
+	                  <beans:bean class="com.acorn.racket.login.controller.SessionInterceptor" />	
+	         </interceptor>	
+	</interceptors>
 	
 	
 	
