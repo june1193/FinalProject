@@ -1392,6 +1392,7 @@ $(document).ready(function() {
                   <div class="local" onclick=local_Eight()>송파구</div>
                </div>
 
+
                <!-- 한줄 단위 -->
                <c:forEach var="club" items="${data}" varStatus="status">
                   <c:choose>
