@@ -16,6 +16,7 @@
         
         a{
         text-decoration:  none;
+        color: black;
         }
 
         #wrap {
@@ -152,9 +153,12 @@
             border:1px solid black;
         }
         */
+        /*
         .post:last-child {
             border-bottom: none;
         }
+        
+        */
 
         .post h2 {
             margin-top: 0;
@@ -363,13 +367,13 @@
                     </div>
                     </div>
                 </div>
-                <a href="/racket/postWriter">
+                <a href="/racket/postWrite">
                 
                 <div class="view_controller">
-                   <button style="margin-left: auto; margin-right: 5px; background-image: url('/racket/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
-                       
-               </div>
-               </a>
+	               <a href="/racket/postWrite"><button  type="button" style="margin-left: auto; margin-right: 5px; background-image: url('/racket/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
+	               </a> 	                    
+	            </div>
+	            </a>
             </div>
         </nav> 
 
@@ -384,21 +388,27 @@
                                   
                     
                     <!-- 반복 -->
-                    <c:forEach var="item" items="${list}" >
-                    <a href="/racket/boarddetail?code=${item.post_id } ">
-                           <div class="post">             
-                           
-                               <div class ="image">
-                                   <img src="${item.img}" style="width: 150px; height: 100px;">
-                               </div>
-                               <div>
-                                   <div class="content"> ${item.post_content} </div>
-                                   <p class="meta">작성자: ${item.user_id}   | 작성일: ${item.post_date} </p>
-                               </div>
-                           </div>  
-                           </a>
-                           </c:forEach>                    
-                         <!--   -->
+					 	 <c:forEach var="item" items="${list}">
+					    <a href="/racket/boarddetail?postnum=${item.post_id}">
+					        <div class="post">
+					            <div class="image">
+					                <c:choose>
+					                    <c:when test="${not empty item.img}">
+					                        <img src="${item.img}" style="width: 150px; height: 100px;">
+					                    </c:when>
+					                    <c:otherwise>
+					                        <img src="/racket/resources/img/Noimg.jpg" style="width: 150px; height: 100px;">
+					                    </c:otherwise>
+					                </c:choose>
+					            </div>
+					            <div>
+					                <div class="content">${item.post_content}</div>
+					                <p class="meta">작성자: ${item.user_id} | 작성일: ${item.post_date}</p>
+					            </div>
+					        </div>
+					    </a>
+					</c:forEach>                 
+                 		  <!--   -->
                         
                        
                      </div> 
@@ -430,19 +440,19 @@
                     </div>
 
                     <div class="post">
-                        <h2>배드민턴 초심입니다</h2>
-                        <p>배드민턴 우습게 봤는데 생각보다 어렵네요? 레슨을 받아야 할 것 같아요 ㅠㅠ</p>
+                        <h2>배드민턴 혼복 파트너 구해요</h2>
+                        <p>배드민턴 여복은 파트너가 있는데.. 파트너 해주실 남성분 있나요?</p>
                         <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-13</p>
                     </div>
 
                     <div class="post">
-                        <h2>테니스는 급수가 어떻게되나요?</h2>
-                        <p>배드민턴은 급수가 딱 정해져 있는것 같은데 테니스는 급수 이름이 요란하네요? 아시는분 알려주세요</p>
+                        <h2>테니스 레슨비용</h2>
+                        <p>테니스 배우시는 회원님들 보통 레슨비용은 어떻게되나요?</p>
                         <p class="meta">작성자: 테스형 | 작성일: 2024-05-07</p>
                     </div>
 
                     <div class="post">
-                        <h2>탁구 어렵네요</h2>
+                        <h2>탁구 복식</h2>
                         <p>탁구 복식은 꼭 번갈아 쳐야하나요 한번씩 치기 빡시네요 ㅠㅠ</p>
                         <p class="meta">작성자: 제빵왕김탁구 | 작성일: 2024-05-07</p>
                     </div>

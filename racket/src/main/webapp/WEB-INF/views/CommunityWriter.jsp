@@ -117,7 +117,9 @@
             </div>
             <div class="controller">
                 <button style="background-image:url(${pageContext.request.contextPath}/resources/img/글등록.png);"></button>
-                <button style="background-image:url(${pageContext.request.contextPath}/resources/img/취소.png);"></button>
+              <a href="/racket/Review">
+                <button type="button" style="background-image:url(${pageContext.request.contextPath}/resources/img/취소.png);"></button>
+              </a>
             </div>
         </div>
         </form>
