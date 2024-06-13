@@ -123,7 +123,7 @@ public class MatchController {
    @RequestMapping("/needLogin") // 이건 url을 알아도 위치검사를 하기때문에 암호화 필요없다
    public String Stamplogin(HttpServletRequest request) {
       HttpSession session = request.getSession(); // 세션 가져오기
-      // 로그인 컨트롤러에 if문으로 redirectStampingUrl값이 null값이 아니면 stamping으로 매핑
+      // 로그인 컨트롤러에 if문으로 redirectStampingUrl값이 null값이 아니면 stamping으로 매핑 이후 세션에서 제거?
       session.setAttribute("redirectStampingUrl", "/stamping");
       return "needLogin";
    }

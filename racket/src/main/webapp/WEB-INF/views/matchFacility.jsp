@@ -1184,7 +1184,7 @@ $(document).ready(function() {
 			<!-- 번개모임 -->
 			<article id="art-1">
 
-				<div class="joinshow_container"  tabindex="0">
+				<div class="joinshow_container" >
 					<!-- 보여지는 뷰 -->
 					<c:forEach var="items" items="${main}">
 						<div class="joinshow" onclick="joindetails(this)"

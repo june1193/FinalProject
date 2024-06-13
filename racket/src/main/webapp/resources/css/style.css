@@ -58,47 +58,70 @@ aside {
 }
 
 #mapContainer {
-	position: relative;
-	align-items: center; /* 수직 가운데 정렬 */
-	width: 100%;
-	height: 650px; /* 원하는 높이로 조정 */
+   position: relative;
+   align-items: center; /* 수직 가운데 정렬 */
+   width: 100%;
+   height: 800px; /* 원하는 높이로 조정 */
 }
 
 #map {
-	position: relative;
-	width: 100%;
-	height: 100%;
+   position: relative;
+   width: 100%;
+   height: 100%;
 }
 
 .mapImg {
-	display: flex; /* Flexbox 설정 */
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	justify-content: space-between;
-	z-index: 10;
-	pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
+   display: flex; /* Flexbox 설정 */
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   justify-content: space-between;
+   z-index: 10;
+   pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
 }
 
-.map_left, .map_right {
-	height: 100%;
-	pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
+.map_left,
+.map_right {
+   height: 100%;
+   pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
 }
 
 .map_left {
-	background-image: url('/racket/resources/imgs/지도 좌측.png');
-	background-size: cover; /* 이미지를 컨테이너에 맞춤 */
-	background-position: left; /* 이미지를 가운데 정렬 */
-	width: 140px;
+   background-image: url('/racket/resources/imgs/지도 좌측.png');
+   background-size: cover; /* 이미지를 컨테이너에 맞춤 */
+   background-position: left; /* 이미지를 가운데 정렬 */
+   width: 140px;
 }
 
 .map_right {
-	background-image: url('/racket/resources/imgs/지도 우측.png');
-	background-size: cover;
-	background-position: right;
-	width: 160px;
+   background-image: url('/racket/resources/imgs/지도 우측.png');
+   background-size: cover;
+   background-position: right;
+   width: 160px;
+}
+
+.map_detail {
+   position: absolute;
+   width: 350px;
+   z-index: 100;
+   top: 30px; /* #map의 위에서 10px 떨어진 위치 */
+   right: 200px; /* #map의 오른쪽에서 10px 떨어진 위치 */
+   background-color: white; /* 배경색을 추가하여 가독성을 높임 */
+   padding: 10px; /* 내부 여백을 추가하여 요소 간의 간격을 조절 */
+   border-radius: 5px; /* 모서리를 둥글게 만듦 */
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자를 추가하여 입체감을 줌 */
+}
+
+.map_detail img {
+   width: 300px;
+   height: 180px;
+}
+
+.direction {
+   display: flex;
+   justify-content: space-between;
 }
 
 .gmnoprint a, .gmnoprint span, .gm-style-cc {
@@ -313,25 +336,24 @@ aside {
 }
 
 .user_container {
-   position: absolute;
-   margin-top: 40px;
-   text-align: center;
-   width: 280px;
-   margin-left: 100px;
-   visibility: hidden;
-   opacity: 0;
-   display: none; /* 처음에는 요소가 보이지 않도록 설정 */
-   transition: opacity 0.3s linear, visibility 0s linear 0.3s; /* 부드러운 전환 효과 */
+	position: absolute;
+	margin-top: 40px;
+	text-align: center;
+	width: 280px;
+	margin-left: 100px;
+	visibility: hidden;
+	opacity: 0;
+	display: none; /* 처음에는 요소가 보이지 않도록 설정 */
+	transition: opacity 0.3s linear, visibility 0s linear 0.3s;
+	/* 부드러운 전환 효과 */
 }
 
 .user_container.visible {
-   visibility: visible;
-   opacity: 1;
-   display: block; /* 요소를 보이게 함 */
-   transition: opacity 0.3s linear; /* visible 시 효과 지연 없음 */
+	visibility: visible;
+	opacity: 1;
+	display: block; /* 요소를 보이게 함 */
+	transition: opacity 0.3s linear; /* visible 시 효과 지연 없음 */
 }
-
-
 
 .logout_box {
 	position: relative;
@@ -411,11 +433,6 @@ aside {
 	font-size: 14px;
 }
 
-.direction {
-	display: flex;
-	justify-content: space-between;
-}
-
 .facility_container::before {
 	content: '';
 	position: absolute;
@@ -438,9 +455,9 @@ aside {
 }
 
 .swiper-slide h3 {
-   white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
-   overflow: hidden; /* 넘치는 텍스트를 숨김 */
-   text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+	white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+	overflow: hidden; /* 넘치는 텍스트를 숨김 */
+	text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
 }
 
 .swiper-slide img {
@@ -509,109 +526,101 @@ aside {
 }
 
 footer {
-   background-color: #84adea;
-   padding: 40px 0px;
-   display: flex;
-   justify-content: space-around;
+	background-color: #84adea;
+	padding: 40px 0px;
+	display: flex;
+	justify-content: space-around;
 }
 
 footer a {
-   color: #2b2b2b;
+	color: #2b2b2b;
 }
 
 .footer_left {
-   display: flex;
-   flex-direction: column;
-   color: #2b2b2b;
-   gap: 30px;
+	display: flex;
+	flex-direction: column;
+	color: #2b2b2b;
+	gap: 30px;
 }
 
 .footer_top {
-   display: flex;
-   align-items: center;
-   font-weight: bold;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
 }
 
 .right_list {
-   margin: 0 auto;
-   display: flex;
-   gap: 30px;
-   align-items: center;
+	margin: 0 auto;
+	display: flex;
+	gap: 30px;
+	align-items: center;
 }
+
 .right_list li:after {
-   display: block;
-   content: '';
-   position: absolute;
-   margin-top: -19px;
-   margin-left: -15px;
-   width: 1px;
-   height: 16px;
-   background-color: grey;
+	display: block;
+	content: '';
+	position: absolute;
+	margin-top: -19px;
+	margin-left: -15px;
+	width: 1px;
+	height: 16px;
+	background-color: grey;
 }
 
 .footer_bottom {
-   font-size: 15px;
-   font-weight: lighter;
+	font-size: 15px;
+	font-weight: lighter;
 }
 
 .footer_right {
-   display: flex;
-   flex-direction: column;
-   gap: 30px;
-   margin-right: 100px;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	margin-right: 100px;
 }
 
 .post_best {
-   display: flex;
-   flex-wrap: wrap;
-   border: 1px solid black;
-   margin-bottom: 15px;
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid black;
+	margin-bottom: 15px;
 }
 
-.best_post1,
-.best_post2,
-.best_post3,
-.best_post4 {
-   width: 540px;
-   height: 250px;
-   margin: 0 auto;
-   margin-top: 20px;
-   margin-bottom: 20px;
-   padding: 30px;
-   border: 1px solid black;
-   display: flex;
-   flex-direction: column;
-   background-color: #ebebeb;
+.best_post1, .best_post2, .best_post3, .best_post4 {
+	width: 540px;
+	height: 250px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 30px;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	background-color: #ebebeb;
 }
 
-.post1_title,
-.post2_title,
-.post3_title,
-.post4_title {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+.post1_title, .post2_title, .post3_title, .post4_title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .post1_contents, .post2_contents, .post3_contents, .post4_contents {
-   flex: 1;
-   margin-bottom: 10px;
+	flex: 1;
+	margin-bottom: 10px;
 }
 
-.post1_footer,
-.post2_footer,
-.post3_footer,
-.post4_footer {
-   display: flex;
-   justify-content: space-between;
-   margin-top: auto;
-   align-items: center;
+.post1_footer, .post2_footer, .post3_footer, .post4_footer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: auto;
+	align-items: center;
 }
 
 .post_right {
-   display: flex;
-   align-items: center;
-   gap: 20px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
 .container input {

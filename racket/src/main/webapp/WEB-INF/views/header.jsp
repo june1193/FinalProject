@@ -5,7 +5,7 @@
       <header>
          <div class="wrap">
             <div class="logo">
-               <a href="">
+               <a href="/racket/map">
                   <h3><i class="fa-solid fa-table-tennis-paddle-ball"></i> 코트 메이트</h3>
                </a>
                <!-- 타이틀 정하기 -->
@@ -18,7 +18,7 @@
                   <input type="radio" name="tab" id="tab2" class="tab tab--2" data-url="/racket/facilityList" />
                   <label class="tab_label" for="tab2">시설찾기</label>
 
-                  <input type="radio" name="tab" id="tab3" class="tab tab--3" data-url="/racket/community" />
+                  <input type="radio" name="tab" id="tab3" class="tab tab--3" data-url="/racket/Review" />
                   <label class="tab_label" for="tab3">커뮤니티</label>
 
                   <button class="button" id="user_btn"><i class="fa-regular fa-circle-user"></i></button>
