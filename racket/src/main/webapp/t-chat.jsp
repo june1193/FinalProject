@@ -26,11 +26,9 @@ var wsocket;
 	      
 		//닉네임가져오기
 		var nickname = $("#uId").val();
-		
-		//만약 session이 null이면 닉네임 입력창 뜨게, 닉네임 입력 안하고 전송하면 입력하라고 유효성 검사
 			$.ajax({
 	        	type : "get",
-	        	url : "/racket/getCount",
+	        	url : "/racket/tennis/getCount",
 	        	success :function(data){
 	        		writeCount(data);
 	        	}
@@ -39,11 +37,52 @@ var wsocket;
 		
 		//소켓 연결
 		function connect(){
-			wsocket = new WebSocket("ws://localhost:8080/webchat/chat-ws");
+			wsocket = new WebSocket("ws://localhost:8080/racket/chat-wsT");
 			wsocket.onopen = onOpen;
 			wsocket.onmessage = onMessage;
 			wsocket.onclose = onClose;
 		}
+		
+		//소켓 연결되면 실행됨
+	    function onOpen(evt) {
+	    	
+	    }
+	     
+	    //상대방한테 메세지 받으면 실행됨
+	    function onMessage(evt) {
+	        var data = evt.data;
+	        var message = data.split(":");
+	        var sender = message[0];
+	        var content = message[1];
+	        let msg = content.trim().charAt(0);
+	        if (msg === '/') { //귓속말
+				if(content.match("/"+nickname)){
+					var temp = content.replace(("/"+nickname), "[귓속말] "+sender+" : ");
+					whisper(temp);
+				}
+	        }else if (data.match("notice")) {
+	        	noticeMessage(data);
+	        }else if(sender === 'count'){
+	        	writeCount(content);
+	        }else if(sender === '감소count'){
+	        	writeCount(content);
+	        }else{
+	        	appendRecvMessage(data);
+	        	
+	        }
+	        
+	     
+	        
+
+	        
+	    }
+	    
+	    function onClose(evt) {
+	    	window.close();   
+	      }
+	    
+	    
+	    
 		
 		var disConnect = false;
 		 function disconnect() {
@@ -57,7 +96,7 @@ var wsocket;
 				//퇴장시 카운트 감소
 		    	$.ajax({
 		    		type : "get",
-		    		url : "/racket/deleteNickname/"+nickname,
+		    		url : "/racket/tennis/deleteNickname/"+nickname,
 		    		success:function(data){
 		    			wsocket.send("감소count:"+data); //상대방한테 보내는 메세지
 		    			writeCount(data); //내 화면 카운트 감소
@@ -76,7 +115,7 @@ var wsocket;
 			  if(!disConnect && nickname != undefined){
 				  $.ajax({
 			    		type : "get",
-			    		url : "/racket/deleteNickname/"+nickname,
+			    		url : "/racket/tennis/deleteNickname/"+nickname,
 			    		success:function(data){
 			    			let today = new Date(); 
 					    	let hours = today.getHours(); // 시
@@ -99,52 +138,14 @@ var wsocket;
 			 
 		        
 		     
-		 	//소켓 연결되면 실행됨
-		    function onOpen(evt) {
-
-				
-				
-		    	
-		    }
-		     
-		    //상대방한테 메세지 받으면 실행됨
-		    function onMessage(evt) {
-		        var data = evt.data;
-		        var message = data.split(":");
-		        var sender = message[0];
-		        var content = message[1];
-		        let msg = content.trim().charAt(0);
-		        if (msg === '/') { //귓속말
-					if(content.match("/"+nickname)){
-						var temp = content.replace(("/"+nickname), "[귓속말] "+sender+" : ");
-						whisper(temp);
-					}
-		        }else if (data.match("notice")) {
-		        	noticeMessage(data);
-		        }else if(sender === 'count'){
-		        	writeCount(content);
-		        }else if(sender === '감소count'){
-		        	writeCount(content);
-		        }else{
-		        	appendRecvMessage(data);
-		        	
-		        }
-		        
-		     
-		        
-
-		        
-		    }
-		    
-		    function onClose(evt) {
-		    	window.close();   
-		      }
-		    
+		 	
+		    //동접수 작성
 		    function writeCount(data){
 		    	$(".count").empty();
     			$(".count").append("<span> ("+data+") </span>");
 		    }
 		    
+		    //귓속말 받았을때
 		    function whisper(msg){
 		    	$(".chatt-area").append("<div class='whisper'>"+ msg+"</div>");
 		    	scrollTop();
@@ -166,6 +167,7 @@ var wsocket;
 		        
 		    }
 		    
+		    //입,퇴장 알림
 		    function noticeMessage(msg){
 		
 		    	$(".chatt-area").append(msg);
@@ -174,7 +176,7 @@ var wsocket;
 		    }
 
 		    
-		    //받는 메시지 채팅창에 추가
+		    //받은 메시지 채팅창에 추가
 		    function appendRecvMessage(msg) {
 		        $(".chatt-area").append( "<div class=''>" + msg+"</div>");        
 		        scrollTop();
@@ -187,7 +189,7 @@ var wsocket;
 		          $(".chatt-box").scrollTop(maxScroll);
 		    }
 		    
-		    //보내는 메시지 채팅창에 추가
+		    //보내는 메시지 내 채팅창에 추가
 		    function appendSendMessage(msg) {  
 		        $(".chatt-area").append( "<div class='send' > " + msg+  "</div>"); 
 		        scrollTop();
@@ -220,18 +222,18 @@ var wsocket;
 		 			       }  		 
 		 			            event.stopPropagation();  // 상위로 이벤트 전파 막음
 		 			        });
+		    			
 		    			//입장 버튼 눌렀을때
 				        $('#entrance').click(function() { 
 				        	nickname = $("#text27").val();
 				        	if(nickname == ''){
 				        		alert("닉네임을 입력해 주세요");
 				        	}else{
-				        		
-
+				        		//닉네임 입력 후 입장 버튼 눌렀으면
 						    	//접속자 수 증가
 								$.ajax({
 						    		type : "get",
-						    		url : "/racket/checkNickname/"+nickname,
+						    		url : "/racket/tennis/checkNickname/"+nickname,
 						    		success:function(data){
 						    			if(data > 0){
 						    				let msg = "<div class='notice'>*** "+hours+":"+minutes+":"+seconds+" ⟣"+nickname+"⟢님이 입장하였습니다. ***</div>";
@@ -265,9 +267,8 @@ var wsocket;
 						    	
 				        	}				        	
 				        });
-				        //$('#exitBtn').click(function() { disconnect(); });
 				        $(document).on("click","#exitBtn",function(){
-				        	disconnect();
+				        	disconnect(); 
 				        });
 				        
 
@@ -411,7 +412,7 @@ text-align: center;
 
 .send{
     text-align:right;
-    color: #ed778c;
+    color: #0e4cab;
     
  }
  
@@ -425,12 +426,7 @@ text-align: center;
  	width: 400px;
  	
  }
- .window:before{
- 	background: linear-gradient(transparent 20%,#ffffffb3 40%,transparent 41%),linear-gradient(90deg,#ffffff66,#0000001a,#ffffff33),#f9a8d1;
- }
- .title-bar{
- 	background: linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), #f9a8d1;
- }
+
  .title-bar.active .title-bar-controls button.is-maximize:before, .title-bar.active .title-bar-controls button[aria-label=Maximize]:before, .window.active .title-bar .title-bar-controls button.is-maximize:before, .window.active .title-bar .title-bar-controls button[aria-label=Maximize]:before{
  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABsSURBVHgBlZHBCYAwDEVT6YaKbqArOILgBLqBosP1VkhAaQ6S1lKad+ihPy8kxLT9+IACG57r2KqKu2GCBpTYtEMOOQELzrnv4z53I4vDjjJnwXsPJWTOAiJGHVNB5pGwLjPk+AlEBLUY7eFebCosBHOR7vYAAAAASUVORK5CYII=) no-repeat 50%, radial-gradient(circle at bottom, #da2a2a, transparent 65%), linear-gradient(#fdc3d0 50%, #ffa1a9 0);
  box-shadow: 0 0 7px 3px #f05dad, inset 0 0 0 1px #fffa;
@@ -438,9 +434,7 @@ text-align: center;
  [role=button]:after, button:after{
  background : linear-gradient(180deg, #fce5f9, #f8ade1 30% 50%, #f285c1 50%, #f2498e);
  }
- .window-body{
- background: #ffeded;
- }
+ 
  body{
  margin: 0;
  }
@@ -482,7 +476,7 @@ justify-content: space-between;
 margin: 0;
 }
 .open{
-background-color: #ffbfe0;
+background-color: #d9d9d9;
 padding: 10px 0;
 border-radius: 2px;
 border: 1px solid #ccc;
@@ -501,7 +495,7 @@ margin: 0;
 	<div id="wrap">
 		<div class="window active" style="max-width: 400px">
 			<div class="title-bar">
-				<div class="title-bar-text">배드민턴을 사랑하는 사람들의 채팅방</div>
+				<div class="title-bar-text">테니스를 사랑하는 사람들의 채팅방</div>
 				<div class="title-bar-controls">
 					<button aria-label="Minimize"></button>
 					<button aria-label="Maximize"></button>
@@ -512,7 +506,7 @@ margin: 0;
 				<div class="field-row-stacked" style="width: 100%">
 					<div class="header">
 						<div class="icon">
-							🏸❤🤍
+							🎾😍							
 							<div class="count">
 								<span> (0)</span>
 							</div>

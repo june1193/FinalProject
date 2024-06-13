@@ -14,8 +14,12 @@
 
   <websocket:handlers>
       <websocket:mapping handler="chatHandler" path="/chat-ws" />
+      <websocket:mapping handler="chatHandlerT" path="/chat-wsT" />
+      <websocket:mapping handler="chatHandlerTT" path="/chat-wsTT" />
   </websocket:handlers>
 
   <bean id="chatHandler" class="com.acorn.racket.chatt.ChatWebSocketHandler" />
+  <bean id="chatHandlerT" class="com.acorn.racket.chatt.ChatWebSocketHandlerT" />
+  <bean id="chatHandlerTT" class="com.acorn.racket.chatt.ChatWebSocketHandlerTT" />
 
 </beans>
