@@ -13,10 +13,10 @@
                <div class="right_title">
                   <nav class="right_nav">
                      <ul class="right_list">
-                        <li><a href="#">매칭</a></li>
-                        <li><a href="#">시설찾기</a></li>
-                        <li><a href="#">문의하기</a></li>
-                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="/racket/club">매칭</a></li>
+                        <li><a href="/racket/facilityList">시설찾기</a></li>
+                        <li><a href="/racket/qna">문의하기</a></li>
+                        <li><a href="/racket/Review">커뮤니티</a></li>
                      </ul>
                   </nav>
                </div>

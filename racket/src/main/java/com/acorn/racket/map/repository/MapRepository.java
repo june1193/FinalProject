@@ -27,4 +27,12 @@ public class MapRepository implements MapRepositoryI {
     public List<MapDTO> getRecommendedPosts() {
         return session.selectList(NAMESPACE + "getRecommendedPosts");
     }
+    
+    public List<MapDTO> getMarker() {
+    	return session.selectList(NAMESPACE + "getMarker");
+    }
+    
+    public MapDTO getFacilityById(String id) {
+        return session.selectOne(NAMESPACE + "getFacilityById", id);
+    }
 }
