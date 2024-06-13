@@ -17,7 +17,7 @@ public class MapController {
     @Autowired
     private MapService mapService;
 
-    @GetMapping("/login")
+    @GetMapping("/login5")
     public String loginUser(@RequestParam(value = "user_Id", required = false, defaultValue = "anonymous") String userId, HttpServletRequest request) {
         // 사용자 ID를 매개변수로 받아 세션에 저장, 제공되지 않았을 경우 "anonymous"를 기본값으로 사용
         HttpSession session = request.getSession();

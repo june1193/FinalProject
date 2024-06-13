@@ -77,9 +77,8 @@
 	    //리뷰 수정 요청
 	    $(document).on("click", ".update.edit", function(){
 	    	let rating = $("input[name='rating']:checked").val();
-	    	console.log("별점"+rating);
 	    	let text = $(".sb-writer > textarea").val();
-	    	let check = checkReview(rating, text)
+	    	let check = checkReview(rating, text) //유효성 검사
 	    	if(check){
 	    		let data = {rating : rating, content : text};
 		    	let dataJSON = JSON.stringify(data);
@@ -122,14 +121,12 @@
 	    				console.log()
 	    				let user = data[i];
 	    				let userRating = user.rating;
-	    	            let session = '<%=session.getAttribute("user")%>';
-	    	            console.log(session);
 	    				//세션 아이디값과 데이터의 유저 아이디가 같으면
 	    				if(uID == user.userID){
 	    					let srating = user.rating;
 	 						let u_rating = '#'+srating+'-s';
 	 						let s_rating = '#'+srating+'-stars';
-	 						console.log(s_rating);
+	 						//별점 색칠
 	    					$(u_rating).prevAll().addBack().addClass("full");
 	 						$(s_rating).prop("checked",true);
 	    					$(".star-rating").addClass("readonly");
@@ -199,8 +196,6 @@
 	    	}
 	    }
 	   
-	    
-	    //리뷰 등록
 	    $(document).on("click",".submit", function(){
 	    	let rating = '';
 	    	rating = $("input[name='rating']:checked").val();
@@ -509,6 +504,7 @@
 	
 </script>
 <script type="text/javascript">
+//리뷰 작성해주세요 부분 평균 별점 표시
 var rating = "${facility.rating}";
 var table = document.querySelector('.RS');
 var totalRating = 5;

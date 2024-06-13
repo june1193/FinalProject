@@ -41,6 +41,7 @@
 		//.sport > ul > li input, #submit
 		$(".form ul > li > input,.search-btn, #submit").click(function(){
 			$(".item-list").children().remove();
+			//화면 바뀌기 때문에 초기화
 			offset = 0;
 			limit = 20;
 	        
