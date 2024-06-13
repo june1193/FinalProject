@@ -50,4 +50,12 @@ public class MapService {
 		return list;
 
 	}
+	
+	public List<MapDTO> getMarker() {
+		return repository.getMarker();
+	}
+	
+	public MapDTO getFacilityById(String id) {
+        return repository.getFacilityById(id);
+    }
 }

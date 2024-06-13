@@ -18,6 +18,8 @@ public class MapDTO {
 	String service_start_time;
 	String service_end_time;
 	int post_id;
+	int uppost;
+	int downpost;
 	String post_title;
 	String user_id;
 	String post_content;
