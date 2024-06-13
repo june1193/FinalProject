@@ -69,8 +69,9 @@
                 }
             });
             
-            let session = '<%=session.getAttribute("user")%>';
-            console.log(session);
+            var session = '<%=(String)session.getAttribute("user")%>';
+            console.log("세션"+session);
+            var userId = "${user.user_ID}";
             
     		//status 클래스
     		function getStatus(service_status){
@@ -145,6 +146,7 @@
     		$(document).on("click",".like",function(){
     			let click = $(this); 
     			let facID = click.attr('id');
+    			let uID = $("input[name='uId']").val();
     			$.ajax({
     				method : "get",
     				url : "/racket/facility/"+facID+"/bookmark",
@@ -152,7 +154,7 @@
     					if(data === -1){
     					}else{
     						click.children('.basil--heart-outline').toggleClass("full");
-    						if(${user.user_ID != session}){ //session랑 user_id랑 다르면(=다른사람이 북마크한거 찜한거임)
+    						if(userId != session ){ //session랑 user_id랑 다르면(=다른사람이 북마크한거 찜한거임)
     							click.children(".footer-font").empty();
     							click.children(".footer-font").append(data);
     						}else{
@@ -194,6 +196,7 @@
     </script>
 </head>
 <body>
+<input type="hidden" value="${sessionScope.user}" name="uId"  id="uId">
     <div class="wrap">
         <section>
             <div class="mypage-box">
@@ -205,7 +208,7 @@
                     </div>
                     <div class="p-desc">
                         <h2>${user.user_Nickname }</h2>
-                        <p><strong>성별</strong>${user.gender }</p>
+                        <p><strong>성별</strong>${user.sex }</p>
                         <p><strong>주종목</strong>${user.exercise }</p>
                         <p><strong>급수</strong>${user.user_Level }</p>
                         <p><strong>스탬프</strong><span class="my">1</span><span>/9</span> 개</p>

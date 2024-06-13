@@ -26,8 +26,8 @@ public class FacService {
 	
 	//필터 검색
 	public Map selectFilter(Map<String,Object> parameters){
-		List<FacDTO> list = repository.selecFilter(parameters);
-		int count = repository.selectTotalCount(parameters);
+		List<FacDTO> list = repository.selecFilter(parameters); //시설목록 가져옴
+		int count = repository.selectTotalCount(parameters); //시설 총 데이커 컨수 가져옴
 		
 
 		Map<String, Object> map = new HashMap ();		
@@ -115,7 +115,6 @@ public class FacService {
 	
 	//리뷰 수정
 	public int updateReview(Map<String, Object> param) {
-		System.out.println("서비스 "+repository.updateReview(param));
 		return repository.updateReview(param);
 	}
 	
