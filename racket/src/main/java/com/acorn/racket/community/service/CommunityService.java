@@ -122,7 +122,34 @@ public class CommunityService   implements CommunityServiceI {
 	   //커뮤니티 메인 목록 관련
 	      public List<ReviewlistDTO> commainFilter( String search){      
 	         
-	         return cr.selectCFilter( search );
+	    	  List<ReviewlistDTO> list = cr.selectCFilter( search );
+	    	  // 정규식 패턴 설정
+		      String regex = "src=\"([^\"]*)\"";
+		      Pattern pattern = Pattern.compile(regex);
+		      
+		      // HTML 태그 제거 정규식 패턴
+		      String htmlTagRegex = "<[^>]*>";
+		      Pattern htmlTagPattern = Pattern.compile(htmlTagRegex);
+
+		      // 리스트를 순회하며 각 게시글의 첫 번째 이미지 경로 추출 및 설정
+		      for (ReviewlistDTO dto : list) {
+		          String postContent = dto.getPost_content();
+		          Matcher matcher = pattern.matcher(postContent);
+
+		          if (matcher.find()) {
+		              String firstImgSrc = matcher.group(1);
+		              dto.setImg(firstImgSrc);
+		          } else {
+		              // 이미지가 없는 경우 null 또는 빈 문자열을 설정
+		              dto.setImg(null); // 또는 dto.setImg("");
+		          }
+		          // HTML 태그 제거
+		          Matcher htmlTagMatcher = htmlTagPattern.matcher(postContent);
+		          String plainTextContent = htmlTagMatcher.replaceAll("");
+		          dto.setPost_content(plainTextContent);
+		      } 
+	    	 
+	         return list;
 	         
 	      }
 	

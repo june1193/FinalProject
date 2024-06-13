@@ -79,6 +79,7 @@
             margin: 0 auto;
 
             margin-bottom: 100px;
+            line-height: 25px;
         }
 
         .realcontent {
@@ -238,6 +239,8 @@
             height: 100%;
             margin-top: 15px;
             display: flex;
+            
+            position: relative;;
         }
 
         .view_controller button {
@@ -256,6 +259,13 @@
         img {
             cursor: pointer;
         }
+        
+        .postwrite{
+             position:absolute;
+             right:0px;
+        }
+        
+     
     </style>
 
 </head>
@@ -356,24 +366,64 @@
                 </div>
             
         </div>
+        
         <!-- 글목록 부분 -->
-        <form action="">
+        <form action="/racket/boarddetail"  name="frm">
             <div class="view_controller">
-                <button
+              <a href="/racket/Review">
+                <button  type="button"
                     style="background-image: url('${pageContext.request.contextPath}/resources/img/글목록.png'); background-position: center; background-size: 100% 100%;"></button>
-                <button
+              </a>
+                <button  id="beforeButton" type="button" onclick="sendBefore()" 
                     style="margin-left: 30px; background-image: url('${pageContext.request.contextPath}/resources/img/이전글.png'); background-position: center; background-size: 100% 100%;"></button>
-                <button
+                <button  id="afterButton"  type="button" onclick="sendAfter()" 
                     style="background-image: url('${pageContext.request.contextPath}/resources/img/다음글.png'); background-position: center; background-size: 100% 100%;"></button>
-                <button
+              
+              <a  class="postwrite"  href="/racket/postWrite">
+                <button  type="button"
                     style="margin-left: auto; margin-right: 5px; background-image: url('${pageContext.request.contextPath}/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
+            </a>
             </div>
+           	  
+            
+              <input type="hidden"  value="${param.postnum}"  id="postnum"  name="postnum"/>
+            <!--     
+             <input type="text"  value=" <%=request.getParameter("postnum") %>"  id="code"  name="code"/>
+          -->
         </form>
-    </div>
+    </div> 
+    
 </body>
 
 <!-- 댓글insert 스크립트 -->
 <script>
+
+//이전글보기
+function sendBefore(){
+    // 현재코드값
+    let codeTag = document.querySelector("#postnum");
+    let code = parseInt(codeTag.value, 10); // 문자열을 정수로 변환
+    
+    if (code <= 1) {
+        alert("이전글이 없습니다.");
+        return; // 더 이상 동작하지 않음
+    } else {
+        let beforeCode = code - 1;
+        codeTag.value = beforeCode;
+        document.frm.submit();
+    }
+}
+
+// 다음글보기
+function sendAfter(){
+    let codeTag = document.querySelector("#postnum");
+    let code = parseInt(codeTag.value, 10); // 문자열을 정수로 변환
+    let afterCode = code + 1;
+    
+    codeTag.value = afterCode;
+    document.frm.submit();
+}
+
 
 function createcomment(){
 	
