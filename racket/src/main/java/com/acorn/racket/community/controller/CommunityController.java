@@ -146,7 +146,9 @@ public class CommunityController {
         
         service.insertPostSV(insert);
 		
+
         return "redirect:/Review";
+
 	}
 	
 	//summernote 이미지 업로드 부분

@@ -4,13 +4,93 @@ function initMap() {
       console.error('Element with id "map" not found.');
       return;
    }
+   
 
    // Google Maps 동적 지도 초기화
    const map = new google.maps.Map(mapElement, {
-      center: { lat: 37.5665, lng: 127.178 }, // 서울 중심 좌표
-      zoom: 10.9, // 초기 줌 레벨
+      center: { lat: 37.5665, lng: 127.028 }, // 서울 중심 좌표
+      zoom: 11.3, // 초기 줌 레벨
       disableDefaultUI: true,
    });
+   
+    const iconBase = '/racket/resources/imgs/'; // 아이콘 파일들이 저장된 기본 경로
+
+    const icons = {
+        '테니스장': {
+            url: iconBase + 'tennis.png',
+            size: new google.maps.Size(64, 64), // 원본 이미지의 크기
+            scaledSize: new google.maps.Size(64, 64), // 스케일링된 크기
+            anchor: new google.maps.Point(64, 64) // 앵커 포인트 설정
+        },
+        '배드민턴장': {
+            url: iconBase + 'badminton.png',
+            size: new google.maps.Size(64, 64),
+            scaledSize: new google.maps.Size(64, 64),
+            anchor: new google.maps.Point(64, 64)
+        },
+        '탁구장': {
+            url: iconBase + 'pingpong.png',
+            size: new google.maps.Size(64, 64),
+            scaledSize: new google.maps.Size(64, 64),
+            anchor: new google.maps.Point(64, 64)
+        }
+    };
+
+    facmarkers.forEach(function (facmarker) {
+      const lat = parseFloat(facmarker.location_y);
+      const lng = parseFloat(facmarker.location_x);
+
+      if (isNaN(lat) || isNaN(lng)) {
+         console.error('Invalid coordinates:', facmarker);
+         return;
+      }
+
+      const markerIcon = icons[facmarker.minclassname] || icons['default'];
+
+      const marker = new google.maps.Marker({
+         position: { lat: lat, lng: lng },
+         map: map,
+         icon: markerIcon
+      });
+
+      marker.addListener('click', function () {
+         fetchFacilityDetails(facmarker.facilityID);
+      });
+   });
+
+
+
+   function fetchFacilityDetails(id) {
+   console.log('Fetching details for facility ID:', id);
+
+	   $.ajax({
+        url: '/racket/facilityDetails',
+        method: 'GET',
+        data: { id: id },       
+        success: function(data) {
+            console.log('Facility details retrieved:', data);
+            updateFacilityDetails(data);
+        },
+        error: function(err) {
+            console.error('Error fetching facility details:', err);
+        }
+    });
+	}
+
+	function updateFacilityDetails(facility) {
+	   if (!facility) {
+	      console.error('No facility data provided');
+	      return;
+	   }
+	
+	   $('.map_detail').show();
+	   $('.detail_title').text(facility.facName);
+	   $('.detail_address').html(`<i class="fas fa-location-arrow"></i> ${facility.region_name}`);
+	   $('.detail_tel').html(`<i class="fas fa-phone"></i> ${facility.tel_num}`);
+	   $('.detail_time').html(`<i class="fas fa-calendar-check"></i> ${facility.service_start_time} - ${facility.service_end_time}`);
+       $('.detail_img').html(`<img src="${facility.image}" alt="예시" id="detail_img" />`);
+	}
+
 
    // GeoJSON 데이터 로드
    map.data.loadGeoJson('/racket/resources/json/Seoul_MapData.geojson');
@@ -43,6 +123,9 @@ function initMap() {
       서대문구: { lat: 37.5792, lng: 126.9368 },
       강북구: { lat: 37.6283, lng: 127.0253 },
    };
+   
+ 
+   
 
    for (const [name, coords] of Object.entries(districts)) {
       new google.maps.Marker({
@@ -252,22 +335,22 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       });
    });
-   
-   
-   // 스탬프 페이지 이동 부드러운 효과
-   var links = document.querySelectorAll('a');
-   links.forEach(function (link) {
+
+    // 페이지 이동 부드러운 효과
+    var links = document.querySelectorAll('a');
+    links.forEach(function (link) {
       link.addEventListener('click', function (event) {
-         var href = link.getAttribute('href');
-         if (href && (href.startsWith('/') || href.startsWith(location.origin))) {
-            event.preventDefault();
-            document.body.classList.add('fade-out');
-            setTimeout(function () {
-               window.location.href = href;
-            }, 500);
-         }
+        var href = link.getAttribute('href');
+        if (href && (href.startsWith('/') || href.startsWith(location.origin))) {
+          event.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(function () {
+            window.location.href = href;
+          }, 500);
+        }
       });
-   });
+    });
+
    
    // 버튼과 사용자 컨테이너 요소를 선택
    var userButton = document.querySelector('#user_btn');
