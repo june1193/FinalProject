@@ -373,8 +373,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-function login() {
-   fetch('/racket/login?user_Id=Test123') // user_Id에 기본값을 설정
+/*function login() {
+   fetch('/racket/login?user_ID=Test123') // user_Id에 기본값을 설정
       .then((response) => {
          if (response.ok) {
             location.reload(); // 페이지 새로고침
@@ -383,7 +383,7 @@ function login() {
          }
       })
       .catch((error) => console.error('로그인 중 오류 발생:', error));
-}
+}*/
 
 function logout() {
    fetch('/racket/logout')
