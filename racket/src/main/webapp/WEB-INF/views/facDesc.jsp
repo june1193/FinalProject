@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/racket/resources/css/font.css">
+<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
 <link rel="stylesheet" href="/racket/resources/css/spaceDesc-style.css">
 <link rel="stylesheet" href="/racket/resources/css/footer-style.css">
 <link rel="stylesheet" href="/racket/resources/css/header-style.css">
@@ -122,8 +123,6 @@
 	    				console.log()
 	    				let user = data[i];
 	    				let userRating = user.rating;
-	    	            let session = '<%=session.getAttribute("user")%>';
-	    	            console.log(session);
 	    				//세션 아이디값과 데이터의 유저 아이디가 같으면
 	    				if(uID == user.userID){
 	    					let srating = user.rating;
@@ -284,6 +283,7 @@
 	    });
 	 	
 	 	
+	 	
 	 	//북마크
 	 	$(".bookmark").click(function(){
 			$.ajax({
@@ -305,7 +305,7 @@
 
 </head>
 <body>
-	<input type="hidden" value="${sessionScope.user}" name="uId"  id="uId">
+	<input type="hidden" value="${sessionScope.loggedInUser.userId}" name="uId"  id="uId">
     <div id="wrap">
     <jsp:include page="header.jsp"></jsp:include>
         <div class="sub-main">
@@ -392,7 +392,7 @@
 	                		<span class="bookmark-count">${facility.count }</span>
 	                    </div>
 	                    <div class="match-btn">
-	                        <button>매칭 찾기</button>
+	                        <button type="button"><a href="/racket/match?Match=${facility.facilityID}">매칭 찾기</a></button>
 	                    </div>
                     </div> 
                 </div>
@@ -522,5 +522,6 @@ function rateIt(rating) {
 }
 rateIt(rating);
 </script>
+<jsp:include page="popup.jsp"></jsp:include>
 </body>
 </html>
