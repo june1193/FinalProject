@@ -18,7 +18,7 @@
                 <a href="javascript:popupOpen('b-chat');" title="배드민턴방"><span class="fluent-emoji-high-contrast--badminton"></span></a>
             </div>
             <div class="chatt-pingpong">
-                <span onClick="popupOpen('tt-chat')" class="fa6-solid--table-tennis-paddle-ball"></span>
+                <a href="javascript:popupOpen('tt-chat');" title="탁구방"><span class="fa6-solid--table-tennis-paddle-ball"></span></a>
             </div>
             <div class="chatt-tennis">
                 <a href="javascript:popupOpen('t-chat');" title="테니스방"><span class="ic--round-sports-tennis"></span></a>
