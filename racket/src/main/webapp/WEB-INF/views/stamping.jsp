@@ -149,7 +149,7 @@ button:hover {
 	<div id="wrap">
 		<div id="centerbox">
 			<h1 id="change"></h1>
-			<p>유저 아이디</p>
+			<p>${id_info.userId}</p>
 			<div id="stamp-space">
 				<div id="img-space">
 					<img src="resources/images/tennis_stamp.jpg" alt="">
@@ -221,18 +221,18 @@ button:hover {
 
            
             // 이촌 테니스장 200m 범위     
-            var minLat = 37.509911;
+           /*  var minLat = 37.509911;
             var maxLat = 37.520481;
             var minLon = 126.972446;
             var maxLon = 126.995433; 
-            
+             */
 
 
             //서울 전체 범위
-        /*      var minLat = 37.466681;
+			var minLat = 37.466681;
             var maxLat = 37.611778;
             var minLon = 126.866408;
-            var maxLon = 127.094280; */
+            var maxLon = 127.094280; 
 
 
 

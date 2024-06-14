@@ -58,6 +58,12 @@ body {
         <button id="login-btn">로그인</button>
         <button id="signup-btn">회원가입</button>
     </div>
+    
+    <script>
+    document.getElementById("login-btn").addEventListener("click", function() {
+        window.location.href = "/racket/login";
+    });
+</script>
 </div>
 </body>
 </html>

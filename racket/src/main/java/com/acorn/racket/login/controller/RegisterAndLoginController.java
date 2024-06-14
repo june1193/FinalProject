@@ -71,6 +71,18 @@ public class RegisterAndLoginController {
             // 로그인 성공 시 세션에 사용자 정보를 저장합니다.
             session.setAttribute("loggedInUser", user);
             model.addAttribute("user", user);
+
+//
+         // 세션에 redirectStampingUrl이 있는지 확인
+            String redirectStampingUrl = (String) session.getAttribute("redirectStampingUrl");
+            System.out.println("이게 지금 널인가?"+redirectStampingUrl);
+            if (redirectStampingUrl != null) {
+                // 세션에 redirectStampingUrl이 있으면 해당 URL로 리디렉션
+                session.removeAttribute("redirectStampingUrl"); // 일회용 URL이므로 사용 후 제거
+                return "redirect:" + redirectStampingUrl;
+            }
+//
+            
             // 성공 페이지로 리디렉션합니다.
             return "redirect:/map";
         } else {
