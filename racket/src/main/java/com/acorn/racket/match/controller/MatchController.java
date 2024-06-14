@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.acorn.racket.login.domain.UserLoginDTO;
 import com.acorn.racket.match.domain.Club;
 import com.acorn.racket.match.domain.MatchCreateDTO;
 import com.acorn.racket.match.domain.MatchCreateInsertDTO;
@@ -100,8 +101,8 @@ public class MatchController {
    @RequestMapping("/stamp")
    public String StampMain(HttpServletRequest request, Model model) {
       HttpSession session = request.getSession(); // 세션 가져오기
-      /* String id = (String) session.getAttribute("user_ID"); */ // 세션에서 "id" 속성 값 가져오기
-      String id = "user1"; // 임시로 id 값을 설정
+      UserLoginDTO id = (UserLoginDTO) session.getAttribute("loggedInUser");  // 세션에서 "id" 속성 값 가져오기
+      System.out.println("오긴 하냐?" + id);
 
       // 세션에 user_ID가 없으면 뷰만 리턴
       if (id == null) {
@@ -110,11 +111,13 @@ public class MatchController {
          return "stampMain";
       }
 
-      List<Stamp> Slist = nr.StampData(id);
+      String userId = id.getUserId();
+      
+      List<Stamp> Slist = nr.StampData(userId);
       System.out.println(Slist);
       model.addAttribute("s_data", Slist);
 
-      int countS = nr.countStamps(id);
+      int countS = nr.countStamps(userId);
       model.addAttribute("countStamp", countS);
       return "stampMain";
    }
