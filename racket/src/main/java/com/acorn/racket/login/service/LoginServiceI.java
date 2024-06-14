@@ -1,5 +1,7 @@
 package com.acorn.racket.login.service;
 
-public interface LoginServiceI {
+import com.acorn.racket.login.domain.UserLoginDTO;
 
+public interface LoginServiceI {
+    UserLoginDTO login(String username, String password);
 }
