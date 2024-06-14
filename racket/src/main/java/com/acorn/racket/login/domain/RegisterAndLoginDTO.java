@@ -1,17 +1,18 @@
 package com.acorn.racket.login.domain;
 
-public class UserLoginDTO {
+public class RegisterAndLoginDTO {
     private String userId;
     private String userNickname;
     private String password;
     private String userName;
-    private String birthDay; // 필드명 변경
+    private String birthday;
     private String userEmail;
     private String sex;
     private String exercise;
     private int userLevel;
     private String userImageUrl;
 
+    // Getters and Setters
     public String getUserId() {
         return userId;
     }
@@ -44,12 +45,12 @@ public class UserLoginDTO {
         this.userName = userName;
     }
 
-    public String getBirthDay() { // 메소드명 변경
-        return birthDay;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setBirthDay(String birthDay) { // 메소드명 변경
-        this.birthDay = birthDay;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getUserEmail() {
@@ -94,27 +95,27 @@ public class UserLoginDTO {
 
     @Override
     public String toString() {
-        return "UserLoginDTO [userId=" + userId + ", userNickname=" + userNickname + ", password=" + password
-                + ", userName=" + userName + ", birthDay=" + birthDay + ", userEmail=" + userEmail + ", sex=" + sex
+        return "RegisterAndLoginDTO [userId=" + userId + ", userNickname=" + userNickname + ", password=" + password
+                + ", userName=" + userName + ", birthday=" + birthday + ", userEmail=" + userEmail + ", sex=" + sex
                 + ", exercise=" + exercise + ", userLevel=" + userLevel + ", userImageUrl=" + userImageUrl + "]";
     }
 
-    public UserLoginDTO(String userId, String userNickname, String password, String userName, String birthDay, // 생성자 인자 변경
-                        String userEmail, String sex, String exercise, int userLevel, String userImageUrl) {
+    public RegisterAndLoginDTO(String userId, String userNickname, String password, String userName, String birthday,
+            String userEmail, String sex, String exercise, int userLevel, String userImageUrl) {
         super();
         this.userId = userId;
         this.userNickname = userNickname;
         this.password = password;
         this.userName = userName;
-        this.birthDay = birthDay; // 생성자 필드 변경
+        this.birthday = birthday;
         this.userEmail = userEmail;
         this.sex = sex;
         this.exercise = exercise;
         this.userLevel = userLevel;
         this.userImageUrl = userImageUrl;
     }
-    
-    public UserLoginDTO() {
+
+    public RegisterAndLoginDTO() {
         // 기본 생성자의 본문은 비워두거나 필요한 초기화를 수행할 수 있습니다.
     }
 }
