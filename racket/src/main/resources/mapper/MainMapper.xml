@@ -13,7 +13,7 @@
 	
 	<!-- 마커 상세 조회 쿼리 -->
 	<select id="getFacilityById" parameterType="String" resultType="MapDTO">
-        SELECT facilityID, location_x, location_y, facName, region_name, tel_num, service_start_time, service_end_time, minclassname, image
+        SELECT facilityID, location_x, location_y, facName, region_name, tel_num, service_start_time, service_end_time, minclassname, image, place
         FROM facilitytbl
         WHERE facilityID = #{id}
     </select>
@@ -43,6 +43,8 @@
 		LIMIT 4
 	</select>
 
+
+	
 
 
 </mapper>

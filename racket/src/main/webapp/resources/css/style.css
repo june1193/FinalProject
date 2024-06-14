@@ -58,70 +58,74 @@ aside {
 }
 
 #mapContainer {
-   position: relative;
-   align-items: center; /* 수직 가운데 정렬 */
-   width: 100%;
-   height: 800px; /* 원하는 높이로 조정 */
+	position: relative;
+	align-items: center; /* 수직 가운데 정렬 */
+	width: 100%;
+	height: 800px; /* 원하는 높이로 조정 */
 }
 
 #map {
-   position: relative;
-   width: 100%;
-   height: 100%;
+	position: relative;
+	width: 100%;
+	height: 100%;
 }
 
 .mapImg {
-   display: flex; /* Flexbox 설정 */
-   position: absolute;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   justify-content: space-between;
-   z-index: 10;
-   pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
+	display: flex; /* Flexbox 설정 */
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	justify-content: space-between;
+	z-index: 10;
+	pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
 }
 
-.map_left,
-.map_right {
-   height: 100%;
-   pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
+.map_left, .map_right {
+	height: 100%;
+	pointer-events: none; /* 지도와 상호 작용하지 않도록 설정 */
 }
 
 .map_left {
-   background-image: url('/racket/resources/imgs/지도 좌측.png');
-   background-size: cover; /* 이미지를 컨테이너에 맞춤 */
-   background-position: left; /* 이미지를 가운데 정렬 */
-   width: 140px;
+	background-image: url('/racket/resources/imgs/지도 좌측.png');
+	background-size: cover; /* 이미지를 컨테이너에 맞춤 */
+	background-position: left; /* 이미지를 가운데 정렬 */
+	width: 140px;
 }
 
 .map_right {
-   background-image: url('/racket/resources/imgs/지도 우측.png');
-   background-size: cover;
-   background-position: right;
-   width: 160px;
+	background-image: url('/racket/resources/imgs/지도 우측.png');
+	background-size: cover;
+	background-position: right;
+	width: 160px;
 }
 
 .map_detail {
-   position: absolute;
-   width: 350px;
-   z-index: 100;
-   top: 30px; /* #map의 위에서 10px 떨어진 위치 */
-   right: 200px; /* #map의 오른쪽에서 10px 떨어진 위치 */
-   background-color: white; /* 배경색을 추가하여 가독성을 높임 */
-   padding: 10px; /* 내부 여백을 추가하여 요소 간의 간격을 조절 */
-   border-radius: 5px; /* 모서리를 둥글게 만듦 */
-   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자를 추가하여 입체감을 줌 */
+	position: absolute;
+	width: 350px;
+	z-index: 10;
+	top: 30px; /* #map의 위에서 10px 떨어진 위치 */
+	left: 200px; /* #map의 왼쪽에서 10px 떨어진 위치 */
+	background-color: white; /* 배경색을 추가하여 가독성을 높임 */
+	padding: 20px; /* 내부 여백을 추가하여 요소 간의 간격을 조절 */
+	border-radius: 10px; /* 모서리를 둥글게 만듦 */
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자를 추가하여 입체감을 줌 */
 }
 
 .map_detail img {
-   width: 300px;
-   height: 180px;
+	width: 100%;
+	height: 180px;
 }
 
 .direction {
-   display: flex;
-   justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
+}
+
+.direction_comment {
+	border: 1px solid #ebebeb;
+	padding: 5px;
 }
 
 .gmnoprint a, .gmnoprint span, .gm-style-cc {
@@ -150,138 +154,131 @@ aside {
 
 /* Remove this container when use*/
 .component-title {
-	width: 100%;
-	position: absolute;
-	z-index: 999;
-	top: 30px;
-	left: 0;
-	padding: 0;
-	margin: 0;
-	font-size: 36px;
-	font-weight: 700;
-	color: #888;
-	text-align: center;
+   width: 100%;
+   position: absolute;
+   z-index: 999;
+   top: 30px;
+   left: 0;
+   padding: 0;
+   margin: 0;
+   font-size: 36px;
+   font-weight: 700;
+   color: #888;
+   text-align: center;
 }
 
 .tab-container {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding: 2px;
-	border-radius: 9px;
+   position: relative;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 2px;
+   border-radius: 9px;
 }
 
 .indicator {
-	content: '';
-	width: 130px;
-	height: 28px;
-	background: #ffffff;
-	position: absolute;
-	z-index: 9;
-	border: 0.5px solid rgba(0, 0, 0, 0.04);
-	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px
-		rgba(0, 0, 0, 0.04);
-	border-radius: 7px;
-	/* 수정된 부분: transition 속성과 cubic-bezier 함수 */
-	transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+   content: '';
+   width: 130px;
+   height: 28px;
+   background: #ffffff;
+   position: absolute;
+   z-index: 9;
+   border: 0.5px solid rgba(0, 0, 0, 0.04);
+   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+   border-radius: 7px;
+   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .tab {
-	width: 130px;
-	height: 28px;
-	position: absolute;
-	z-index: 99;
-	outline: none;
-	opacity: 0;
+   width: 130px;
+   height: 28px;
+   position: relative;
+   z-index: 99;
+   text-decoration: none; /* 링크 스타일 제거 */
 }
 
 .tab_label {
-	width: 130px;
-	height: 28px;
-	position: relative;
-	z-index: 999;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border: 0;
-	font-size: 16px;
-	opacity: 0.6;
-	font-weight: bolder;
-	cursor: pointer;
-	/* 추가된 부분: hover 시 scale 변화 */
-	transition: opacity 0.2s, transform 0.2s; /* transform 추가 */
-	transform: scale(1);
+   width: 130px;
+   height: 28px;
+   position: relative;
+   z-index: 999;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: 0;
+   font-size: 16px;
+   opacity: 0.6;
+   font-weight: bolder;
+   cursor: pointer;
+   transition: opacity 0.2s, transform 0.2s;
+   transform: scale(1);
+   color: inherit; /* 링크 색상 상속 */
 }
 
 .tab_label:hover {
-	/* 추가된 부분: hover 시 scale 적용 */
-	transform: scale(1.1);
-	opacity: 1;
+   transform: scale(1.1);
+   opacity: 1;
 }
 
-/* checked 상태일 때 label의 opacity를 1로 설정 */
-.tab:checked+.tab_label {
-	transform: scale(1.1);
-	opacity: 1;
+.tab--1:focus ~ .indicator,
+.tab--1:hover ~ .indicator {
+   left: 2px;
 }
 
-.tab--1:checked ~ .indicator {
-	left: 2px;
+.tab--2:focus ~ .indicator,
+.tab--2:hover ~ .indicator {
+   left: calc(130px + 2px);
 }
 
-.tab--2:checked ~ .indicator {
-	left: calc(130px + 2px);
-}
-
-.tab--3:checked ~ .indicator {
-	left: calc(130px * 2 + 2px);
+.tab--3:focus ~ .indicator,
+.tab--3:hover ~ .indicator {
+   left: calc(130px * 2 + 2px);
 }
 
 .button {
-	cursor: pointer;
-	position: relative;
-	padding: 10px 24px;
-	margin-left: 5px;
-	font-size: 14px;
-	color: #87dbc0;
-	border: 2px solid rgba(135, 219, 192, 0);
-	background-color: transparent;
-	font-weight: 600;
-	transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-	overflow: hidden;
+   cursor: pointer;
+   position: relative;
+   padding: 10px 24px;
+   margin-left: 5px;
+   font-size: 14px;
+   color: #87dbc0;
+   border: 2px solid rgba(135, 219, 192, 0);
+   background-color: transparent;
+   font-weight: 600;
+   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+   overflow: hidden;
 }
 
 .button::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	margin: auto;
-	width: 50px;
-	height: 50px;
-	border-radius: inherit;
-	scale: 0;
-	z-index: -1;
-	background-color: #60b99d;
-	transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+   content: '';
+   position: absolute;
+   inset: 0;
+   margin: auto;
+   width: 50px;
+   height: 50px;
+   border-radius: inherit;
+   scale: 0;
+   z-index: -1;
+   background-color: #60b99d;
+   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .button:hover::before {
-	scale: 3;
+   scale: 3;
 }
 
 .button:hover {
-	color: #212121;
-	scale: 1.1;
-	box-shadow: 0 0px 20px #69b59d;
+   color: #212121;
+   scale: 1.1;
+   box-shadow: 0 0px 20px #69b59d;
 }
 
 .button:active {
-	scale: 1;
+   scale: 1;
 }
 
-.button>i {
-	font-size: 30px;
+.button > i {
+   font-size: 30px;
 }
 
 .btn_wrap {
@@ -346,6 +343,7 @@ aside {
 	display: none; /* 처음에는 요소가 보이지 않도록 설정 */
 	transition: opacity 0.3s linear, visibility 0s linear 0.3s;
 	/* 부드러운 전환 효과 */
+	z-index: 100;
 }
 
 .user_container.visible {
@@ -353,6 +351,7 @@ aside {
 	opacity: 1;
 	display: block; /* 요소를 보이게 함 */
 	transition: opacity 0.3s linear; /* visible 시 효과 지연 없음 */
+	z-index: 100;
 }
 
 .logout_box {
@@ -624,78 +623,98 @@ footer a {
 }
 
 .container input {
-   position: absolute;
-   opacity: 0;
-   cursor: pointer;
-   height: 0;
-   width: 0;
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
 }
 
 .container input {
-   position: absolute;
-   opacity: 0;
-   cursor: pointer;
-   height: 0;
-   width: 0;
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
 }
 
 .container {
-   display: flex;
-   position: relative;
-   cursor: pointer;
-   font-size: 20px;
-   user-select: none;
-   transition: 100ms;
-   align-items: center;
-   gap: 10px;
+	display: flex;
+	position: relative;
+	cursor: pointer;
+	font-size: 20px;
+	user-select: none;
+	transition: 100ms;
+	align-items: center;
+	gap: 10px;
 }
 
 .checkmark {
-   top: 0;
-   left: 0;
-   height: 2em;
-   width: 2em;
-   transition: 100ms;
-   animation: dislike_effect 400ms ease;
+	top: 0;
+	left: 0;
+	height: 2em;
+	width: 2em;
+	transition: 100ms;
+	animation: dislike_effect 400ms ease;
 }
 
 .container input:checked ~ .checkmark path {
-   fill: #ff5353;
-   stroke-width: 0;
+	fill: #ff5353;
+	stroke-width: 0;
 }
 
 .container input:checked ~ .checkmark {
-   animation: like_effect 400ms ease;
+	animation: like_effect 400ms ease;
 }
 
 .container:hover {
-   transform: scale(1.1);
+	transform: scale(1.1);
 }
 
-@keyframes like_effect {
-   0% {
-      transform: scale(0);
-   }
-
-   50% {
-      transform: scale(1.2);
-   }
-
-   100% {
-      transform: scale(1);
-   }
+@
+keyframes like_effect { 0% {
+	transform: scale(0);
 }
 
-@keyframes dislike_effect {
-   0% {
-      transform: scale(0);
-   }
-
-   50% {
-      transform: scale(1.2);
-   }
-
-   100% {
-      transform: scale(1);
-   }
+50
+%
+{
+transform
+:
+scale(
+1.2
+);
+}
+100
+%
+{
+transform
+:
+scale(
+1
+);
+}
+}
+@
+keyframes dislike_effect { 0% {
+	transform: scale(0);
+}
+50
+%
+{
+transform
+:
+scale(
+1.2
+);
+}
+100
+%
+{
+transform
+:
+scale(
+1
+);
+}
 }

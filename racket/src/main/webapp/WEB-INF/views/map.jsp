@@ -25,8 +25,6 @@
 </style>
 <script>
 	var facmarkers = JSON.parse('${facmarkers}');
-
-	console.log(facmarkers);
 </script>
 </head>
 <body>
@@ -57,13 +55,13 @@
 			</div>
 			<nav class="nav">
 				<div class="tab-container">
-					<input type="radio" name="tab" id="tab1" class="tab tab--1"
-						data-url="/racket/club" /> <label class="tab_label" for="tab1">매칭</label>
-					<input type="radio" name="tab" id="tab2" class="tab tab--2"
-						data-url="/racket/facilityList" /> <label class="tab_label"
-						for="tab2">시설찾기</label> <input type="radio" name="tab" id="tab3"
-						class="tab tab--3" data-url="/racket/Review" /> <label
-						class="tab_label" for="tab3">커뮤니티</label>
+					<a href="/racket/club" class="tab tab--1">
+						<div class="tab_label">매칭</div>
+					</a> <a href="/racket/facilityList" class="tab tab--2">
+						<div class="tab_label">시설찾기</div>
+					</a> <a href="/racket/Review" class="tab tab--3">
+						<div class="tab_label">커뮤니티</div>
+					</a>
 
 					<button class="button" id="user_btn">
 						<i class="fa-regular fa-circle-user"></i>
@@ -71,6 +69,7 @@
 
 					<div class="indicator"></div>
 				</div>
+
 				<div class="user_container">
 					<c:choose>
 						<c:when test="${isLoggedIn}">
@@ -106,29 +105,7 @@
 
 	<div id="mapContainer">
 		<div id="map"></div>
-		<div class="map_detail">
-
-			<div class="detail_img">
-				<img src="" alt="예시" id="detail_img" />
-			</div>
-			<h4 class="detail_title">시설명</h4>
-			<p class="detail_address">
-				<i class="fas fa-location-arrow"></i> 주소
-			</p>
-			<p class="detail_tel">
-				<i class="fas fa-phone"></i> 전화번호
-			</p>
-			<p class="detail_time">
-				<i class="fas fa-calendar-check"></i> 운영시간
-			</p>
-			<hr />
-			<div class="direction">
-				<div class="direction_comment">자세히보기</div>
-				<div class="direction_icon">
-					<i class="fas fa-paper-plane"></i> <i class="fab fa-google"></i>
-				</div>
-			</div>
-		</div>
+		<div id="mapContent-container"></div>
 		<div class="mapImg">
 			<div class="map_left"></div>
 			<div class="map_right"></div>
