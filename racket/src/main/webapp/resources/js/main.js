@@ -4,45 +4,51 @@ function initMap() {
       console.error('Element with id "map" not found.');
       return;
    }
-   
 
    // Google Maps 동적 지도 초기화
    const map = new google.maps.Map(mapElement, {
-      center: { lat: 37.5665, lng: 127.028 }, // 서울 중심 좌표
-      zoom: 11.3, // 초기 줌 레벨
+      center: { lat: 37.5665, lng: 126.928 }, // 서울 중심 좌표
+      zoom: 12, // 초기 줌 레벨
       disableDefaultUI: true,
    });
-   
-    const iconBase = '/racket/resources/imgs/'; // 아이콘 파일들이 저장된 기본 경로
 
-    const icons = {
-        '테니스장': {
-            url: iconBase + 'tennis.png',
-            size: new google.maps.Size(64, 64), // 원본 이미지의 크기
-            scaledSize: new google.maps.Size(64, 64), // 스케일링된 크기
-            anchor: new google.maps.Point(64, 64) // 앵커 포인트 설정
-        },
-        '배드민턴장': {
-            url: iconBase + 'badminton.png',
-            size: new google.maps.Size(64, 64),
-            scaledSize: new google.maps.Size(64, 64),
-            anchor: new google.maps.Point(64, 64)
-        },
-        '탁구장': {
-            url: iconBase + 'pingpong.png',
-            size: new google.maps.Size(64, 64),
-            scaledSize: new google.maps.Size(64, 64),
-            anchor: new google.maps.Point(64, 64)
-        }
-    };
+   const iconBase = '/racket/resources/imgs/'; // 아이콘 파일들이 저장된 기본 경로
 
-    facmarkers.forEach(function (facmarker) {
+   const icons = {
+      테니스장: {
+         url: iconBase + 'tennis.png',
+         size: new google.maps.Size(64, 64), // 원본 이미지의 크기
+         scaledSize: new google.maps.Size(64, 64), // 스케일링된 크기
+         anchor: new google.maps.Point(64, 64), // 앵커 포인트 설정
+      },
+      배드민턴장: {
+         url: iconBase + 'badminton.png',
+         size: new google.maps.Size(64, 64),
+         scaledSize: new google.maps.Size(64, 64),
+         anchor: new google.maps.Point(64, 64),
+      },
+      탁구장: {
+         url: iconBase + 'pingpong.png',
+         size: new google.maps.Size(64, 64),
+         scaledSize: new google.maps.Size(64, 64),
+         anchor: new google.maps.Point(64, 64),
+      },
+   };
+
+   for (let i = facmarkers.length - 1; i >= 0; i--) {
+      const facmarker = facmarkers[i];
+
+      // '서남물재생센터'인 데이터 중 'facilityID'가 'S210331112704279047'인 데이터만 처리
+      if (facmarker.place === '서남물재생센터' && facmarker.facilityID !== 'S210331112704279047') {
+         continue; // 조건에 맞지 않는 데이터는 무시
+      }
+
       const lat = parseFloat(facmarker.location_y);
       const lng = parseFloat(facmarker.location_x);
 
       if (isNaN(lat) || isNaN(lng)) {
          console.error('Invalid coordinates:', facmarker);
-         return;
+         continue;
       }
 
       const markerIcon = icons[facmarker.minclassname] || icons['default'];
@@ -50,13 +56,13 @@ function initMap() {
       const marker = new google.maps.Marker({
          position: { lat: lat, lng: lng },
          map: map,
-         icon: markerIcon
+         icon: markerIcon,
       });
 
       marker.addListener('click', function () {
          fetchFacilityDetails(facmarker.facilityID);
       });
-   });
+   }
 
 
 
@@ -79,16 +85,37 @@ function initMap() {
 
 	function updateFacilityDetails(facility) {
 	   if (!facility) {
-	      console.error('No facility data provided');
-	      return;
-	   }
-	
-	   $('.map_detail').show();
-	   $('.detail_title').text(facility.facName);
-	   $('.detail_address').html(`<i class="fas fa-location-arrow"></i> ${facility.region_name}`);
-	   $('.detail_tel').html(`<i class="fas fa-phone"></i> ${facility.tel_num}`);
-	   $('.detail_time').html(`<i class="fas fa-calendar-check"></i> ${facility.service_start_time} - ${facility.service_end_time}`);
-       $('.detail_img').html(`<img src="${facility.image}" alt="예시" id="detail_img" />`);
+        console.error('No facility data provided');
+        return;
+    }
+
+    const contentHTML = `
+        <div class="map_detail">
+            <div class="detail_img">
+                <img src="${facility.image}" alt="예시" id="detail_img" />
+            </div>
+            <h4 class="detail_title">${facility.facName}</h4>
+            <p class="detail_address">
+                <i class="fas fa-location-arrow"></i> ${facility.region_name}
+            </p>
+            <p class="detail_tel">
+                <i class="fas fa-phone"></i> ${facility.tel_num}
+            </p>
+            <p class="detail_time">
+                <i class="fas fa-calendar-check"></i> &nbsp;${facility.service_start_time} - ${facility.service_end_time}
+            </p>
+            <hr />
+            <div class="direction">
+                <div class="direction_comment"><a href="/racket/facility/${facility.facilityID}">자세히보기</a></div>
+                <div class="direction_icon">
+                    <i class="fas fa-paper-plane"></i> <i class="fab fa-google"></i>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // AJAX 요청 후 content-container에 내용을 삽입
+    document.getElementById('mapContent-container').innerHTML = contentHTML;
 	}
 
 
@@ -144,145 +171,97 @@ function initMap() {
    }
 
    // 지도 스타일 설정
-   const initialMapStyle = [
-      {
-         elementType: 'geometry',
-         stylers: [{ color: '#d3eaff' }], // 전체적으로 어두운 색상
-      },
-      {
-         elementType: 'labels.text.stroke',
-         stylers: [{ color: '#d3eaff' }],
-      },
-      {
-         elementType: 'labels.text.fill',
-         stylers: [{ color: '#746855' }],
-      },
-
-      {
-         featureType: 'all',
-         elementType: 'labels',
-         stylers: [{ visibility: 'off' }],
-      },
-      {
-         featureType: 'all',
-         elementType: 'labels.icon',
-         stylers: [{ visibility: 'off' }],
-      },
-      {
-         featureType: 'all',
-         elementType: 'labels.text.fill',
-         stylers: [{ visibility: 'off' }],
-      },
-      {
-         featureType: 'all',
-         elementType: 'labels.text.stroke',
-         stylers: [{ visibility: 'off' }],
-      },
-      // 추가 스타일 설정
-   ];
-
-   const zoomedMapStyle = [
-      {
-         featureType: 'administrative.locality',
-         elementType: 'geometry.fill',
-         stylers: [
+const zoomedMapStyle = [
+    {
+        featureType: 'administrative.locality',
+        elementType: 'geometry.fill',
+        stylers: [
             { visibility: 'on' }, // 해당 요소 표시
             { color: 'rgba(255, 255, 255, 0)' }, // 투명한 색상
-         ],
-      },
-      {
-         featureType: 'water',
-         elementType: 'geometry',
-         stylers: [
+        ],
+    },
+    {
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [
             //{ color: '#d3d3d3' }, // 강 등의 색상
-         ],
-      },
-      {
-         featureType: 'road',
-         elementType: 'geometry',
-         stylers: [
+        ],
+    },
+    {
+        featureType: 'road',
+        elementType: 'geometry',
+        stylers: [
             { color: '#d3d3d3' }, // 도로 등의 색상
-         ],
-      },
-      {
-         featureType: 'poi.park',
-         elementType: 'geometry',
-         stylers: [
+        ],
+    },
+    {
+        featureType: 'poi.park',
+        elementType: 'geometry',
+        stylers: [
             { color: '#c8e6c9' }, // 공원 등의 색상
-         ],
-      },
-      {
-         elementType: 'labels.text.fill',
-         stylers: [
+        ],
+    },
+    {
+        elementType: 'labels.text.fill',
+        stylers: [
             {
-               color: '#87DBC0', // 텍스트 라벨의 색상
+                color: '#87DBC0', // 텍스트 라벨의 색상
             },
-         ],
-      },
-      {
-         featureType: 'administrative.locality',
-         elementType: 'labels.text',
-         stylers: [{ visibility: 'on' }], // '동' 라벨 숨기기
-      },
-      {
-         featureType: 'administrative.neighborhood',
-         elementType: 'labels.text',
-         stylers: [{ visibility: 'on' }], // '구' 라벨 표시하기
-      },
-      {
-         featureType: 'road', //도로의 라벨에 대한 스타일 설정
-         elementType: 'labels',
-         stylers: [
+        ],
+    },
+    {
+        featureType: 'administrative.locality',
+        elementType: 'labels.text',
+        stylers: [{ visibility: 'on' }], // '동' 라벨 숨기기
+    },
+    {
+        featureType: 'administrative.neighborhood',
+        elementType: 'labels.text',
+        stylers: [{ visibility: 'on' }], // '구' 라벨 표시하기
+    },
+    {
+        featureType: 'road', //도로의 라벨에 대한 스타일 설정
+        elementType: 'labels',
+        stylers: [
             {
-               visibility: 'off',
+                visibility: 'off',
             },
-         ],
-      },
-      {
-         featureType: 'water',
-         elementType: 'labels.text', //물의 텍스트 라벨에 대한 스타일 설정
-         stylers: [
+        ],
+    },
+    {
+        featureType: 'water',
+        elementType: 'labels.text', //물의 텍스트 라벨에 대한 스타일 설정
+        stylers: [
             {
-               visibility: 'off',
+                visibility: 'off',
             },
-         ],
-      },
-      {
-         featureType: 'poi',
-         elementType: 'labels.icon',
-         stylers: [
+        ],
+    },
+    {
+        featureType: 'poi',
+        elementType: 'labels.icon',
+        stylers: [
             { visibility: 'off' }, // 모든 아이콘 숨기기
-         ],
-      },
-   ];
+        ],
+    },
+];
 
-   // 지도에 zoom_changed 이벤트 리스너 추가
-   function setMapStyleAndOverlay() {
-      let zoomLevel = map.getZoom(); // 현재 줌 레벨 가져오기
-      if (zoomLevel < 12) {
-         // 줌 레벨이 12 미만일 때 초기 스타일 설정
-         map.setOptions({ styles: initialMapStyle });
-         map.data.setStyle({
-            fillColor: '#87DBC0',
-            strokeWeight: 0.6,
-            fillOpacity: 1.0,
-         });
-      } else {
-         // 줌 레벨이 12 이상일 때 확대 스타일 설정
-         map.setOptions({ styles: zoomedMapStyle });
-         map.data.setStyle({
-            fillColor: '#d3eaff',
-            strokeWeight: 0.2,
-            fillOpacity: 0.6,
-         });
-      }
-   }
+// 지도에 zoom_changed 이벤트 리스너 추가
+function setZoomedMapStyle() {
+    map.setOptions({ styles: zoomedMapStyle });
+    map.data.setStyle({
+        fillColor: '#d3eaff',
+        strokeWeight: 0.2,
+        fillOpacity: 0.6,
+    });
+}
 
-   // 줌 변경 이벤트 리스너 추가
-   map.addListener('zoom_changed', setMapStyleAndOverlay);
+// 줌 변경 이벤트 리스너 추가
+map.addListener('zoom_changed', setZoomedMapStyle);
 
-   // 초기 줌 레벨에 따른 스타일과 오버레이 설정
-   setMapStyleAndOverlay();
+// 초기 스타일 설정
+setZoomedMapStyle();
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {

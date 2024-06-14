@@ -6,10 +6,6 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import com.acorn.racket.facility.domain.FacDTO;
-import com.acorn.racket.facility.service.FacService;
 import com.acorn.racket.map.domain.MapDTO;
 import com.acorn.racket.map.repository.MapRepository;
 
