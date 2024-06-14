@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
 
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -1552,7 +1552,7 @@ function matchform() {
 </script>
 
 
-
+<jsp:include page="popup.jsp"></jsp:include>
 </body>
 
 

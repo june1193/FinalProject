@@ -101,7 +101,7 @@ public class MatchController {
    @RequestMapping("/stamp")
    public String StampMain(HttpServletRequest request, Model model) {
       HttpSession session = request.getSession(); // 세션 가져오기
-      UserLoginDTO id = (UserLoginDTO) session.getAttribute("loggedInUser");  // 세션에서 "id" 속성 값 가져오기
+      UserLoginDTO id = (UserLoginDTO) session.getAttribute("loggedInUser"); 
       System.out.println("오긴 하냐?" + id);
 
       // 세션에 user_ID가 없으면 뷰만 리턴
@@ -125,17 +125,27 @@ public class MatchController {
    // 스탬프 "로그인이 필요합니다" 페이지 임시 컨트롤러
    @RequestMapping("/needLogin") // 이건 url을 알아도 위치검사를 하기때문에 암호화 필요없다
    public String Stamplogin(HttpServletRequest request) {
-      HttpSession session = request.getSession(); // 세션 가져오기
-      // 로그인 컨트롤러에 if문으로 redirectStampingUrl값이 null값이 아니면 stamping으로 매핑 이후 세션에서 제거?
+	   HttpSession session = request.getSession(false); // 세션 가져오기 (기존 세션이 없으면 생성하지 않음)
+	    
+	    if (session != null && session.getAttribute("loggedInUser") != null) {
+	        // 이미 로그인된 상태이면 세션 무효화 (로그아웃)
+	        session.invalidate();
+	        // 새로운 세션을 가져와 redirectStampingUrl 설정
+	        session = request.getSession(true);
+	    } else if (session == null) {
+	        // 세션이 없으면 새로운 세션 생성
+	        session = request.getSession(true);
+	    }
       session.setAttribute("redirectStampingUrl", "/stamping");
       return "needLogin";
    }
 
    // 스탬프 찍기 페이지 임시 컨트롤러
    @RequestMapping("/stamping") // 암호화 할것
-   public String stamping(HttpServletRequest request) {
-      HttpSession session = request.getSession(); // 세션 가져오기
-      String id = (String) session.getAttribute("user_ID"); // 세션에서 "id" 속성 값 가져오기
+   public String stamping(HttpServletRequest request, Model model) {
+	      HttpSession session = request.getSession(); // 세션 가져오기
+	      UserLoginDTO id = (UserLoginDTO) session.getAttribute("loggedInUser"); 
+	      model.addAttribute("id_info", id);
       // 세션 아이디로 데이터를 추가해야 한다.
       return "stamping"; // 로그인한 사용자이므로 스탬핑 페이지로 이동
    }
@@ -143,10 +153,10 @@ public class MatchController {
    // 스탬프 인서트와 동시에 스템프 메인으로 이동 (이촌테니스장)
    @PostMapping("/stampbutton")
    public String stampinginsert(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-      HttpSession session = request.getSession(); // 세션 가져오기
-      /* String id = (String) session.getAttribute("user_ID"); */ // 세션에서 "id" 속성 값 가져오기
-      String id = "user1"; // 임시로 id 값을 설정
-      nr.addStamp(id, "S240420102801036476"); // 사용자 ID와 시설번호 추가
+	  HttpSession session = request.getSession(); // 세션 가져오기
+	  UserLoginDTO id = (UserLoginDTO) session.getAttribute("loggedInUser"); 
+	  String userId = id.getUserId();
+      nr.addStamp(userId, "S240420102801036476"); // 사용자 ID와 시설번호 추가
       redirectAttributes.addFlashAttribute("message", "스탬프가 추가되었습니다.");
       return "redirect:/stamp";
    }
