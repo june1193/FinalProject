@@ -78,7 +78,7 @@
 									<div class="login_user">
 										<i class="fa-regular fa-face-smile"></i>
 									</div>
-									<div id="user_name">${user_ID}</div>
+									<div id="user_name">${user_ID.userNickname}</div>
 									<div class="bookmark_settings">
 										<a href="#" class="user_bookmark"><i
 											class="fa-solid fa-bookmark"></i></a> <a href="#"
@@ -93,7 +93,7 @@
 								<div class="logout_user">
 									<i class="fa-regular fa-face-frown"></i>
 								</div>
-								<a href="#" class="login_form" onclick="login()">로그인</a> <a
+								<a href="/racket/login" class="login_form">로그인</a> <a
 									href="#" class="register_form">회원가입</a>
 							</div>
 						</c:otherwise>

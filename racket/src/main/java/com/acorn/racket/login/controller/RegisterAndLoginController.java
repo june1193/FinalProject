@@ -54,7 +54,7 @@ public class RegisterAndLoginController {
     	// 이미 로그인된 경우 성공 페이지로 리다이렉트합니다.
     	HttpSession session = request.getSession(false); // 새로운 세션 생성을 막음
         if (session != null && session.getAttribute("loggedInUser") != null) {
-            return "redirect:/success"; // 이미 로그인된 경우 성공 페이지로 리다이렉트
+            return "redirect:/map"; // 이미 로그인된 경우 성공 페이지로 리다이렉트
         }
         return "login";
     }
@@ -72,7 +72,7 @@ public class RegisterAndLoginController {
             session.setAttribute("loggedInUser", user);
             model.addAttribute("user", user);
             // 성공 페이지로 리디렉션합니다.
-            return "redirect:/success";
+            return "redirect:/map";
         } else {
             // 로그인 실패 시 에러 메시지를 모델에 추가하여 다시 로그인 폼을 보여줍니다.
         	model.addAttribute("error", "Invalid username or password");
