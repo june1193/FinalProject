@@ -651,7 +651,7 @@ display: flex;
                                         data.forEach(item =>{
                                            if( item.place === selectPlace){
                                               hiddenURL.val(item.facilityID);
-                                              alert("test :" + item.facilityID);
+                                              
                                            }
                                            
                                         });
@@ -717,7 +717,7 @@ display: flex;
                                         data.forEach(item =>{
                                            if( item.place === selectPlace){
                                               hiddenURL.val(item.facilityID);
-                                              alert("test :" + item.facilityID);
+                                              
                                            }
                                            
                                         });
@@ -783,7 +783,7 @@ display: flex;
                                         data.forEach(item =>{
                                            if( item.place === selectPlace){
                                               hiddenURL.val(item.facilityID);
-                                              alert("test :" + item.facilityID);
+                                              
                                            }
                                            
                                         });
@@ -1212,9 +1212,9 @@ $(document).ready(function() {
              datadiv = button.parentElement.parentElement.parentElement;
              let match_num = parseInt( datadiv.getAttribute('data-matchnum') , 10 );
              
-             alert(match_num);
+             
                let jsondata = { 
-                     "user_Id" : "duckgu" ,
+                     "user_Id" : "${user.userId}" ,
                      "match_num" :    match_num
                      
                };
@@ -1511,7 +1511,7 @@ function matchform() {
       let membersu = $('#membersu').val(); // 모집인원
       let intro = $('#intro').val();  // 소개글 
       let placeURL = $('#placeURL').val(); // 시설물 
-      let user_id = "jungkiwon";
+      let user_id = "${user.userId}";
       
         let jsonObject = {
               matchdate: matchdate,

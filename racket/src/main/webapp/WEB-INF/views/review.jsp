@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/racket/resources/css/chat-style.css">
     <style>
        * {
             padding: 0px;
@@ -363,7 +364,7 @@
                     </div>
                     </div>
                 </div>
-                <a href="/racket/postWriter">
+                <a href="/racket/postWrite">
                 
                 <div class="view_controller">
                    <button style="margin-left: auto; margin-right: 5px; background-image: url('/racket/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
@@ -385,7 +386,7 @@
                     
                     <!-- 반복 -->
                     <c:forEach var="item" items="${list}" >
-                    <a href="/racket/boarddetail?code=${item.post_id } ">
+                    <a href="/racket/boarddetail?postnum=${item.post_id } ">
                            <div class="post">             
                            
                                <div class ="image">
@@ -480,6 +481,7 @@
 
         <div id="paging">[ 1 2 3 4 5 ]</div> <!-- 페이징 -->
     </div>
+    <jsp:include page="popup.jsp"></jsp:include>
 </body>
 
 </html>

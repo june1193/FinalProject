@@ -10,6 +10,7 @@
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
     <style>
         * {
             box-sizing: border-box;
@@ -343,7 +344,7 @@
             <!-- 댓글 작성 부분 -->
         
                 <div class="comment_write_box">
-                    <div class="write_id">jungkiwon</div>
+                    <div class="write_id">${user.userId}</div>
                     <div class="write_content"><textarea name="content"  id="content"
                             placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
                     </div>
@@ -357,21 +358,49 @@
             
         </div>
         <!-- 글목록 부분 -->
-        <form action="">
+        
             <div class="view_controller">
                 <button
-                    style="background-image: url('${pageContext.request.contextPath}/resources/img/글목록.png'); background-position: center; background-size: 100% 100%;"></button>
+                    style="background-image: url('${pageContext.request.contextPath}/resources/img/글목록.png'); background-position: center; background-size: 100% 100%;" onclick="reviewUrl()"></button>
                 <button
-                    style="margin-left: 30px; background-image: url('${pageContext.request.contextPath}/resources/img/이전글.png'); background-position: center; background-size: 100% 100%;"></button>
+                    style="margin-left: 30px; background-image: url('${pageContext.request.contextPath}/resources/img/이전글.png'); background-position: center; background-size: 100% 100%;" onclick="prevPage()"></button>
                 <button
-                    style="background-image: url('${pageContext.request.contextPath}/resources/img/다음글.png'); background-position: center; background-size: 100% 100%;"></button>
+                    style="background-image: url('${pageContext.request.contextPath}/resources/img/다음글.png'); background-position: center; background-size: 100% 100%;" onclick="nextPage()"></button>
                 <button
-                    style="margin-left: auto; margin-right: 5px; background-image: url('${pageContext.request.contextPath}/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
+                    style="margin-left: auto; margin-right: 5px; background-image: url('${pageContext.request.contextPath}/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;" onclick="writeUrl()"></button>
             </div>
-        </form>
     </div>
+    <jsp:include page="popup.jsp"></jsp:include>
 </body>
+<!-- 글 이동 버튼 스크립트 -->
+<script>
 
+		let params = new URLSearchParams(window.location.search);
+		let postnum = parseInt(params.get('postnum'));
+	
+	function writeUrl() {
+	    window.location.href = "/racket/postWrite"; 
+	}
+	
+	function reviewUrl() {
+	    window.location.href = "/racket/Review"; 
+	}
+	
+	function prevPage(){
+		
+		if(postnum == 1){
+			alert("마지막 글입니다.");
+		}else{
+		 let newPostnum = postnum - 1;
+         window.location.href = window.location.pathname + '?postnum=' + newPostnum;
+		}
+	}
+	
+	function nextPage(){
+		 let newPostnum = postnum + 1;
+         window.location.href = window.location.pathname + '?postnum=' + newPostnum;
+	}
+</script>
 <!-- 댓글insert 스크립트 -->
 <script>
 
@@ -381,8 +410,8 @@ function createcomment(){
 	var div = document.querySelector('div[data-post-id]');
 			
 	
-	var postid =  div.getAttribute('data-post-id') ;		
-	var user_id = "jungkiwon";
+	var postid =  div.getAttribute('data-post-id');		
+	var user_id = "${user.userId}"
 	var commentcontent = document.querySelector('#content').value;
 	
 	
@@ -443,7 +472,7 @@ function updateCommentList(ajaxdata){
             constructor() {
                 this.formHTML = `
                     <div class="comment_write_box" id="replyForm" style="margin-left:30px;">
-                        <div class="write_id">jungkiwon</div>
+                        <div class="write_id">${user.userId}</div>
                         <div class="write_content">
                             <textarea id="replyTextarea" placeholder="커뮤니티의 품격을 유지하고 모든 사용자가 쾌적한 환경에서 소통할 수 있도록, 선정적이거나 극단적인 내용, 비속어 등의 부적절한 언어 사용은 사전 통지 없이 삭제 처리될 수 있습니다. 이러한 조치는 공공의 이익을 위해 필요하며, 모든 사용자가 서로를 존중하는 문화 속에서 자유롭게 의견을 교환할 수 있는 공간을 만드는 데 기여합니다. 이용 약관을 준수하시어 모두가 안전하고 존중받는 경험을 할 수 있도록 협조 부탁드립니다."></textarea>
                         </div>
@@ -498,7 +527,7 @@ function insertreply(){
 		var replyTextarea = $('#replyTextarea').val();
 	// li 태그의 data-comment-id 값을 가져옵니다.
 		var commentId = parentLi.attr('data-comment-id');
-		var user_id = 'duckgu';
+		var user_id = '${user.userId}';
 		
 		console.log(commentId);
 		console.log(postid);     // 값이 잘 출력되는지 확인합니다.

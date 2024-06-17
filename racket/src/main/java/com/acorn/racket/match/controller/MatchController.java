@@ -55,7 +55,7 @@ public class MatchController {
 
    // 매칭 메인
    @RequestMapping("/club")
-   public String mmain(Model model, @RequestParam(value = "p", defaultValue = "1") int currentPage) {
+   public String mmain(Model model, @RequestParam(value = "p", defaultValue = "1") int currentPage , HttpServletRequest request) {
       // 인기랭킹
       List<Club> r_clubs = nr.selectTopClubs(5);
       model.addAttribute("r_data", r_clubs);
@@ -69,7 +69,12 @@ public class MatchController {
       // 매치 뷰
       List<MatchViewDTO> list2 = ms.mainMatchViewSV();
       model.addAttribute("main", list2);
-
+      
+		HttpSession session = request.getSession();
+		UserLoginDTO user = (UserLoginDTO) session.getAttribute("loggedInUser");
+		
+		model.addAttribute("user", user);
+      
       return "match";
    }
    
