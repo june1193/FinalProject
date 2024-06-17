@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
 <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/matchjoin.css" />
  --%>
 <script
@@ -1547,7 +1547,7 @@ function matchform() {
 </script>
 
 
-
+<jsp:include page="popup.jsp"></jsp:include>
 </body>
 
 
