@@ -8,7 +8,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/racket/resources/css/chat-style.css">
     <style>
        * {
             padding: 0px;
@@ -17,6 +16,7 @@
         
         a{
         text-decoration:  none;
+        color: black;
         }
 
         #wrap {
@@ -153,9 +153,12 @@
             border:1px solid black;
         }
         */
+        /*
         .post:last-child {
             border-bottom: none;
         }
+        
+        */
 
         .post h2 {
             margin-top: 0;
@@ -367,8 +370,8 @@
                 <a href="/racket/postWrite">
                 
                 <div class="view_controller">
-                   <button style="margin-left: auto; margin-right: 5px; background-image: url('/racket/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
-                       
+                  <a href="/racket/postWrite"><button  type="button" style="margin-left: auto; margin-right: 5px; background-image: url('/racket/resources/img/글쓰기.png'); background-position: center; background-size: 100% 100%;"></button>
+                  </a>                        
                </div>
                </a>
             </div>
@@ -385,20 +388,26 @@
                                   
                     
                     <!-- 반복 -->
-                    <c:forEach var="item" items="${list}" >
-                    <a href="/racket/boarddetail?postnum=${item.post_id } ">
-                           <div class="post">             
-                           
-                               <div class ="image">
-                                   <img src="${item.img}" style="width: 150px; height: 100px;">
-                               </div>
-                               <div>
-                                   <div class="content"> ${item.post_content} </div>
-                                   <p class="meta">작성자: ${item.user_id}   | 작성일: ${item.post_date} </p>
-                               </div>
-                           </div>  
-                           </a>
-                           </c:forEach>                    
+                    <c:forEach var="item" items="${list}">
+                   <a href="/racket/boarddetail?postnum=${item.post_id}">
+                       <div class="post">
+                           <div class="image">
+                               <c:choose>
+                                   <c:when test="${not empty item.img}">
+                                       <img src="${item.img}" style="width: 150px; height: 100px;">
+                                   </c:when>
+                                   <c:otherwise>
+                                       <img src="/racket/resources/img/Noimg.jpg" style="width: 150px; height: 100px;">
+                                   </c:otherwise>
+                               </c:choose>
+                           </div>
+                           <div>
+                               <div class="content">${item.post_content}</div>
+                               <p class="meta">작성자: ${item.user_id} | 작성일: ${item.post_date}</p>
+                           </div>
+                       </div>
+                   </a>
+               </c:forEach>                 
                          <!--   -->
                         
                        
@@ -415,61 +424,61 @@
                     <div class="post">
                         <h2>배드민턴 초심입니다</h2>
                         <p>배드민턴 우습게 봤는데 생각보다 어렵네요? 레슨을 받아야 할 것 같아요 ㅠㅠ</p>
-                        <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-13</p>
+                        <p class="meta">작성자: 민턴사랑 | 작성일: 2024-06-13</p>
                     </div>
 
                     <div class="post">
                         <h2>테니스는 급수가 어떻게되나요?</h2>
                         <p>배드민턴은 급수가 딱 정해져 있는것 같은데 테니스는 급수 이름이 요란하네요? 아시는분 알려주세요</p>
-                        <p class="meta">작성자: 테스형 | 작성일: 2024-05-07</p>
+                        <p class="meta">작성자: 테스형 | 작성일: 2024-06-07</p>
                     </div>
 
                     <div class="post">
                         <h2>탁구 어렵네요</h2>
                         <p>탁구 복식은 꼭 번갈아 쳐야하나요 한번씩 치기 빡시네요 ㅠㅠ</p>
-                        <p class="meta">작성자: 제빵왕김탁구 | 작성일: 2024-05-07</p>
+                        <p class="meta">작성자: 제빵왕김탁구 | 작성일: 2024-06-06</p>
                     </div>
 
                     <div class="post">
-                        <h2>배드민턴 초심입니다</h2>
-                        <p>배드민턴 우습게 봤는데 생각보다 어렵네요? 레슨을 받아야 할 것 같아요 ㅠㅠ</p>
+                        <h2>배드민턴 혼복 파트너 구해요</h2>
+                        <p>배드민턴 여복은 파트너가 있는데.. 파트너 해주실 남성분 있나요?</p>
+                        <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-25</p>
+                    </div>
+
+                    <div class="post">
+                        <h2>테니스 레슨비용</h2>
+                        <p>테니스 배우시는 회원님들 보통 레슨비용은 어떻게되나요?</p>
+                        <p class="meta">작성자: 테스형 | 작성일: 2024-05-20</p>
+                    </div>
+
+                    <div class="post">
+                        <h2>탁구 복식</h2>
+                        <p>탁구 복식은 꼭 번갈아 쳐야하나요 한번씩 치기 빡시네요 ㅠㅠ</p>
+                        <p class="meta">작성자: 제빵왕김탁구 | 작성일: 2024-05-17</p>
+                    </div>
+
+                    <div class="post">
+                        <h2>배드민턴 신발추천</h2>
+                        <p>배드민턴 신발을 바꿔야할것 같은데 요즘 유행하는 브랜드나 이쁜 운동화 추천부탁드려요</p>
                         <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-13</p>
                     </div>
 
                     <div class="post">
-                        <h2>테니스는 급수가 어떻게되나요?</h2>
-                        <p>배드민턴은 급수가 딱 정해져 있는것 같은데 테니스는 급수 이름이 요란하네요? 아시는분 알려주세요</p>
+                        <h2>마포구 체육관</h2>
+                        <p>마포구 배드민턴장 4코트 이상 있는 체육관 정보 알려주세요</p>
                         <p class="meta">작성자: 테스형 | 작성일: 2024-05-07</p>
                     </div>
 
                     <div class="post">
-                        <h2>탁구 어렵네요</h2>
-                        <p>탁구 복식은 꼭 번갈아 쳐야하나요 한번씩 치기 빡시네요 ㅠㅠ</p>
+                        <h2>탁구...좀 알려주세요</h2>
+                        <p>탁구 혼자는 실만한것 같은데 복식은.. 진짜 위치도 그렇게 넘 어려워요 잘치고 싶어요 !!</p>
                         <p class="meta">작성자: 제빵왕김탁구 | 작성일: 2024-05-07</p>
                     </div>
 
                     <div class="post">
-                        <h2>배드민턴 초심입니다</h2>
-                        <p>배드민턴 우습게 봤는데 생각보다 어렵네요? 레슨을 받아야 할 것 같아요 ㅠㅠ</p>
-                        <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-13</p>
-                    </div>
-
-                    <div class="post">
-                        <h2>테니스는 급수가 어떻게되나요?</h2>
-                        <p>배드민턴은 급수가 딱 정해져 있는것 같은데 테니스는 급수 이름이 요란하네요? 아시는분 알려주세요</p>
-                        <p class="meta">작성자: 테스형 | 작성일: 2024-05-07</p>
-                    </div>
-
-                    <div class="post">
-                        <h2>탁구 어렵네요</h2>
-                        <p>탁구 복식은 꼭 번갈아 쳐야하나요 한번씩 치기 빡시네요 ㅠㅠ</p>
-                        <p class="meta">작성자: 제빵왕김탁구 | 작성일: 2024-05-07</p>
-                    </div>
-
-                    <div class="post">
-                        <h2>배드민턴 초심입니다</h2>
-                        <p>배드민턴 우습게 봤는데 생각보다 어렵네요? 레슨을 받아야 할 것 같아요 ㅠㅠ</p>
-                        <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-13</p>
+                        <h2>배드민턴 고수가 되고싶어요</h2>
+                        <p>배드민턴 레슨을 꼭 받아야하나봐요 ㅠㅠ 왜이렇게 어렵죠 ?? 입문하는 사람은 레슨없이는 힘들것같아요..ㅜㅜ</p>
+                        <p class="meta">작성자: 민턴사랑 | 작성일: 2024-05-03</p>
                     </div>
 
                 </div>
@@ -481,7 +490,6 @@
 
         <div id="paging">[ 1 2 3 4 5 ]</div> <!-- 페이징 -->
     </div>
-    <jsp:include page="popup.jsp"></jsp:include>
 </body>
 
 </html>
