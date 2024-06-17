@@ -1,5 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +39,8 @@
 
 <div class="container">
     <h3>회원님의 메일로 소중한 데이터를 보내드렸습니다<h3>
-        <input type="submit" value="홈으로">
+         <a href="/racket/map" class="home-link">홈으로</a>
+    </form>
 </div>
 
 </body>

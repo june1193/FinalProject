@@ -21,5 +21,47 @@
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"/>
-	</bean>	
+	</bean>
+	
+	<!-- 이메일 인증 bean -->
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- SMTP 호스트 -->
+		<property name="host" value="smtp.gmail.com" />
+		
+		<!-- SMTP 포트 -->
+		<property name="port" value="587" />
+		
+		<!-- 발송 이메일 정보 -->
+		<property name="username" value="queenmamocat@gmail.com" />
+		
+		<!-- 구글 이메일 2단계 보안인증 발급 키 -->
+		<property name="password" value="fwrs rnad lgrq eawx" />
+		
+		<!-- JavaMail 속성 설정 -->
+		<property name="javaMailProperties">
+		
+		<props>
+			<!-- 전송 프로토콜 -->
+			<prop key="mail.transport.protocol">smtp</prop>
+			
+			<!-- SMTP 인증 사용 여부 -->
+			<prop key="mail.smtp.auth">true</prop>
+			
+			<!-- 소켓 팩토리 클래스 -->
+			<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			
+			<!-- STARTTLS 사용 여부 -->
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			
+			<!-- 디버그 모드 활성화 여부 -->
+			<prop key="mail.debug">true</prop>
+			
+			<!-- SMTP 서버 신뢰 여부 -->
+			<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+			
+			<!-- SSL 프로토콜 버전 -->
+			<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+		</props>
+		</property>
+		</bean>	
 </beans>

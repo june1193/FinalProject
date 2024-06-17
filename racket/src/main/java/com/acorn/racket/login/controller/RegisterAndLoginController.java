@@ -130,13 +130,13 @@ public class RegisterAndLoginController {
             boolean success = PasswordChangeService.changePassword(user.getUserId(), oldPassword, newPassword);
             if (success) {
                 model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
-                return "redirect:/success";
+                return "redirect:/map";
             } else {
                 model.addAttribute("error", "현재 비밀번호가 올바르지 않습니다.");
                 return "passwordChanger";
             }
         }
-        return "redirect:/login2"; // 로그인되어 있지 않으면 로그인 페이지로 리디렉션
+        return "redirect:/login"; // 로그인되어 있지 않으면 로그인 페이지로 리디렉션
     }
  // 비밀번호 찾기 처리
     
@@ -163,14 +163,22 @@ public class RegisterAndLoginController {
     }
     
     @PostMapping("/FindPasswordByInfo")
-    public String findPasswordByID(@RequestParam("name") String name,
+    public String findPasswordByInfo(@RequestParam("name") String name,
             @RequestParam("email") String email,
             Model model) {
 		boolean userExists = finderService.checkUserExistsName(name, email);
 	
 		if (userExists) {
-		// 이름과 이메일이 일치하는 사용자가 있는 경우 sended.jsp로 이동합니다.
-		return "sended";
+			try {
+	            finderService.sendPasswordByEmail(name, email);
+	            return "sended"; // 비밀번호 전송 성공 페이지로 리다이렉트
+	        } catch (IllegalArgumentException e) {
+	            model.addAttribute("error", e.getMessage());
+	            return "FindPasswordByInfo"; // 비밀번호 찾기 실패 시 다시 입력 폼 페이지로 이동
+	        } catch (Exception e) {
+	            model.addAttribute("error", "아이디 전송 중 오류가 발생했습니다.");
+	            return "FindPasswordByInfo"; // 비밀번호 찾기 실패 시 다시 입력 폼 페이지로 이동
+	        }
 		} else {
 		// 사용자를 찾을 수 없는 경우 NotExist 페이지로 이동합니다.
 		return "NotExist";
@@ -195,7 +203,17 @@ public class RegisterAndLoginController {
         UserLoginDTO user = finderService.findByNameAndEmail(name, email);
         if (user != null) {
             model.addAttribute("userId", user.getUserId());
-            return "Sended"; // 아이디를 보여주는 페이지로 이동
+            try {
+                finderService.sendUserIdByEmail(name, email);
+                return "sended"; // 아이디 전송 성공 페이지로 리다이렉트
+            } catch (IllegalArgumentException e) {
+                model.addAttribute("error", e.getMessage());
+                return "FindID"; // 아이디 찾기 실패 시 다시 입력 폼 페이지로 이동
+            } catch (Exception e) {
+                model.addAttribute("error", "아이디 전송 중 오류가 발생했습니다.");
+                return "FindID"; // 아이디 찾기 실패 시 다시 입력 폼 페이지로 이동
+            }
+            
         } else {
             model.addAttribute("error", "입력하신 정보와 일치하는 사용자를 찾을 수 없습니다.");
             return "FindID"; // 다시 입력 폼 페이지로 이동

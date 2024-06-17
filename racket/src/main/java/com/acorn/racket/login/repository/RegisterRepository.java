@@ -97,4 +97,18 @@ public class RegisterRepository {
         }
         return null;
     }
+        
+        public String getEmail(String userId) throws SQLException {
+            String sql = "SELECT user_Email FROM usertbl WHERE user_ID = ?";
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("user_Email");
+                    }
+                }
+            }
+            return null;
+        }
 }

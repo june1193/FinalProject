@@ -1,5 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +39,7 @@
 
 <div class="container">
     <h3>입력해주신 정보로 가입된 아이디가 존재하지 않습니다!<h3>
-        <input type="submit" value="홈으로">
+         <a href="/racket/map" class="home-link">홈으로</a>
 </div>
 
 </body>
