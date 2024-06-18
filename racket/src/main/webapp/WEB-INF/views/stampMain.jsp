@@ -202,7 +202,7 @@
 <jsp:include page="footer.jsp"></jsp:include>
 	<!-- 스탬프 추가시 알람 -->
 	<script>
-		// 서버로부터 받은 메시지를 변수에 저장
+		// 서버로부터 받은 메시지를 변수에 저장.
 		var message = "${message}";
 
 		// 메시지가 비어 있지 않은 경우에만 alert 함수를 사용하여 메시지를 표시
