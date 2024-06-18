@@ -143,11 +143,12 @@
 	    					$(".write-review").append("<button type='button' class='update'>수정</button>");
 	    					    					
 	    				}
+	    				let userImageUrl = user.userImageUrl ? user.userImageUrl : '/racket/resources/images/user.png';
 	    				str = `<li>
 	    				<a href="/racket/mypage/\${user.userID}.do">
 	                        <div class="profile">
 		                        <div class="img-in">
-		                            <img src="\${user.userImageUrl}" alt="">
+		                            <img src="\${userImageUrl}" alt="">
 		                        </div>
 	                    	<span>\${user.userNickname}</span>
 	                		</div>
@@ -428,7 +429,14 @@
 	                    		<div class="write-review">
 	                    			<div class="profile sa-profile">
 	                            <div class="img-in">
-	                                <img src="${userInfo.user_Image_Url }" alt="">
+	                            	<c:choose>
+	                            		<c:when test="${not empty userInfo.user_Image_Url }">
+	                            			<img src="${userInfo.user_Image_Url }" alt="">
+	                            		</c:when>
+	                            		<c:otherwise>
+	                            			<img alt="" src="/racket/resources/images/user.png">
+	                            		</c:otherwise>
+	                            	</c:choose> 
 	                            </div>
 	                            <span>${userInfo.user_Nickname}</span>
 	                        </div>
@@ -460,7 +468,7 @@
 									    <div class='outer-star'><div class='inner-star'></div></div>
 									    <div class="numberRating"></div>
 									  </div>
-									  <p>후기를 작성하려면 <span><a>로그인</a></span> 하세요.</p>
+									  <p>후기를 작성하려면 <span><a href="/racket/login">로그인</a></span> 하세요.</p>
 									</div>                    	
                         		
                         		</div>

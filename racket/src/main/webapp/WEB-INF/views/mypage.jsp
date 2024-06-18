@@ -202,7 +202,15 @@
                 <div class="profile-box">
                     <div class="profile">
                         <div class="profile-in">
-                            <img src="${user.user_Image_Url }" alt="">
+                        	<c:choose>
+                        		<c:when test="${not empty user.user_Image_Url }">
+                        			<img src="${user.user_Image_Url }" alt="">
+                        		</c:when>
+                        		<c:otherwise>
+                        			<img alt="" src="/racket/resources/images/user.png">
+                        		</c:otherwise>
+                        	</c:choose>
+                            
                         </div>                       
                     </div>
                     <div class="p-desc">

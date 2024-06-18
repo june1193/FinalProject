@@ -159,7 +159,9 @@
             background-clip: content-box, border-box;
         }
         .profile-in > img{
-            width: 100%;
+                width: 100%;
+			    object-fit: cover;
+			    height: 100%;
         }
         .edit{
             margin-left: 30px;

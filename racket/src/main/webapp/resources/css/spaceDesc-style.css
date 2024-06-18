@@ -328,6 +328,7 @@ a {
 .sub-review{
     display: none;
 }
+.match-btn > button > a{color : #fff;}
 .review-content > ul{
     padding: 15px;
 }
@@ -363,7 +364,9 @@ a {
 
 }
 .img-in > img{
-    width: 100%;
+        width: 100%;
+    	object-fit: cover;
+    	height: 100%;
 }
 .sa2{
 	width: 80%;
