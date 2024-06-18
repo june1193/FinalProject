@@ -13,6 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />
 	<script src="${pageContext.request.contextPath}/resources/js/summernote-lite.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote-lite.css">
+    <link rel="stylesheet" href="/racket/resources/css/header-style.css">
+	<link rel="stylesheet" href="/racket/resources/css/footer-style.css">
 
     <style>
         * {
@@ -95,7 +97,7 @@
         }
     </style>
 </head>
-
+<%@ include  file="header.jsp"  %>
 <body>
     <div class="container">
     <form action="/racket/insertPost" method="post">
@@ -123,6 +125,8 @@
         </form>
     </div>
     <jsp:include page="popup.jsp"></jsp:include>
+    
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 <!-- summernote 관련 -->
 <script>
