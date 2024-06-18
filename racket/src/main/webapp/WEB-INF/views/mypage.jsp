@@ -196,7 +196,7 @@
 </head>
 <body>
 <input type="hidden" value="${sessionScope.loggedInUser.userId}" name="uId"  id="uId">
-    <div class="wrap">
+    <div id="wrap">
         <section>
             <div class="mypage-box">
                 <div class="profile-box">

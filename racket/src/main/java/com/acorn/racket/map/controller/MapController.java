@@ -26,7 +26,6 @@ public class MapController {
     public String mapPage(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         UserLoginDTO user = (UserLoginDTO) session.getAttribute("loggedInUser");
-
         // 사용자가 로그인되어 있는지 확인
         if (user != null) {
             // 로그인 상태일 때, 모델에 로그인 박스를 보여주기 위한 속성 추가

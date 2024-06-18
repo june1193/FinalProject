@@ -252,11 +252,9 @@
 	});
 </script>
 </head>
+<%@ include  file="header.jsp"  %>
 <body>
     <div id="wrap">
-
-        <%@ include  file="header.jsp"  %>
-
         <section>
             <div class="space-content">
                 <h4>시설 찾기</h4>
