@@ -358,7 +358,7 @@
                 <div id="qna" onclick=ArtTwo()>종목별 게시판</div>
             </div>
             <!-- <div id="search-nav">검색창ㅁㅁㅁㅁㅁㅁ</div> -->
-                   
+            <!--  -->       
             <div class="search-area">
                 <div class="search">
                     <div class="search-in">
