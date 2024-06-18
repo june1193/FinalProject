@@ -35,9 +35,16 @@ public class FacController {
 	public void insertAPI( ) {	
 		System.out.println("실행");
 		try {
-			ArrayList<FacDTO> list = service.getApiData();
+			ArrayList<FacDTO> list = service.getApiData("5" ,"탁구장");
 			int rows = service.insert(list);
 			System.out.println("들어간 레코드 수 : "+rows);
+			list = service.getApiData("50" ,"배드민턴장");
+			rows = service.insert(list);
+			System.out.println("들어간 레코드 수 : "+rows);
+			list = service.getApiData("260" ,"테니스장");
+			rows = service.insert(list);
+			System.out.println("들어간 레코드 수 : "+rows);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace(); 
