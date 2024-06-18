@@ -164,7 +164,7 @@
 </style>
 
 </head>
-<jsp:include page="header.jsp"></jsp:include>
+<%@ include  file="header.jsp"  %>
 <body>
 
 	<div id="wrap">

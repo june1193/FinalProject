@@ -1090,7 +1090,7 @@ $(document).ready(function() {
 
 
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<%@ include  file="header.jsp"  %>
    <!-- 최 상단바 -->
    <nav>
       <div id="outer-nav">
