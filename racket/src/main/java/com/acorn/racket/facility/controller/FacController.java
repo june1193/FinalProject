@@ -22,6 +22,7 @@ import com.acorn.racket.facility.domain.ParamDTO;
 import com.acorn.racket.facility.domain.ReviewDTO;
 import com.acorn.racket.facility.domain.ReviewVO;
 import com.acorn.racket.facility.service.FacService;
+import com.acorn.racket.login.domain.UserLoginDTO;
 
 
 @Controller
@@ -60,10 +61,11 @@ public class FacController {
 		System.out.println(options.getOptions());
 		Map<String, Object> parameters = new HashMap<>();
 		HttpSession session = request.getSession();
-		String user = (String)session.getAttribute("user");
+		UserLoginDTO user = (UserLoginDTO)session.getAttribute("loggedInUser");
+		//System.out.println("아이디"+user.getUserId());
 		//String user = "test3";
 		if(user != null) {
-			parameters.put("user", user);
+			parameters.put("user", user.getUserId());
 		}else {
 			parameters.put("user", null);
 			//parameters.put("user", "test2");
@@ -83,12 +85,12 @@ public class FacController {
 	public String selectAll(Model model, @PathVariable String facID,HttpServletRequest request) {
 		Map<String, String> parameters = new HashMap<>();
 		HttpSession session = request.getSession();
-		String user = (String)session.getAttribute("user");
+		UserLoginDTO user = (UserLoginDTO)session.getAttribute("loggedInUser");
 		//String user = "test3";
 		if(user != null) {
-			parameters.put("user", user);
+			parameters.put("user", user.getUserId());
 			//유저 정보 받아오기
-			Map<String, Object> map = service.selectUser(user); 
+			Map<String, Object> map = service.selectUser(user.getUserId()); 
 			model.addAttribute("userInfo", map);
 		}else {
 			parameters.put("user", null);
@@ -105,11 +107,11 @@ public class FacController {
 	public int checkBookmark(@PathVariable String facID, HttpServletRequest request) {
 		Map<String, String> param = new HashMap<>();
 		HttpSession session = request.getSession();
-		String user = (String)session.getAttribute("user");
+		UserLoginDTO user = (UserLoginDTO)session.getAttribute("loggedInUser");
 		//String user = "test3";
 		if(user != null) {
 			param.put("facID", facID);
-			param.put("user", user);
+			param.put("user", user.getUserId());
 		}else {
 			return -1;
 		}
@@ -134,10 +136,10 @@ public class FacController {
 	public Map insertReview(@PathVariable String facID, @RequestBody ReviewVO review, HttpServletRequest request) {
 		Map<String, Object> param = new HashMap<>();
 		HttpSession session = request.getSession();
-		String user = (String)session.getAttribute("user");
+		UserLoginDTO user = (UserLoginDTO)session.getAttribute("loggedInUser");
 		//String user = "test3";
 		param.put("facID", facID);
-		param.put("user", user);
+		param.put("user", user.getUserId());
 		param.put("rating", review.getRating());
 		param.put("content", review.getContent());
 		System.out.println(review);
@@ -170,10 +172,10 @@ public class FacController {
 	public int updateReview(@PathVariable String facID, @RequestBody ReviewVO review, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Map<String, Object> param = new HashMap<>();
-		String user = (String)session.getAttribute("user");
+		UserLoginDTO user = (UserLoginDTO)session.getAttribute("loggedInUser");
 		//String user = "test3";
 		param.put("facID", facID);
-		param.put("user", user);
+		param.put("user", user.getUserId());
 		param.put("rating", review.getRating());
 		param.put("text", review.getContent());
 		
@@ -188,10 +190,10 @@ public class FacController {
 	public int deleteReview(@PathVariable String facID,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Map<String, String> param = new HashMap<>();
-		String user = (String)session.getAttribute("user");
+		UserLoginDTO user = (UserLoginDTO)session.getAttribute("loggedInUser");
 		//String user = "test3";
 		param.put("facID", facID);
-		param.put("user", user);
+		param.put("user", user.getUserId());
 		return service.deleteReview(param);
 	}
 	

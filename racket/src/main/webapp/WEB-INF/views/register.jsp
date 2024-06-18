@@ -120,14 +120,14 @@ input[type="submit"]:hover {
             </div>
 
             성별:
-            <input type="radio" name="sex" value="m">남성
-            <input type="radio" name="sex" value="f">여성
+            <input type="radio" name="sex" value="남">남성
+            <input type="radio" name="sex" value="여">여성
             <br><br>
 
             운동:
-            <input type="radio" name="exercise" value="bad">배드민턴
-            <input type="radio" name="exercise" value="tab">탁구
-            <input type="radio" name="exercise" value="ten">테니스
+            <input type="radio" name="exercise" value="배드민턴">배드민턴
+            <input type="radio" name="exercise" value="탁구">탁구
+            <input type="radio" name="exercise" value="테니스">테니스
             <br><br>
 
             운동 수준:
