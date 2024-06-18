@@ -358,11 +358,11 @@
                 <div id="qna" onclick=ArtTwo()>종목별 게시판</div>
             </div>
             <!-- <div id="search-nav">검색창ㅁㅁㅁㅁㅁㅁ</div> -->
-                   
+            <!--  -->       
             <div class="search-area">
                 <div class="search">
                     <div class="search-in">
-                        <input type="text" placeholder="검색어를 입력하세요"  id="searchContent">
+                        <input type="text" placeholder="검색어를 입력하세요"  id="searchContent"   value= "${ empty param.search ? '':param.search}">
                         <button  onclick="search()">
                             <span class="tabler--search"></span>
                         </button>
