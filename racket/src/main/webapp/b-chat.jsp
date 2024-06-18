@@ -39,7 +39,7 @@ var wsocket;
 		
 		//소켓 연결
 		function connect(){
-			wsocket = new WebSocket("ws://localhost:8080/racket/chat-ws");
+			wsocket = new WebSocket("ws://3.107.70.76:8080/racket/chat-ws");
 			wsocket.onopen = onOpen;
 			wsocket.onmessage = onMessage;
 			wsocket.onclose = onClose;
