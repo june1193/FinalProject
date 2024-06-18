@@ -4,6 +4,10 @@ package com.acorn.racket.community.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,6 +15,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.acorn.racket.community.domain.CommentDTO;
 import com.acorn.racket.community.domain.CommentinsertDTO;
@@ -33,6 +40,8 @@ import com.acorn.racket.community.domain.InsertPostDTO;
 import com.acorn.racket.community.domain.ReviewlistDTO;
 import com.acorn.racket.community.domain.replyDTO;
 import com.acorn.racket.community.service.CommunityService;
+import com.acorn.racket.login.domain.UserLoginDTO;
+import com.acorn.racket.user.domain.UserDTO;
 
 
 
@@ -46,8 +55,10 @@ public class CommunityController {
 	 
 	//게시글 상세 요청부분
 	@GetMapping("/boarddetail")
-	public String writeview(Model model , int postnum) {
+	public String writeview( HttpServletRequest request , Model model , int postnum) {
 		
+		HttpSession session = request.getSession();
+		UserLoginDTO user = (UserLoginDTO) session.getAttribute("loggedInUser");
 		
 		
 		
@@ -62,6 +73,7 @@ public class CommunityController {
 		model.addAttribute("cmList", CommentList);
 		model.addAttribute("post", postview );
 		model.addAttribute("reply", reply);
+		model.addAttribute("user", user);
 		
 		return "CommunityDetail";	
 	}
@@ -113,15 +125,19 @@ public class CommunityController {
 	}
 	// 게시물 작성 페이지 뷰
 	@RequestMapping(value = "/postWrite")
-	public String getWritePage() {
+	public String getWritePage(HttpServletRequest request , Model model) {
 		
+		HttpSession session = request.getSession();
+		UserLoginDTO user = (UserLoginDTO) session.getAttribute("loggedInUser");
+		
+		model.addAttribute("user", user);
 		
 		return "CommunityWriter";
 	}
 	
 	//게시물 인설트 부분
 	@RequestMapping(value = "/insertPost" , method = RequestMethod.POST , produces="text/plain;charset=UTF-8")
-	public String insertPost(@RequestParam("user_id") String user_id , @RequestParam("board_name") String board_name , @RequestParam("post_title") String post_title ,@RequestParam("post_content") String post_content) {
+	public RedirectView insertPost(@RequestParam("user_id") String user_id , @RequestParam("board_name") String board_name , @RequestParam("post_title") String post_title ,@RequestParam("post_content") String post_content) {
 		
 		InsertPostDTO insert = new InsertPostDTO();
 		insert.setBoard_name(board_name);
@@ -146,7 +162,7 @@ public class CommunityController {
         
         service.insertPostSV(insert);
 		
-        return "ab";
+        return new RedirectView("/racket/Review");
 	}
 	
 	//summernote 이미지 업로드 부분
@@ -192,6 +208,39 @@ public class CommunityController {
 	            return ResponseEntity.badRequest().body("이미지 업로드 실패");
 	        }
 	    }
+	 
+	 //게시물 취소 부분
+	 
+	    @RequestMapping(value = ("/deleteImages") ,method = RequestMethod.POST , produces ="text/plain;charset=UTF-8" )
+	    @ResponseBody
+	    public String deleteImages(@RequestBody List<String> imgURLs) {
+	    	
+	        StringBuilder result = new StringBuilder();
+
+	        for (String imgURL : imgURLs) {
+	            try {
+	                // BASE_UPLOAD_DIR를 동적으로 가져오기
+	                String uploadDirectory = servletContext.getRealPath("/resources/boardimg/");
+	                // 파일 경로를 절대 경로로 변환
+	                Path filePath = Paths.get(uploadDirectory, imgURL.substring(imgURL.lastIndexOf("/") + 1)).normalize();
+	                // 디버그용 로그 추가
+	                System.out.println("Deleting file: " + filePath);
+	                // 파일 경로가 uploadDirectory 내에 있는지 확인
+	                if (filePath.startsWith(uploadDirectory)) {
+	                    Files.deleteIfExists(filePath);
+	                    result.append("File deleted successfully: ").append(filePath).append("\n");
+	                } else {
+	                    result.append("Invalid file path: ").append(filePath).append("\n");
+	                }
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                result.append("File deletion failed: ").append(e.getMessage()).append("\n");
+	            }
+	        }
+	        return result.toString();
+	    }
+	    
+	    
 	// 대댓글 인서트 부분
 	 @RequestMapping(value = "/insertreply" , method = RequestMethod.POST , produces = "text/plain;charset=UTF-8")
 	 @ResponseBody

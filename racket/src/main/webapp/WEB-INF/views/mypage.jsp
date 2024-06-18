@@ -69,8 +69,7 @@
                 }
             });
             
-            var session = '<%=(String)session.getAttribute("user")%>';
-            console.log("세션"+session);
+            var session = $("input[name='uId']").val();
             var userId = "${user.user_ID}";
             
     		//status 클래스
@@ -196,14 +195,22 @@
     </script>
 </head>
 <body>
-<input type="hidden" value="${sessionScope.user}" name="uId"  id="uId">
+<input type="hidden" value="${sessionScope.loggedInUser.userId}" name="uId"  id="uId">
     <div class="wrap">
         <section>
             <div class="mypage-box">
                 <div class="profile-box">
                     <div class="profile">
                         <div class="profile-in">
-                            <img src="${user.user_Image_Url }" alt="">
+                        	<c:choose>
+                        		<c:when test="${not empty user.user_Image_Url }">
+                        			<img src="${user.user_Image_Url }" alt="">
+                        		</c:when>
+                        		<c:otherwise>
+                        			<img alt="" src="/racket/resources/images/user.png">
+                        		</c:otherwise>
+                        	</c:choose>
+                            
                         </div>                       
                     </div>
                     <div class="p-desc">
@@ -214,7 +221,7 @@
                         <p><strong>스탬프</strong><span class="my">1</span><span>/9</span> 개</p>
                     </div>
                     <!-- sessionScope.user로 변경 -->
-                    <c:if test="${sessionScope.user eq user.user_ID }">
+                    <c:if test="${sessionScope.loggedInUser.userId eq user.user_ID }">
 	                    <div class="edit">
 	                        <span class="solar--settings-linear"></span>프로필 수정
 	                    </div>
@@ -301,14 +308,14 @@
                                     <div class="like" id="${facility.facilityID}"> 
                                     <c:set var="bookmarkList" value="${list.bookmark[facStatus.index]}" />
                                     	<c:choose>
-                                    		<c:when test="${sessionScope.user eq facility.liked }">
+                                    		<c:when test="${sessionScope.loggedInUser.userId eq facility.liked }">
                                     			<span class="basil--heart-outline full"></span> <span class="footer-font">${facility.count }</span>
                                     		</c:when>
                                     		<c:otherwise>
                                     			<c:set var="loop_flag" value="false" />
                                     			<c:forEach var="item" items="${bookmarkList}">
                                     				<c:if test="${not loop_flag }">
-												        <c:if test="${sessionScope.user eq item }"> 
+												        <c:if test="${sessionScope.loggedInUser.userId eq item }"> 
 												            <c:set var="loop_flag" value="true" />
 												        </c:if>
 												    </c:if>
@@ -324,7 +331,7 @@
                 		</c:forEach>                                 
                     </div>
                     </c:when>
-                    	<c:when test="${sessionScope.user eq user.user_ID }">
+                    	<c:when test="${sessionScope.loggedInUser.userId eq user.user_ID }">
                     		<p class="non-bookmark">
                     			<span class="pepicons-print--heart"></span> <span>→</span> <span class="pepicons-print--heart-filled"></span>
                     		</p>

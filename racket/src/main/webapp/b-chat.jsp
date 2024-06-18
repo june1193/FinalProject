@@ -262,7 +262,6 @@ var wsocket;
 						    	
 				        	}				        	
 				        });
-				        //$('#exitBtn').click(function() { disconnect(); });
 				        $(document).on("click","#exitBtn",function(){
 				        	disconnect();
 				        });

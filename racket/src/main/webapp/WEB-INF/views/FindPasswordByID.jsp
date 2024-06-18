@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,11 +67,8 @@
     }
 </style>
 <body>
-    <div class="banner">
-        배너가 들어갈 자리
-    </div>
     <div class="BigWrap">
-        <form action="/FindPasswordByID" method="post">
+        <form action="/racket/FindPasswordByID" method="post">
             <h2>비밀번호 찾기</h2>
 
             <div class="text1">

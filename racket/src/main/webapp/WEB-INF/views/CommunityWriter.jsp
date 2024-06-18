@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/racket/resources/css/chat-style.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />
-    <script src="${pageContext.request.contextPath}/resources/js/summernote-lite.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/summernote-lite.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/summernote-lite.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote-lite.css">
+
     <style>
         * {
             box-sizing: border-box;
@@ -100,7 +100,7 @@
     <div class="container">
     <form action="/racket/insertPost" method="post">
         <div class="content_container">
-        <input type="hidden" name="user_id" value="jungkiwon" >
+        <input type="hidden" name="user_id" value="${user.userId}" >
             <div class="border_title">
                 <h1 style="margin-left: 15px;">후기 게시판</h1>
                 <input type="hidden" name="board_name"  value="후기 게시판">
@@ -117,14 +117,18 @@
             </div>
             <div class="controller">
                 <button style="background-image:url(${pageContext.request.contextPath}/resources/img/글등록.png);"></button>
-                <button style="background-image:url(${pageContext.request.contextPath}/resources/img/취소.png);"></button>
+                <button style="background-image:url(${pageContext.request.contextPath}/resources/img/취소.png);" type="button" onclick="cancel()"></button>
             </div>
         </div>
         </form>
     </div>
+    <jsp:include page="popup.jsp"></jsp:include>
 </body>
 <!-- summernote 관련 -->
 <script>
+
+let imgURL = [];
+
 $(document).ready(function () {
     $('#summernote').summernote({
         height: 1000,
@@ -154,6 +158,7 @@ $(document).ready(function () {
         }
     });
 
+    
     function imageUploader(file) {
         var data = new FormData();
         data.append("file", file);
@@ -166,13 +171,41 @@ $(document).ready(function () {
             processData: false,
             success: function(response) {
                 $('#summernote').summernote('insertImage', response);
+                imgURL.push(response);
+                console.log(imgURL);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Upload failed:', textStatus, errorThrown);
             }
         });
     }
+
+    
 });
 </script>
-<!--  -->
+<script>
+//게시물 생성 취소 부분
+function cancel() {
+    if (imgURL.length > 0) {
+        $.ajax({
+            url: '/racket/deleteImages',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(imgURL),
+            success: function(response) {
+                	
+            	alert("게시물 작성 취소");
+            	window.history.back();
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Failed to delete images:', textStatus, errorThrown);
+            }
+        });
+    }else{
+    	alert("게시물 작성 취소");
+    	window.history.back();
+    }
+}
+</script>
 </html>
