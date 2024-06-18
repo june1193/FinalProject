@@ -9,6 +9,7 @@
 <title>Document</title>
 <link rel="stylesheet" href="/racket/resources/css/style.css" />
 <link rel="stylesheet" href="/racket/resources/css/font.css">
+<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
 <script src="https://kit.fontawesome.com/353e3b9f74.js"
 	crossorigin="anonymous"></script>
 <script
@@ -228,5 +229,6 @@
 	<script src="/racket/resources/js/main.js"></script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8wsx0LtLG5OxLSA5UzXpbEAbUjnPEE0&callback=initMap"></script>
+		<jsp:include page="popup.jsp"></jsp:include>
 </body>
 </html>
