@@ -183,7 +183,7 @@
 <body>
 
 	<div id="wrap">
-<jsp:include page="header.jsp"></jsp:include>
+<%@ include  file="header.jsp"  %>
 		<div class="container">
 			<h1>내 스탬프</h1>
 			<div id="aram">1</div>

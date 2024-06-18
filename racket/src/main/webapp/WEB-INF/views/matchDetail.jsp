@@ -214,8 +214,9 @@
         
     </script>
 </head>
-<jsp:include page="header.jsp"></jsp:include>
+
 <body>
+<%@ include  file="header.jsp"  %>
 	<div id="top_box">
 
 		<div id="title_box">
