@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="/racket/resources/css/header-style.css">
+   <link rel="stylesheet" href="/racket/resources/css/footer-style.css">
 <style>
 * {
 	padding: 0px;
@@ -162,7 +164,7 @@
 </style>
 
 </head>
-
+<jsp:include page="header.jsp"></jsp:include>
 <body>
 
 	<div id="wrap">
@@ -229,6 +231,7 @@
 		<div id="space"></div>
 
 	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script>
 	window.kakaoAsyncInit = function() {

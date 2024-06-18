@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="/racket/resources/css/header-style.css">
+   <link rel="stylesheet" href="/racket/resources/css/footer-style.css">
 <style>
 * {
 	padding: 0px;
@@ -181,7 +183,7 @@
 <body>
 
 	<div id="wrap">
-
+<jsp:include page="header.jsp"></jsp:include>
 		<div class="container">
 			<h1>내 스탬프</h1>
 			<div id="aram">1</div>
@@ -197,7 +199,7 @@
 		<div id="space"></div>
 
 	</div>
-
+<jsp:include page="footer.jsp"></jsp:include>
 	<!-- 스탬프 추가시 알람 -->
 	<script>
 		// 서버로부터 받은 메시지를 변수에 저장

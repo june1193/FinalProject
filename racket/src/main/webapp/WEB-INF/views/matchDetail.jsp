@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="/racket/resources/css/header-style.css">
+   <link rel="stylesheet" href="/racket/resources/css/footer-style.css">
 <style>
 * {
 	padding: 0px;
@@ -212,6 +214,7 @@
         
     </script>
 </head>
+<jsp:include page="header.jsp"></jsp:include>
 <body>
 	<div id="top_box">
 
@@ -320,5 +323,6 @@
 		</div>
 
 	</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
