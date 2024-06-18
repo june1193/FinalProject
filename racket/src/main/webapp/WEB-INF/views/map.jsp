@@ -94,7 +94,7 @@
 									<i class="fa-regular fa-face-frown"></i>
 								</div>
 								<a href="/racket/login" class="login_form">로그인</a> <a
-									href="#" class="register_form">회원가입</a>
+									href="/racket/register" class="register_form">회원가입</a>
 							</div>
 						</c:otherwise>
 					</c:choose>

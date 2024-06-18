@@ -115,8 +115,11 @@ function initMap() {
     `;
 
     // AJAX 요청 후 content-container에 내용을 삽입
-    document.getElementById('mapContent-container').innerHTML = contentHTML;
-	}
+      const container = $('#mapContent-container');
+      container.fadeOut(300, function () {
+         container.html(contentHTML).fadeIn(300);
+      });
+   }
 
 
    // GeoJSON 데이터 로드
