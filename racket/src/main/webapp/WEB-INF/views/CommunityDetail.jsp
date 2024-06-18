@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="/racket/resources/css/chat-style.css">
+	<link rel="stylesheet" href="/racket/resources/css/header-style.css">
+	<link rel="stylesheet" href="/racket/resources/css/footer-style.css">
     <style>
         * {
             box-sizing: border-box;
@@ -260,6 +262,7 @@
     </style>
 
 </head>
+<%@ include  file="header.jsp"  %>
 <body>
     <!-- 글 제목 부분-->
     <div class="container" data-post-id="${post.post_id}">
@@ -371,6 +374,8 @@
             </div>
     </div>
     <jsp:include page="popup.jsp"></jsp:include>
+    
+    <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <!-- 글 이동 버튼 스크립트 -->
 <script>
