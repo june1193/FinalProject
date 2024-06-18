@@ -13,6 +13,7 @@ import com.acorn.racket.login.domain.UserLoginDTO;
 
 //return 값이  true => 원래요청 흐름으로 진행
 //return 값이  false =>원래요청 흐름이 중지됨
+// 수정
 public class SessionInterceptor extends HandlerInterceptorAdapter {	   
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
