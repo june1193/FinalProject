@@ -1,71 +1,73 @@
 @charset "UTF-8";
-html,
-         body {
-            margin: 0 auto;
-            box-sizing: border-box;
-            font-family: 'Pretendard';
-            font-weight: 400;
-            color: #2a2a2a;
-         }
 
-         a {
-            text-decoration: none;
-            color: #2a2a2a;
-         }
+html, body {
+	margin: 0 auto;
+	box-sizing: border-box;
+	font-family: 'Pretendard';
+	font-weight: 400;
+	color: #2a2a2a;
+}
 
-         li {
-            list-style: none;
-         }
+a {
+	text-decoration: none;
+	color: #2a2a2a;
+}
 
-         footer {
-            background-color: #84adea;
-            padding: 40px 0px;
-            display: flex;
-            justify-content: space-around;
-         }
+li {
+	list-style: none;
+}
 
-         footer a {
-            color: #2b2b2b;
-         }
+footer {
+	margin-top: 30px;
+	background-color: #84adea;
+	padding: 40px 0px;
+	display: flex;
+	justify-content: space-around;
+}
 
-         .footer_left {
-            display: flex;
-            flex-direction: column;
-            color: #2b2b2b;
-            gap: 30px;
-         }
+footer a {
+	color: #2b2b2b;
+}
 
-         .footer_top {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-         }
+.footer_left {
+	display: flex;
+	flex-direction: column;
+	color: #2b2b2b;
+	gap: 30px;
+}
 
-         .right_list {
-            margin: 0 auto;
-            display: flex;
-            gap: 30px;
-            align-items: center;
-         }
-         .right_list li:after {
-            display: block;
-            content: '';
-            position: absolute;
-            margin-top: -19px;
-            margin-left: -15px;
-            width: 1px;
-            height: 16px;
-            background-color: grey;
-         }
+.footer_top {
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+}
 
-         .footer_bottom {
-            font-size: 15px;
-            font-weight: lighter;
-         }
+.right_list {
+	margin: 0 auto;
+	display: flex;
+	gap: 30px;
+	align-items: center;
+}
 
-         .footer_right {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-right: 100px;
-         }
+.right_list li:after {
+	display: block;
+	content: '';
+	position: absolute;
+	margin-top: -19px;
+	margin-left: -15px;
+	width: 1px;
+	height: 16px;
+	background-color: grey;
+}
+
+.footer_bottom {
+	font-size: 15px;
+	font-weight: lighter;
+}
+
+.footer_right {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	margin-right: 100px;
+}
