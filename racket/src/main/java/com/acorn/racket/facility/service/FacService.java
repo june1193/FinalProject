@@ -38,8 +38,8 @@ public class FacService {
 	}
 	
 	//api 받아와서 json으로 가공 후 FacDTO타입으로 리스트 반환
-	public ArrayList<FacDTO> getApiData() throws IOException{
-		String result = api.getApiData();
+	public ArrayList<FacDTO> getApiData(String num, String sport) throws IOException{
+		String result = api.getApiData(num, sport);
 		JSONObject rjson  = new JSONObject(result);
         JSONObject a = rjson.getJSONObject("ListPublicReservationSport");
         JSONArray items = a.getJSONArray("row");
