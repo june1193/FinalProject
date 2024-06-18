@@ -1089,7 +1089,6 @@ $(document).ready(function() {
 
 
 <body>
-
    <!-- 최 상단바 -->
    <nav>
       <div id="outer-nav">
