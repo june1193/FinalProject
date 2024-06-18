@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/racket/resources/css/chat-style.css">
-
+  <link rel="stylesheet" href="/racket/resources/css/header-style.css">
+   <link rel="stylesheet" href="/racket/resources/css/footer-style.css">
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style>
@@ -1089,6 +1090,7 @@ $(document).ready(function() {
 
 
 <body>
+<jsp:include page="header.jsp"></jsp:include>
    <!-- 최 상단바 -->
    <nav>
       <div id="outer-nav">
@@ -1550,7 +1552,7 @@ function matchform() {
 
 </script>
 
-
+<jsp:include page="footer.jsp"></jsp:include>
 <jsp:include page="popup.jsp"></jsp:include>
 </body>
 
