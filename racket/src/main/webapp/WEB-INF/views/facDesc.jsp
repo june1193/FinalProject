@@ -308,7 +308,7 @@
 <body>
 	<input type="hidden" value="${sessionScope.loggedInUser.userId}" name="uId"  id="uId">
     <div id="wrap">
-    <jsp:include page="header.jsp"></jsp:include>
+    <%@ include  file="header.jsp"  %>
         <div class="sub-main">
         	<div class="title-area">
         		<h4>${facility.facName }</h4>

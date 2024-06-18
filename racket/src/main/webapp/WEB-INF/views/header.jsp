@@ -33,13 +33,13 @@
 
 			<div class="user_container">
 				<c:choose>
-					<c:when test="${isLoggedIn}">
+					<c:when test="${not empty sessionScope.loggedInUser}">
 						<div class="login_box">
 							<div class="login_wrap">
 								<div class="login_user">
 									<i class="fa-regular fa-face-smile"></i>
 								</div>
-								<div id="user_name">${user_ID.userNickname}</div>
+								<div id="user_name">${sessionScope.loggedInUser.userNickname}</div>
 								<div class="bookmark_settings">
 									<a href="#" class="user_bookmark"><i
 										class="fa-solid fa-bookmark"></i></a> <a href="#"
