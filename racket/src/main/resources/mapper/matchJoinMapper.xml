@@ -72,7 +72,7 @@
 	<select id="selectuser_nickname" parameterType="String"
 		resultType="MatchCreateInsertDTO">
 		SELECT user_Nickname , birthday , user_Level , user_Image_Url
-		FROM UserTbl
+		FROM usertbl
 		WHERE user_id = #{user_id}
 	</select>
 	<!-- 유저가 생성한 게시물 번호와 시간으로 생성한 게시물 찾기 -->
