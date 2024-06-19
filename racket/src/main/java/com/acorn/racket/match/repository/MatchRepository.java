@@ -116,6 +116,7 @@ public class MatchRepository {
        
        String user_id = data.getUser_id();
        String Matchdate = data.getMatchdate();
+       System.out.println(Matchdate);
        
        Map<String, Object> params = new HashMap<>();
        params.put("user_id", user_id);
